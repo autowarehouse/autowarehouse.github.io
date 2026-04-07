@@ -1,5 +1,6 @@
 ---
 import '@/styles/global.css';
+import CookieConsent from '@components/common/CookieConsent.astro';
 
 interface Props {
   title: string;
@@ -48,13 +49,31 @@ const ogImageUrl = ogImage
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <!-- Google tag (gtag.js) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-ZENXMKC3ET"></script>
+    <!-- Google Consent Mode v2 + gtag.js -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+
+      // Set default consent BEFORE loading gtag.js
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'wait_for_update': 1500
+      });
+
+      // Restore consent from previous visit
+      if (localStorage.getItem('cookie-consent') === 'accepted') {
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted'
+        });
+      }
+    </script>
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-ZENXMKC3ET"></script>
+    <script is:inline>
       gtag('js', new Date());
-      gtag('config', 'G-ZENXMKC3ET');
+      gtag('config', 'G-ZENXMKC3ET', { anonymize_ip: true });
     </script>
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -101,5 +120,6 @@ const ogImageUrl = ogImage
   </head>
   <body class="min-h-screen antialiased">
     <slot />
+    <CookieConsent />
   </body>
 </html>
