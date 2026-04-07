@@ -1,0 +1,85 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Badge from '@components/ui/Badge.astro';
+import GradientOrb from '@components/ui/GradientOrb.astro';
+import PipelineBar from '@components/ui/PipelineBar.astro';
+import TechStackGrid from '@components/common/TechStackGrid.astro';
+
+const techStack = [
+  { name: 'Next.js 16', description: 'React-based web application' },
+  { name: 'LangGraph.js', description: 'Agent orchestration framework' },
+  { name: 'LangChain.js', description: 'LLM integration & tools' },
+  { name: 'Drizzle ORM', description: 'Type-safe database access' },
+  { name: 'PostgreSQL', description: 'Primary database + pgvector' },
+  { name: 'Turborepo', description: 'Monorepo build system' },
+  { name: 'Tailwind CSS', description: 'Utility-first styling' },
+  { name: 'Docker', description: 'Container deployment' },
+];
+
+const security = [
+  { icon: '🔐', title: 'AES-256-GCM', desc: 'Encryption for all credentials' },
+  { icon: '🔑', title: 'OIDC-First Auth', desc: 'Keycloak, Auth0, LDAP support' },
+  { icon: '🛡️', title: 'RBAC', desc: '30+ granular permissions' },
+  { icon: '📋', title: 'Audit Logging', desc: 'LangSmith tracing for AI actions' },
+];
+---
+
+<PageLayout title="Platform" description="Architecture, tech stack, security, and deployment options for AutoWarehouse.">
+  <!-- Hero -->
+  <section class="relative overflow-hidden py-20">
+    <GradientOrb color="blue" size="400px" position="top: -100px; right: -100px;" />
+    <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
+      <Badge>Platform Overview</Badge>
+      <h1 class="mt-4 text-3xl font-extrabold text-white md:text-5xl">Built for Enterprise Data</h1>
+      <p class="mt-4 text-base text-slate-400">
+        Multi-tenant, AI-powered, self-hosted. One platform from source ingestion to business intelligence.
+      </p>
+    </div>
+  </section>
+
+  <!-- Pipeline -->
+  <section class="bg-[var(--bg-secondary)] py-8">
+    <PipelineBar />
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="py-16">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="mb-8 text-center text-2xl font-extrabold text-white">Tech Stack</h2>
+      <TechStackGrid items={techStack} />
+    </div>
+  </section>
+
+  <!-- Security -->
+  <section class="bg-[var(--bg-secondary)] py-16">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="mb-8 text-center text-2xl font-extrabold text-white">Security & Compliance</h2>
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {security.map((s) => (
+          <div class="glass-card rounded-xl p-5 text-center">
+            <div class="text-2xl">{s.icon}</div>
+            <div class="mt-2 text-sm font-semibold text-white">{s.title}</div>
+            <div class="mt-1 text-xs text-slate-400">{s.desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Deployment -->
+  <section class="py-16">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <h2 class="mb-4 text-2xl font-extrabold text-white">Deploy Your Way</h2>
+      <p class="mb-8 text-sm text-slate-400">Self-hosted on your infrastructure. No cloud lock-in. Docker Compose for single-machine, Kubernetes for scale.</p>
+      <div class="glass-card mx-auto max-w-md rounded-xl p-6">
+        <code class="block text-left text-xs text-slate-300">
+          <span class="text-slate-500">$</span> docker compose up -d<br />
+          <span class="text-green-400">✓</span> postgres:16 — ready<br />
+          <span class="text-green-400">✓</span> web (Next.js) — :3000<br />
+          <span class="text-green-400">✓</span> worker (ETL) — running<br />
+          <span class="text-green-400">✓</span> ollama (LLM) — ready
+        </code>
+      </div>
+    </div>
+  </section>
+</PageLayout>
