@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://autowarehouse.github.io/sitemap-index.xml
+Sitemap: https://autowarehouse.ai/sitemap-index.xml
