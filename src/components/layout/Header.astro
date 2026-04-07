@@ -1,0 +1,82 @@
+---
+import { mainNav } from '@data/navigation';
+---
+
+<header class="sticky top-0 z-50 border-b border-white/[0.06] bg-[#0a0a1a]/80 backdrop-blur-xl">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+    <!-- Logo -->
+    <a href="/" class="text-lg font-extrabold text-white">
+      Auto<span class="gradient-text">Warehouse</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden items-center gap-6 md:flex">
+      {mainNav.map((item) =>
+        item.children ? (
+          <div class="group relative">
+            <button class="flex items-center gap-1 text-sm text-slate-400 transition-colors hover:text-white">
+              {item.label}
+              <svg class="h-3 w-3 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="invisible absolute left-0 top-full min-w-[200px] rounded-lg border border-white/10 bg-[#0d1117] p-2 opacity-0 shadow-xl transition-all group-hover:visible group-hover:opacity-100">
+              {item.children.map((child) => (
+                <a href={child.href} class="block rounded-md px-3 py-2 text-sm text-slate-400 transition-colors hover:bg-white/5 hover:text-white">
+                  {child.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a
+            href={item.href}
+            class="text-sm text-slate-400 transition-colors hover:text-white"
+            {...(item.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}
+          >
+            {item.label}
+          </a>
+        )
+      )}
+    </nav>
+
+    <!-- Right side -->
+    <div class="flex items-center gap-3">
+      <a href="https://github.com/autowarehouse/autowarehouse" target="_blank" rel="noopener" class="hidden text-xs text-slate-400 transition-colors hover:text-white md:block">
+        ⭐ GitHub
+      </a>
+      <a href="/contact" class="gradient-bg rounded-lg px-4 py-2 text-xs font-semibold text-white transition-all hover:scale-105">
+        Request Demo
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <button id="mobile-toggle" class="text-slate-400 md:hidden" aria-label="Toggle menu">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden border-t border-white/[0.06] bg-[#0a0a1a] px-6 py-4 md:hidden">
+    {mainNav.map((item) =>
+      item.children ? (
+        <>
+          <div class="py-2 text-xs font-semibold uppercase tracking-wider text-slate-500">{item.label}</div>
+          {item.children.map((child) => (
+            <a href={child.href} class="block py-2 text-sm text-slate-400 hover:text-white">
+              {child.label}
+            </a>
+          ))}
+        </>
+      ) : (
+        <a href={item.href} class="block py-2 text-sm text-slate-400 hover:text-white">
+          {item.label}
+        </a>
+      )
+    )}
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+</script>

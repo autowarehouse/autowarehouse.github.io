@@ -1,0 +1,54 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-white/[0.06] bg-[var(--bg-secondary)]">
+  <div class="mx-auto max-w-6xl px-6 py-12">
+    <div class="grid gap-8 md:grid-cols-4">
+      <!-- Brand -->
+      <div>
+        <a href="/" class="text-lg font-extrabold text-white">
+          Auto<span class="gradient-text">Warehouse</span>
+        </a>
+        <p class="mt-3 text-sm text-slate-400">
+          AI-Powered Data Warehouse Automation Platform
+        </p>
+      </div>
+
+      <!-- Product -->
+      <div>
+        <h3 class="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Product</h3>
+        <ul class="space-y-2 text-sm text-slate-400">
+          <li><a href="/platform" class="hover:text-white">Platform</a></li>
+          <li><a href="/features/source-connectors" class="hover:text-white">Source Connectors</a></li>
+          <li><a href="/features/data-model-engine" class="hover:text-white">Data Model Engine</a></li>
+          <li><a href="/features/intelligent-mapping" class="hover:text-white">Intelligent Mapping</a></li>
+          <li><a href="/features/etl-engine" class="hover:text-white">ETL Engine</a></li>
+          <li><a href="/features/analytics" class="hover:text-white">Analytics</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div>
+        <h3 class="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Resources</h3>
+        <ul class="space-y-2 text-sm text-slate-400">
+          <li><a href="/pricing" class="hover:text-white">Pricing</a></li>
+          <li><a href="https://github.com/autowarehouse/autowarehouse" target="_blank" rel="noopener" class="hover:text-white">GitHub</a></li>
+          <li><a href="/contact" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div>
+        <h3 class="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Company</h3>
+        <ul class="space-y-2 text-sm text-slate-400">
+          <li><a href="https://www.intellica.net" target="_blank" rel="noopener" class="hover:text-white">Intellica</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 border-t border-white/[0.06] pt-6 text-center text-xs text-slate-500">
+      &copy; {year} Intellica. All rights reserved.
+    </div>
+  </div>
+</footer>
