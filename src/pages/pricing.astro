@@ -1,0 +1,77 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Badge from '@components/ui/Badge.astro';
+import Button from '@components/ui/Button.astro';
+import GradientOrb from '@components/ui/GradientOrb.astro';
+
+const faq = [
+  { q: 'Is AutoWarehouse open source?', a: 'The core platform is available for self-hosted deployment. Contact us for licensing details.' },
+  { q: 'What databases do you support?', a: 'PostgreSQL, MySQL, Oracle, MSSQL, and MongoDB. More connectors are on the roadmap.' },
+  { q: 'Can I use my own LLM?', a: 'Yes. AutoWarehouse supports Ollama (self-hosted), OpenAI, and Anthropic Claude. Bring your own model.' },
+  { q: 'How does the ETL code export work?', a: 'AutoWarehouse generates production-ready Airflow DAGs, dbt models, SQL scripts, Spark jobs, or Snowflake code that you deploy in your own environment.' },
+];
+---
+
+<PageLayout title="Pricing" description="Enterprise pricing for AutoWarehouse. Self-hosted or managed deployment options.">
+  <section class="relative overflow-hidden py-20">
+    <GradientOrb color="blue" size="400px" position="top: -100px; right: -100px;" />
+    <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
+      <Badge>Pricing</Badge>
+      <h1 class="mt-4 text-3xl font-extrabold text-white md:text-5xl">Enterprise Pricing</h1>
+      <p class="mt-4 text-base text-slate-400">
+        Tailored to your data infrastructure needs. Self-hosted on your hardware, or managed by us.
+      </p>
+    </div>
+  </section>
+
+  <section class="pb-20">
+    <div class="mx-auto grid max-w-4xl gap-6 px-6 md:grid-cols-2">
+      <!-- Self-Hosted -->
+      <div class="glass-card rounded-xl p-8">
+        <h3 class="text-lg font-bold text-white">Self-Hosted</h3>
+        <p class="mt-2 text-sm text-slate-400">Deploy on your infrastructure with full control.</p>
+        <ul class="mt-6 space-y-2 text-sm text-slate-300">
+          <li>✓ Docker Compose deployment</li>
+          <li>✓ All features included</li>
+          <li>✓ Bring your own LLM</li>
+          <li>✓ Data stays on-premise</li>
+          <li>✓ Priority support</li>
+        </ul>
+        <div class="mt-8">
+          <Button href="/contact" class="w-full text-center">Contact Sales</Button>
+        </div>
+      </div>
+
+      <!-- Managed -->
+      <div class="glass-card rounded-xl p-8">
+        <h3 class="text-lg font-bold text-white">Managed</h3>
+        <p class="mt-2 text-sm text-slate-400">We handle infrastructure, you focus on data.</p>
+        <ul class="mt-6 space-y-2 text-sm text-slate-300">
+          <li>✓ Fully managed cloud</li>
+          <li>✓ Automatic updates</li>
+          <li>✓ Built-in LLM access</li>
+          <li>✓ SLA guarantees</li>
+          <li>✓ Dedicated support</li>
+        </ul>
+        <div class="mt-8">
+          <Button href="/contact" variant="ghost" class="w-full text-center">Coming Soon</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-[var(--bg-secondary)] py-16">
+    <div class="mx-auto max-w-3xl px-6">
+      <h2 class="mb-8 text-center text-2xl font-extrabold text-white">FAQ</h2>
+      <div class="space-y-4">
+        {faq.map((item) => (
+          <div class="glass-card rounded-xl p-5">
+            <h3 class="text-sm font-semibold text-white">{item.q}</h3>
+            <p class="mt-2 text-xs leading-relaxed text-slate-400">{item.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
