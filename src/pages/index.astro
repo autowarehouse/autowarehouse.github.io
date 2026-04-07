@@ -1,9 +1,29 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
+import PageLayout from '@layouts/PageLayout.astro';
+import HeroSection from '@components/home/HeroSection.astro';
+import PipelineBar from '@components/ui/PipelineBar.astro';
+import ConnectSection from '@components/home/ConnectSection.astro';
+import ModelSection from '@components/home/ModelSection.astro';
+import MapSection from '@components/home/MapSection.astro';
+import ExecuteSection from '@components/home/ExecuteSection.astro';
+import AnalyzeSection from '@components/home/AnalyzeSection.astro';
+import CTAFooter from '@components/home/CTAFooter.astro';
 ---
-<PageLayout title="Home" description="AI-Powered Data Warehouse Automation">
-  <div class="py-20 text-center">
-    <h1 class="text-4xl font-extrabold text-white">AutoWarehouse</h1>
-    <p class="mt-4 text-slate-400">Site under construction</p>
+
+<PageLayout
+  title="From Source to Insight, Automatically"
+  description="AI-Powered Data Warehouse Automation Platform. Connect any database, apply industry data models, let AI agents build your ETL pipeline, query with natural language."
+>
+  <HeroSection />
+
+  <div class="bg-[var(--bg-secondary)] py-8">
+    <PipelineBar />
   </div>
+
+  <ConnectSection />
+  <ModelSection />
+  <MapSection />
+  <ExecuteSection />
+  <AnalyzeSection />
+  <CTAFooter />
 </PageLayout>

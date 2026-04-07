@@ -1,0 +1,55 @@
+---
+import SectionHeading from '@components/ui/SectionHeading.astro';
+
+const templates = [
+  { icon: '👥', code: 'HRDM', name: 'Human Resources Data Model', status: 'READY', statusColor: '#22c55e' },
+  { icon: '📡', code: 'TDM', name: 'Telecom Data Model', status: 'COMING', statusColor: '#eab308' },
+  { icon: '🏦', code: 'FDM', name: 'Finance Data Model', status: 'COMING', statusColor: '#eab308' },
+];
+---
+
+<section class="reveal bg-[var(--bg-secondary)] py-20">
+  <div class="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-2 md:items-center">
+    <div class="glass-card rounded-xl p-6">
+      <div class="mb-3 text-[10px] font-semibold uppercase tracking-[1px] text-purple-400">
+        Industry Templates
+      </div>
+      <div class="space-y-2">
+        {templates.map((t) => (
+          <div class="flex items-center gap-3 rounded-lg border border-purple-500/20 bg-purple-500/[0.06] px-3 py-2.5">
+            <span class="text-lg">{t.icon}</span>
+            <div class="flex-1">
+              <div class="text-xs font-semibold text-white">{t.code}</div>
+              <div class="text-[10px] text-slate-400">{t.name}</div>
+            </div>
+            <span
+              class="rounded-full px-2 py-0.5 text-[9px] font-semibold"
+              style={`color: ${t.statusColor}; background: color-mix(in srgb, ${t.statusColor} 15%, transparent);`}
+            >
+              {t.status}
+            </span>
+          </div>
+        ))}
+        <div class="flex items-center gap-3 rounded-lg border border-dashed border-white/15 px-3 py-2.5">
+          <span class="text-lg">➕</span>
+          <div>
+            <div class="text-xs font-semibold text-slate-400">Custom</div>
+            <div class="text-[10px] text-slate-500">Build your own data model</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <SectionHeading
+        step="Step 2"
+        stepColor="var(--step-model)"
+        title="Choose an Industry Template"
+        description="Pre-built data models for HR, Telecom, Finance, and more. Each template includes Foundation, Analytical, and Semantic layers with star schema design, SCD Type 2 dimensions, and visual ER diagrams. Or build your own custom data model from scratch."
+      />
+      <a href="/features/data-model-engine" class="text-sm font-medium text-purple-400 hover:text-purple-300">
+        → Data Model Engine
+      </a>
+    </div>
+  </div>
+</section>

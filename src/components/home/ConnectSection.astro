@@ -1,0 +1,56 @@
+---
+import SectionHeading from '@components/ui/SectionHeading.astro';
+
+const databases = [
+  { icon: '🐘', name: 'PostgreSQL' },
+  { icon: '🐬', name: 'MySQL' },
+  { icon: '🔶', name: 'Oracle' },
+  { icon: '🟦', name: 'MSSQL' },
+  { icon: '🍃', name: 'MongoDB' },
+];
+
+const documents = ['CVs / Resumes', 'Invoices', 'Contracts', 'Reports'];
+---
+
+<section class="reveal bg-gradient-to-b from-[var(--bg-primary)] to-[var(--bg-secondary)] py-20">
+  <div class="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-2 md:items-center">
+    <div>
+      <SectionHeading
+        step="Step 1"
+        stepColor="var(--step-connect)"
+        title="Connect Any Source"
+        description="PostgreSQL, MySQL, Oracle, MSSQL, MongoDB — connect in seconds. Upload documents, spreadsheets, and flat files."
+      />
+      <a href="/features/source-connectors" class="text-sm font-medium text-blue-400 hover:text-blue-300">
+        → Source Connectors
+      </a>
+    </div>
+
+    <div class="glass-card rounded-xl p-6">
+      <div class="mb-4 text-[10px] font-semibold uppercase tracking-[1px] text-blue-400">Databases</div>
+      <div class="grid grid-cols-2 gap-2">
+        {databases.map((db) => (
+          <div class="rounded-md border border-white/[0.08] bg-white/[0.02] px-3 py-2.5 text-center text-xs text-slate-400">
+            {db.icon} {db.name}
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-4 text-[10px] font-semibold uppercase tracking-[1px] text-pink-400">Documents & Files</div>
+      <div class="mt-2 flex flex-wrap gap-1.5">
+        <span class="rounded border border-pink-500/20 bg-pink-500/5 px-2 py-1 text-[10px] text-pink-300">📑 PDF</span>
+        <span class="rounded border border-pink-500/20 bg-pink-500/5 px-2 py-1 text-[10px] text-pink-300">📝 Word</span>
+        <span class="rounded border border-green-500/20 bg-green-500/5 px-2 py-1 text-[10px] text-green-300">📗 Excel</span>
+        <span class="rounded border border-green-500/20 bg-green-500/5 px-2 py-1 text-[10px] text-green-300">📋 CSV</span>
+      </div>
+      <div class="mt-3 rounded-md bg-pink-500/[0.06] p-2">
+        <div class="text-[9px] font-semibold uppercase tracking-[1px] text-pink-400">Use Cases</div>
+        <div class="mt-1 flex flex-wrap gap-1">
+          {documents.map((doc) => (
+            <span class="rounded bg-pink-500/10 px-2 py-0.5 text-[9px] text-pink-300">{doc}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

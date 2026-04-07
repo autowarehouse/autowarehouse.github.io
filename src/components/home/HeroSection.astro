@@ -1,0 +1,33 @@
+---
+import Button from '@components/ui/Button.astro';
+import GradientOrb from '@components/ui/GradientOrb.astro';
+---
+
+<section class="relative overflow-hidden py-24 md:py-32">
+  <GradientOrb color="blue" size="400px" position="top: -120px; right: -80px;" />
+  <GradientOrb color="purple" size="300px" position="bottom: -100px; left: -60px;" />
+
+  <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
+    <span class="inline-block rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-[11px] font-medium text-blue-400">
+      AI-Powered Data Warehouse Automation
+    </span>
+
+    <h1 class="mt-6 text-4xl font-extrabold leading-tight text-white md:text-6xl">
+      From Source to Insight,
+      <span class="gradient-text">Automatically</span>
+    </h1>
+
+    <p class="mt-6 text-base leading-relaxed text-slate-400 md:text-lg">
+      Connect any database. Apply industry data models. Let AI agents build your ETL pipeline. Query with natural language.
+    </p>
+
+    <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+      <Button href="/platform">Explore Platform</Button>
+      <Button href="/contact" variant="ghost">Request Demo</Button>
+    </div>
+
+    <div class="mt-16 text-[10px] uppercase tracking-[3px] text-slate-600">
+      ▼ Scroll to explore the pipeline
+    </div>
+  </div>
+</section>
