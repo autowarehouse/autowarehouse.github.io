@@ -7,9 +7,10 @@ import type { FeaturePageData } from '@data/features';
 
 interface Props {
   feature: FeaturePageData;
+  poweredBy?: string;
 }
 
-const { feature } = Astro.props;
+const { feature, poweredBy } = Astro.props;
 ---
 
 <PageLayout title={feature.title} description={feature.description}>
@@ -19,6 +20,7 @@ const { feature } = Astro.props;
     color={feature.color}
     title={feature.title}
     description={feature.description}
+    poweredBy={poweredBy}
   />
 
   <section class="mx-auto max-w-6xl px-6 py-16">
