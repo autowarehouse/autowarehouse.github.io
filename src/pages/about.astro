@@ -1,0 +1,110 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Badge from '@components/ui/Badge.astro';
+import GradientOrb from '@components/ui/GradientOrb.astro';
+import TrustMetrics from '@components/common/TrustMetrics.astro';
+import ClientLogos from '@components/common/ClientLogos.astro';
+
+const timeline = [
+  { year: '2006', event: 'Intellica founded by Dr. Kemal Unaltuna and Can Alhas' },
+  { year: '2010s', event: 'Industry data models launched: IFDM (Finance), ITDM (Telecom), HRDM (HR)' },
+  { year: '2020s', event: 'AI product portfolio: Talk To, Blue Octopus, VAR' },
+  { year: '2025', event: 'AutoWarehouse — the convergence of 20 years of data platform expertise into one AI-powered platform' },
+];
+
+const industries = [
+  { icon: '🏦', name: 'Banking & Finance' },
+  { icon: '📡', name: 'Telecommunications' },
+  { icon: '🏛️', name: 'Public Sector' },
+  { icon: '🏭', name: 'Manufacturing' },
+  { icon: '⚡', name: 'Energy' },
+  { icon: '🛒', name: 'Retail' },
+  { icon: '🛡️', name: 'Insurance' },
+];
+---
+
+<PageLayout
+  title="About"
+  description="AutoWarehouse is built by Intellica — a Data & AI company with 450+ professionals, 80+ enterprise projects, and nearly two decades of data warehouse expertise across 20+ countries."
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden py-20">
+    <GradientOrb color="blue" size="400px" position="top: -100px; right: -100px;" />
+    <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
+      <Badge>About</Badge>
+      <h1 class="mt-4 text-3xl font-extrabold text-white md:text-5xl">
+        20 Years of Data Expertise,
+        <span class="gradient-text">One Platform</span>
+      </h1>
+      <p class="mt-4 text-base text-slate-400 md:text-lg">
+        AutoWarehouse is the culmination of nearly two decades of enterprise data platform delivery.
+        Built by Intellica — a PiA Group company — it brings proven industry models, AI-powered discovery, and deterministic code generation into a single, unified platform.
+      </p>
+    </div>
+  </section>
+
+  <!-- Trust Metrics -->
+  <TrustMetrics />
+
+  <!-- Story -->
+  <section class="bg-[var(--bg-secondary)] py-16">
+    <div class="mx-auto max-w-3xl px-6">
+      <h2 class="mb-8 text-center text-2xl font-extrabold text-white">Our Journey</h2>
+      <div class="space-y-6">
+        {timeline.map((t) => (
+          <div class="flex gap-4">
+            <div class="w-16 shrink-0 text-right text-sm font-bold text-blue-400">{t.year}</div>
+            <div class="border-l border-white/10 pl-4 text-sm text-slate-400">{t.event}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why AutoWarehouse -->
+  <section class="py-16">
+    <div class="mx-auto max-w-4xl px-6">
+      <h2 class="mb-4 text-center text-2xl font-extrabold text-white">Why AutoWarehouse?</h2>
+      <p class="mx-auto mb-8 max-w-2xl text-center text-sm text-slate-400">
+        After building 80+ enterprise data platforms manually, we identified the patterns that repeat across every project.
+        AutoWarehouse automates those patterns while preserving the engineering rigor our clients expect.
+      </p>
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="glass-card rounded-xl p-5">
+          <h3 class="text-sm font-semibold text-white">Battle-Tested Models</h3>
+          <p class="mt-2 text-xs text-slate-400">IFDM, ITDM, HRDM — industry data models refined across dozens of enterprise deployments. Not theoretical frameworks — production-proven schemas.</p>
+        </div>
+        <div class="glass-card rounded-xl p-5">
+          <h3 class="text-sm font-semibold text-white">AI Where It Helps, Not Where It Hurts</h3>
+          <p class="mt-2 text-xs text-slate-400">AI assists in discovery, documentation, and mapping suggestions. But ETL code generation is 100% deterministic — no hallucinations in your production pipeline.</p>
+        </div>
+        <div class="glass-card rounded-xl p-5">
+          <h3 class="text-sm font-semibold text-white">Your Infrastructure, Your Control</h3>
+          <p class="mt-2 text-xs text-slate-400">AutoWarehouse generates code for your stack: Airflow, dbt, Snowflake, Spark, PL/SQL. You deploy it. You run it. No vendor lock-in.</p>
+        </div>
+        <div class="glass-card rounded-xl p-5">
+          <h3 class="text-sm font-semibold text-white">Enterprise-Grade Delivery</h3>
+          <p class="mt-2 text-xs text-slate-400">Backed by Intellica's delivery methodology: Discovery & GAP Analysis → Architecture → Implementation → Go-Live → Operations. Proven across 20+ countries.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industries -->
+  <section class="bg-[var(--bg-secondary)] py-16">
+    <div class="mx-auto max-w-4xl px-6">
+      <h2 class="mb-8 text-center text-2xl font-extrabold text-white">Industry Experience</h2>
+      <div class="flex flex-wrap justify-center gap-4">
+        {industries.map((ind) => (
+          <div class="glass-card rounded-lg px-5 py-3 text-center">
+            <span class="text-lg">{ind.icon}</span>
+            <div class="mt-1 text-xs font-medium text-slate-300">{ind.name}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Logos -->
+  <ClientLogos />
+</PageLayout>
