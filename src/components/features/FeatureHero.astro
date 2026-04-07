@@ -1,0 +1,25 @@
+---
+import Badge from '@components/ui/Badge.astro';
+import GradientOrb from '@components/ui/GradientOrb.astro';
+
+interface Props {
+  stepNumber: number;
+  stepLabel: string;
+  color: string;
+  title: string;
+  description: string;
+}
+
+const { stepNumber, stepLabel, color, title, description } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-gradient-to-b from-[var(--bg-primary)] to-[var(--bg-secondary)] py-20">
+  <GradientOrb color="blue" size="400px" position="top: -100px; right: -100px;" />
+  <GradientOrb color="purple" size="300px" position="bottom: -80px; left: -60px;" />
+
+  <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
+    <Badge color={color}>Step {stepNumber} — {stepLabel}</Badge>
+    <h1 class="mt-4 text-3xl font-extrabold text-white md:text-5xl">{title}</h1>
+    <p class="mt-4 text-base leading-relaxed text-slate-400 md:text-lg">{description}</p>
+  </div>
+</section>
