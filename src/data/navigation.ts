@@ -16,6 +16,7 @@ export const mainNav: NavItem[] = [
       href: step.href,
     })),
   },
+  { label: 'Use Cases', href: '/use-cases' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Docs', href: 'https://github.com/autowarehouse/autowarehouse' },
 ];
