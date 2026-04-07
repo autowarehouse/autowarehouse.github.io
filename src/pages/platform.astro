@@ -66,6 +66,59 @@ const security = [
     </div>
   </section>
 
+  <!-- Data Isolation -->
+  <section class="py-16">
+    <div class="mx-auto max-w-5xl px-6">
+      <h2 class="mb-3 text-center text-2xl font-extrabold text-white">Complete Data Isolation</h2>
+      <p class="mx-auto mb-10 max-w-2xl text-center text-sm text-slate-400">
+        AutoWarehouse runs entirely within your network perimeter. No cloud dependency, no external API calls, no data leaves your environment — ever.
+      </p>
+
+      <div class="glass-card rounded-xl p-6 mb-6">
+        <div class="grid gap-6 md:grid-cols-2">
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="text-green-400">✓</span> Air-Gapped Deployment
+            </h3>
+            <p class="mt-2 text-xs leading-relaxed text-slate-400">
+              The entire platform — application, AI engine, LLM runtime, and database — runs on your infrastructure without any internet connectivity requirement. Deploy in fully isolated, air-gapped networks that meet the strictest security requirements of banking, defense, and government environments.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="text-green-400">✓</span> Local LLM — No Cloud AI
+            </h3>
+            <p class="mt-2 text-xs leading-relaxed text-slate-400">
+              AI capabilities run on self-hosted LLM runtimes (Ollama, vLLM, LiteLLM). Your source schemas, column names, business rules, and mapping logic are never sent to any external service. The AI engine lives inside your firewall.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="text-green-400">✓</span> Zero Data Exfiltration
+            </h3>
+            <p class="mt-2 text-xs leading-relaxed text-slate-400">
+              AutoWarehouse connects to your source databases read-only for profiling and discovery. Generated ETL code runs in your own pipeline tools (Airflow, dbt, Spark). No data is copied, cached, or transmitted outside your environment.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="text-green-400">✓</span> Compliance Ready
+            </h3>
+            <p class="mt-2 text-xs leading-relaxed text-slate-400">
+              Designed for regulated industries: KVKK, GDPR, PCI-DSS, SOC 2 — the platform's architecture ensures data residency compliance by design. Full audit trails for every AI decision and data operation.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-xl border border-green-500/15 bg-green-500/5 p-5 text-center">
+        <p class="text-xs leading-relaxed text-green-300/80">
+          <span class="font-semibold text-green-300">For enterprise security teams:</span> AutoWarehouse requires no outbound network access. It can be deployed in environments with no internet connectivity. All dependencies — including LLM weights — are bundled in the container images.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- Intellica Ecosystem -->
   <section class="py-16">
     <div class="mx-auto max-w-6xl px-6">

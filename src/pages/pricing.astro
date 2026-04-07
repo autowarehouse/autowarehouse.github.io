@@ -7,7 +7,7 @@ import GradientOrb from '@components/ui/GradientOrb.astro';
 const faq = [
   { q: 'Is AutoWarehouse open source?', a: 'The core platform is available for self-hosted deployment. Contact us for licensing details.' },
   { q: 'What databases do you support?', a: 'PostgreSQL, MySQL, Oracle, MSSQL, and MongoDB. More connectors are on the roadmap.' },
-  { q: 'Can I use my own LLM?', a: 'Yes. AutoWarehouse supports Ollama (self-hosted), OpenAI, and Anthropic Claude. Bring your own model.' },
+  { q: 'Can I use my own LLM?', a: 'Yes. AutoWarehouse runs LLMs locally on your infrastructure — Ollama, vLLM, LiteLLM, or any OpenAI-compatible endpoint. Your data never leaves your environment.' },
   { q: 'How does the ETL code export work?', a: 'AutoWarehouse generates production-ready Airflow DAGs, dbt models, SQL scripts, Spark jobs, or Snowflake code that you deploy in your own environment.' },
 ];
 ---
