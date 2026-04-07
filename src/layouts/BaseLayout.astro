@@ -56,6 +56,48 @@ const ogImageUrl = ogImage
       gtag('js', new Date());
       gtag('config', 'G-ZENXMKC3ET');
     </script>
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "Intellica",
+          "url": "https://www.intellica.net",
+          "logo": "https://www.intellica.net/img/intellica-logo.png",
+          "foundingDate": "2006",
+          "numberOfEmployees": { "@type": "QuantitativeValue", "minValue": 450 },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Atatürk Mah. Turgut Özal Blv. Gardenya 1 Plaza, Floor 1",
+            "addressLocality": "Ataşehir, Istanbul",
+            "addressCountry": "TR"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+90-216-688-45-46",
+            "email": "info@intellica.net",
+            "contactType": "sales"
+          },
+          "sameAs": ["https://www.linkedin.com/company/intellica"]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "AutoWarehouse",
+          "url": "https://autowarehouse.ai",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "description": description,
+          "creator": { "@type": "Organization", "name": "Intellica", "url": "https://www.intellica.net" },
+          "offers": { "@type": "Offer", "category": "Enterprise" }
+        },
+        {
+          "@type": "WebSite",
+          "name": "AutoWarehouse",
+          "url": "https://autowarehouse.ai"
+        }
+      ]
+    })} />
   </head>
   <body class="min-h-screen antialiased">
     <slot />
