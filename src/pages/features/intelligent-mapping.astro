@@ -1,0 +1,71 @@
+---
+import FeatureLayout from '@layouts/FeatureLayout.astro';
+import { getFeatureBySlug } from '@data/features';
+
+const feature = getFeatureBySlug('intelligent-mapping')!;
+
+const mappingRows = [
+  { source: 'employees.first_name', target: 'dim_employee.full_name', confidence: '95%' },
+  { source: 'departments.dept_id', target: 'dim_department.dept_key', confidence: '99%' },
+  { source: 'salaries.amount', target: 'fact_compensation.salary_amount', confidence: '92%' },
+  { source: 'positions.title', target: 'dim_position.job_title', confidence: '88%' },
+];
+---
+
+<FeatureLayout feature={feature}>
+  <div class="grid gap-8 md:grid-cols-2">
+    <!-- Mapping preview -->
+    <div class="glass-card rounded-xl p-6">
+      <div class="mb-3 text-[10px] font-semibold uppercase tracking-[1px] text-pink-400">AI-Suggested Mappings</div>
+      <div class="space-y-2">
+        {mappingRows.map((row) => (
+          <div class="flex items-center gap-2 rounded-md bg-white/[0.02] p-2">
+            <code class="flex-1 truncate text-[10px] text-slate-400">{row.source}</code>
+            <span class="text-xs text-pink-400">→</span>
+            <code class="flex-1 truncate text-[10px] text-pink-300">{row.target}</code>
+            <span class="text-[9px] font-medium text-green-400">{row.confidence}</span>
+          </div>
+        ))}
+      </div>
+      <div class="mt-4 flex justify-between">
+        <span class="text-[10px] text-slate-500">4 of 42 columns mapped</span>
+        <span class="rounded border border-green-500/30 bg-green-500/10 px-3 py-1 text-[10px] font-medium text-green-400">✓ Approve All</span>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div>
+      <h3 class="mb-4 text-lg font-bold text-white">How It Works</h3>
+      <div class="space-y-4">
+        <div class="flex gap-3">
+          <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pink-500/20 text-[10px] font-bold text-pink-400">1</div>
+          <div>
+            <div class="text-sm font-semibold text-white">Discover</div>
+            <div class="text-xs text-slate-400">AI scans source schema — tables, columns, types, relationships</div>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pink-500/20 text-[10px] font-bold text-pink-400">2</div>
+          <div>
+            <div class="text-sm font-semibold text-white">Match</div>
+            <div class="text-xs text-slate-400">Heuristic + LLM dual approach suggests mappings with reasoning</div>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pink-500/20 text-[10px] font-bold text-pink-400">3</div>
+          <div>
+            <div class="text-sm font-semibold text-white">Validate</div>
+            <div class="text-xs text-slate-400">Generate validation rules — null checks, ranges, uniqueness</div>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pink-500/20 text-[10px] font-bold text-pink-400">4</div>
+          <div>
+            <div class="text-sm font-semibold text-white">Approve</div>
+            <div class="text-xs text-slate-400">Review, refine, and approve before anything runs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</FeatureLayout>
