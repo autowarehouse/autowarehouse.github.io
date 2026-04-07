@@ -1,6 +1,8 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import HeroSection from '@components/home/HeroSection.astro';
+import ClientLogos from '@components/common/ClientLogos.astro';
+import TrustMetrics from '@components/common/TrustMetrics.astro';
 import PipelineBar from '@components/ui/PipelineBar.astro';
 import ConnectSection from '@components/home/ConnectSection.astro';
 import ModelSection from '@components/home/ModelSection.astro';
@@ -15,6 +17,8 @@ import CTAFooter from '@components/home/CTAFooter.astro';
   description="AI-Powered Data Warehouse Automation Platform. Connect any database, apply industry data models, let AI agents build your ETL pipeline, query with natural language."
 >
   <HeroSection />
+  <ClientLogos />
+  <TrustMetrics />
 
   <div class="bg-[var(--bg-secondary)] py-8">
     <PipelineBar />
