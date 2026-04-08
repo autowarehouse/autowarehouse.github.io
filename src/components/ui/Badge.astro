@@ -1,0 +1,15 @@
+---
+interface Props {
+  color?: string;
+  class?: string;
+}
+
+const { color = 'var(--accent-blue)', class: className = '' } = Astro.props;
+---
+
+<span
+  class:list={['inline-block rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest', className]}
+  style={`color: ${color}; background: color-mix(in srgb, ${color} 15%, transparent); border: 1px solid color-mix(in srgb, ${color} 30%, transparent);`}
+>
+  <slot />
+</span>

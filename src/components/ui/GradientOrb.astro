@@ -1,0 +1,20 @@
+---
+interface Props {
+  color?: 'blue' | 'purple';
+  size?: string;
+  position?: string;
+  class?: string;
+}
+
+const { color = 'blue', size = '300px', position = '', class: className = '' } = Astro.props;
+
+const gradient = color === 'blue'
+  ? 'radial-gradient(circle, rgba(59,130,246,0.25) 0%, transparent 70%)'
+  : 'radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%)';
+---
+
+<div
+  class:list={['orb absolute rounded-full pointer-events-none', className]}
+  style={`width: ${size}; height: ${size}; background: ${gradient}; ${position}`}
+  aria-hidden="true"
+/>

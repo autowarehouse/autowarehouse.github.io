@@ -1,0 +1,33 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import HeroSection from '@components/home/HeroSection.astro';
+import ClientLogos from '@components/common/ClientLogos.astro';
+import TrustMetrics from '@components/common/TrustMetrics.astro';
+import PipelineBar from '@components/ui/PipelineBar.astro';
+import ConnectSection from '@components/home/ConnectSection.astro';
+import ModelSection from '@components/home/ModelSection.astro';
+import MapSection from '@components/home/MapSection.astro';
+import ExecuteSection from '@components/home/ExecuteSection.astro';
+import AnalyzeSection from '@components/home/AnalyzeSection.astro';
+import CTAFooter from '@components/home/CTAFooter.astro';
+---
+
+<PageLayout
+  title="From Source to Insight, Automatically"
+  description="AutoWarehouse by Intellica — AI-powered data warehouse automation. Connect any database, apply industry data models (IFDM, ITDM, HRDM), generate production-ready ETL code for Airflow, dbt, Snowflake, Spark. Backed by 20 years of enterprise DWH expertise."
+>
+  <HeroSection />
+  <ClientLogos />
+  <TrustMetrics />
+
+  <div class="bg-[var(--bg-secondary)] py-8">
+    <PipelineBar />
+  </div>
+
+  <ConnectSection />
+  <ModelSection />
+  <MapSection />
+  <ExecuteSection />
+  <AnalyzeSection />
+  <CTAFooter />
+</PageLayout>

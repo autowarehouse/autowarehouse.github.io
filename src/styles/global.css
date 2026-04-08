@@ -1,0 +1,91 @@
+@import 'tailwindcss';
+
+/* ── Theme Custom Properties ── */
+:root {
+  --bg-primary: #0f172a;
+  --bg-secondary: #0d1117;
+  --bg-card: rgba(255, 255, 255, 0.02);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --accent-blue: #3b82f6;
+  --accent-purple: #7c3aed;
+
+  --step-connect: #3b82f6;
+  --step-model: #8b5cf6;
+  --step-map: #ec4899;
+  --step-execute: #22c55e;
+  --step-analyze: #eab308;
+}
+
+/* ── Base Styles ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+/* ── Gradient Utilities ── */
+.gradient-text {
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+}
+
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(12px);
+}
+
+/* ── Scroll Reveal Animation ── */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: reveal-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Fallback: no animation, just visible */
+@supports not (animation-timeline: view()) {
+  .reveal {
+    opacity: 1;
+  }
+}
+
+/* ── Gradient Orb Animation ── */
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(10px, -15px); }
+  66% { transform: translate(-8px, 10px); }
+}
+
+.orb {
+  animation: float 12s ease-in-out infinite;
+  pointer-events: none;
+}

@@ -1,0 +1,125 @@
+---
+import '@/styles/global.css';
+import CookieConsent from '@components/common/CookieConsent.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = ogImage
+  ? new URL(ogImage, Astro.site).toString()
+  : new URL('/og/default.png', Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <title>{title} | AutoWarehouse</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={`${title} | AutoWarehouse`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | AutoWarehouse`} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Consent Mode v2 + gtag.js -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+
+      // Set default consent BEFORE loading gtag.js
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'wait_for_update': 1500
+      });
+
+      // Restore consent from previous visit
+      if (localStorage.getItem('cookie-consent') === 'accepted') {
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted'
+        });
+      }
+    </script>
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-ZENXMKC3ET"></script>
+    <script is:inline>
+      gtag('js', new Date());
+      gtag('config', 'G-ZENXMKC3ET', { anonymize_ip: true });
+    </script>
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "Intellica",
+          "url": "https://www.intellica.net",
+          "logo": "https://www.intellica.net/img/intellica-logo.png",
+          "foundingDate": "2006",
+          "numberOfEmployees": { "@type": "QuantitativeValue", "minValue": 450 },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Atatürk Mah. Turgut Özal Blv. Gardenya 1 Plaza, Floor 1",
+            "addressLocality": "Ataşehir, Istanbul",
+            "addressCountry": "TR"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+90-216-688-45-46",
+            "email": "info@intellica.net",
+            "contactType": "sales"
+          },
+          "sameAs": ["https://www.linkedin.com/company/intellica"]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "AutoWarehouse",
+          "url": "https://autowarehouse.ai",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "description": description,
+          "creator": { "@type": "Organization", "name": "Intellica", "url": "https://www.intellica.net" },
+          "offers": { "@type": "Offer", "category": "Enterprise" }
+        },
+        {
+          "@type": "WebSite",
+          "name": "AutoWarehouse",
+          "url": "https://autowarehouse.ai"
+        }
+      ]
+    })} />
+  </head>
+  <body class="min-h-screen antialiased">
+    <slot />
+    <CookieConsent />
+  </body>
+</html>

@@ -1,0 +1,127 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Badge from '@components/ui/Badge.astro';
+import Button from '@components/ui/Button.astro';
+import GradientOrb from '@components/ui/GradientOrb.astro';
+import { useCases } from '@data/use-cases';
+
+const entryPoints = [
+  { icon: '📦', label: 'Use a ready-made industry model', color: 'var(--step-connect)' },
+  { icon: '🔧', label: 'Extend an existing model with new requirements', color: 'var(--step-model)' },
+  { icon: '🏗️', label: 'Build from scratch — discover, model, map, generate', color: 'var(--step-execute)' },
+];
+---
+
+<PageLayout
+  title="Use Cases"
+  description="Three paths to your data warehouse: deploy a ready-made model, extend an existing one, or build from scratch with AI-assisted discovery. Real enterprise scenarios backed by 20 years of DWH expertise."
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden py-20">
+    <GradientOrb color="blue" size="400px" position="top: -100px; right: -100px;" />
+    <GradientOrb color="purple" size="300px" position="bottom: -80px; left: -60px;" />
+    <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
+      <Badge>Use Cases</Badge>
+      <h1 class="mt-4 text-3xl font-extrabold text-white md:text-5xl">
+        Three Paths to Your <span class="gradient-text">Data Warehouse</span>
+      </h1>
+      <p class="mt-4 text-base text-slate-400 md:text-lg">
+        Every DWH project starts differently. AutoWarehouse meets you where you are — whether you need a turnkey deployment, an incremental extension, or a greenfield build from source discovery.
+      </p>
+    </div>
+  </section>
+
+  <!-- 3 Entry Points Overview -->
+  <section class="bg-[var(--bg-secondary)] py-12">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="grid gap-4 md:grid-cols-3">
+        {entryPoints.map((ep, i) => (
+          <a href={`#use-case-${i + 1}`} class="glass-card rounded-xl p-5 text-center transition-all hover:scale-[1.02]">
+            <div class="text-2xl">{ep.icon}</div>
+            <div class="mt-2 text-xs font-semibold text-white">{ep.label}</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  {useCases.map((uc) => (
+    <section id={`use-case-${uc.number}`} class:list={['py-16', uc.number % 2 === 0 ? 'bg-[var(--bg-secondary)]' : '']}>
+      <div class="mx-auto max-w-5xl px-6">
+        <!-- Header -->
+        <div class="mb-10 text-center">
+          <span class="text-3xl">{uc.icon}</span>
+          <div class="mt-2 text-[10px] font-semibold uppercase tracking-[3px] text-slate-500">
+            Entry Point {uc.number}
+          </div>
+          <h2 class="mt-2 text-2xl font-extrabold text-white md:text-3xl">{uc.title}</h2>
+          <p class="mt-2 text-sm font-medium text-slate-300">{uc.subtitle}</p>
+          <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-400">{uc.description}</p>
+        </div>
+
+        <!-- Scenario -->
+        <div class="glass-card mx-auto mb-10 max-w-3xl rounded-xl p-6">
+          <div class="mb-2 text-[10px] font-semibold uppercase tracking-[2px] text-slate-500">
+            Real-World Scenario
+          </div>
+          <p class="text-sm leading-relaxed text-slate-300">{uc.scenario}</p>
+        </div>
+
+        <!-- Capabilities -->
+        <div class="grid gap-4 md:grid-cols-2">
+          {uc.capabilities.map((cap) => (
+            <div class="glass-card rounded-xl p-5">
+              <h3 class="text-sm font-semibold text-white">{cap.title}</h3>
+              <p class="mt-2 text-xs leading-relaxed text-slate-400">{cap.description}</p>
+            </div>
+          ))}
+        </div>
+
+        <!-- Outcome -->
+        <div class="mt-8 rounded-lg border border-green-500/20 bg-green-500/5 px-5 py-3 text-center">
+          <span class="text-[10px] font-semibold uppercase tracking-wider text-green-400">Outcome: </span>
+          <span class="text-sm text-green-300">{uc.outcome}</span>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Cross-cutting Features -->
+  <section class="py-16">
+    <div class="mx-auto max-w-5xl px-6">
+      <h2 class="mb-8 text-center text-2xl font-extrabold text-white">
+        Across All Scenarios
+      </h2>
+      <div class="grid gap-4 md:grid-cols-3">
+        <div class="glass-card rounded-xl p-5 text-center">
+          <div class="text-2xl">🔒</div>
+          <h3 class="mt-2 text-sm font-semibold text-white">Deterministic ETL</h3>
+          <p class="mt-1 text-xs text-slate-400">Code generation is 100% deterministic — no AI in the output. Every generated pipeline is predictable, auditable, and production-safe.</p>
+        </div>
+        <div class="glass-card rounded-xl p-5 text-center">
+          <div class="text-2xl">🧩</div>
+          <h3 class="mt-2 text-sm font-semibold text-white">Plugin Architecture</h3>
+          <p class="mt-1 text-xs text-slate-400">Each ETL exporter (Airflow, dbt, Snowflake, Spark, PL/SQL) is an independent plugin. Separately versioned, separately licensable, backward-compatible.</p>
+        </div>
+        <div class="glass-card rounded-xl p-5 text-center">
+          <div class="text-2xl">👁️</div>
+          <h3 class="mt-2 text-sm font-semibold text-white">Human-in-the-Loop</h3>
+          <p class="mt-1 text-xs text-slate-400">AI assists discovery and mapping. Humans review, approve, and control. Nothing reaches production without explicit approval.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-gradient-to-br from-indigo-950 to-[var(--bg-primary)] py-16 text-center">
+    <div class="mx-auto max-w-2xl px-6">
+      <h2 class="text-2xl font-extrabold text-white">Which path fits your project?</h2>
+      <p class="mt-3 text-sm text-slate-400">Tell us about your data warehouse needs. We'll show you the fastest path to production.</p>
+      <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <Button href="/contact">Request Demo</Button>
+        <Button href="/platform" variant="ghost">Explore Platform</Button>
+      </div>
+    </div>
+  </section>
+</PageLayout>

@@ -1,0 +1,25 @@
+---
+interface Props {
+  step?: string;
+  stepColor?: string;
+  title: string;
+  description?: string;
+}
+
+const { step, stepColor, title, description } = Astro.props;
+---
+
+<div class="mb-8">
+  {step && (
+    <div
+      class="mb-2 text-[10px] font-semibold uppercase tracking-[2px]"
+      style={stepColor ? `color: ${stepColor}` : ''}
+    >
+      {step}
+    </div>
+  )}
+  <h2 class="text-2xl font-extrabold text-white md:text-3xl">{title}</h2>
+  {description && (
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-slate-400">{description}</p>
+  )}
+</div>

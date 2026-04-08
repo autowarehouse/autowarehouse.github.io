@@ -1,0 +1,64 @@
+---
+import FeatureLayout from '@layouts/FeatureLayout.astro';
+import { getFeatureBySlug } from '@data/features';
+
+const feature = getFeatureBySlug('analytics')!;
+---
+
+<FeatureLayout feature={feature} poweredBy="Talk To natural language technology">
+  <div class="grid gap-8 md:grid-cols-2">
+    <!-- Chatbot demo -->
+    <div class="glass-card rounded-xl p-6">
+      <div class="mb-3 text-[10px] font-semibold uppercase tracking-[1px] text-yellow-400">Natural Language Query</div>
+      <div class="space-y-3">
+        <div class="rounded-lg bg-white/[0.02] p-3">
+          <div class="text-xs text-slate-400">💬 "How many employees joined last quarter?"</div>
+        </div>
+        <div class="rounded-lg bg-yellow-500/[0.06] p-3">
+          <div class="text-xs text-yellow-400 mb-2">📊 Result: 247 new hires across 4 departments</div>
+          <div class="flex items-end gap-1 h-12">
+            <div class="flex-1 rounded-t bg-yellow-500/40" style="height: 70%"></div>
+            <div class="flex-1 rounded-t bg-yellow-500/25" style="height: 45%"></div>
+            <div class="flex-1 rounded-t bg-yellow-500/50" style="height: 85%"></div>
+            <div class="flex-1 rounded-t bg-yellow-500/20" style="height: 35%"></div>
+          </div>
+          <div class="mt-1 flex gap-1 text-[8px] text-slate-500">
+            <span class="flex-1 text-center">Sales</span>
+            <span class="flex-1 text-center">Eng</span>
+            <span class="flex-1 text-center">Ops</span>
+            <span class="flex-1 text-center">HR</span>
+          </div>
+        </div>
+        <div class="rounded-lg bg-white/[0.02] p-3">
+          <div class="text-xs text-slate-400">💬 "Break it down by month"</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard preview -->
+    <div>
+      <h3 class="mb-4 text-lg font-bold text-white">Dashboard Builder</h3>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="glass-card rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-yellow-400">1,247</div>
+          <div class="text-[10px] text-slate-500">Total Headcount</div>
+        </div>
+        <div class="glass-card rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-green-400">+12%</div>
+          <div class="text-[10px] text-slate-500">Growth YoY</div>
+        </div>
+        <div class="glass-card rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-blue-400">$82K</div>
+          <div class="text-[10px] text-slate-500">Avg Salary</div>
+        </div>
+        <div class="glass-card rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-pink-400">4.2%</div>
+          <div class="text-[10px] text-slate-500">Turnover Rate</div>
+        </div>
+      </div>
+      <p class="mt-4 text-xs text-slate-400 leading-relaxed">
+        Configurable KPI widget grids. Save queries as reports. Auto-suggest chart types based on data shape. One-click execution with interactive visualizations.
+      </p>
+    </div>
+  </div>
+</FeatureLayout>

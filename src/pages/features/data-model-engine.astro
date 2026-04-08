@@ -1,0 +1,69 @@
+---
+import FeatureLayout from '@layouts/FeatureLayout.astro';
+import { getFeatureBySlug } from '@data/features';
+
+const feature = getFeatureBySlug('data-model-engine')!;
+
+const templates = [
+  { icon: '👥', code: 'HRDM', name: 'Human Resources', status: 'READY', statusColor: '#22c55e' },
+  { icon: '📡', code: 'TDM', name: 'Telecom', status: 'COMING', statusColor: '#eab308' },
+  { icon: '🏦', code: 'FDM', name: 'Finance', status: 'COMING', statusColor: '#eab308' },
+];
+
+const layers = [
+  { name: 'Foundation', desc: 'ODS tables — normalized operational data', color: '#3b82f6' },
+  { name: 'Analytical', desc: 'Star schema — dimensions & fact tables', color: '#8b5cf6' },
+  { name: 'Semantic', desc: 'Business views & calculated metrics', color: '#ec4899' },
+];
+---
+
+<FeatureLayout feature={feature} poweredBy="proven IFDM, ITDM, HRDM industry models">
+  <div class="grid gap-8 md:grid-cols-2">
+    <!-- Templates -->
+    <div>
+      <h3 class="mb-4 text-lg font-bold text-white">Industry Templates</h3>
+      <div class="space-y-2">
+        {templates.map((t) => (
+          <div class="flex items-center gap-3 glass-card rounded-lg px-4 py-3">
+            <span class="text-xl">{t.icon}</span>
+            <div class="flex-1">
+              <div class="text-sm font-semibold text-white">{t.code}</div>
+              <div class="text-xs text-slate-400">{t.name}</div>
+            </div>
+            <span class="rounded-full px-2 py-0.5 text-[9px] font-semibold" style={`color: ${t.statusColor}; background: color-mix(in srgb, ${t.statusColor} 15%, transparent);`}>
+              {t.status}
+            </span>
+          </div>
+        ))}
+        <div class="flex items-center gap-3 rounded-lg border border-dashed border-white/15 px-4 py-3">
+          <span class="text-xl">➕</span>
+          <div>
+            <div class="text-sm font-semibold text-slate-400">Custom</div>
+            <div class="text-xs text-slate-500">Build your own data model</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Layers -->
+    <div>
+      <h3 class="mb-4 text-lg font-bold text-white">3-Layer Architecture</h3>
+      <div class="space-y-3">
+        {layers.map((l, i) => (
+          <div class="flex items-start gap-3">
+            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white" style={`background: ${l.color};`}>
+              {i + 1}
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-white">{l.name}</div>
+              <div class="text-xs text-slate-400">{l.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-6 text-center text-xs text-slate-500">
+        Foundation → Analytical → Semantic
+      </div>
+    </div>
+  </div>
+</FeatureLayout>

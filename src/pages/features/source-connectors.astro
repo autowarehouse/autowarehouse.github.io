@@ -1,0 +1,64 @@
+---
+import FeatureLayout from '@layouts/FeatureLayout.astro';
+import { getFeatureBySlug } from '@data/features';
+
+const feature = getFeatureBySlug('source-connectors')!;
+
+const databases = [
+  { icon: '🐘', name: 'PostgreSQL' },
+  { icon: '🐬', name: 'MySQL' },
+  { icon: '🔶', name: 'Oracle' },
+  { icon: '🟦', name: 'MSSQL' },
+  { icon: '🍃', name: 'MongoDB' },
+];
+---
+
+<FeatureLayout feature={feature}>
+  <div class="grid gap-8 md:grid-cols-3">
+    <!-- Databases -->
+    <div class="glass-card rounded-xl p-6">
+      <div class="mb-3 text-2xl">🗄️</div>
+      <h3 class="text-base font-bold text-white">Databases</h3>
+      <p class="mt-2 text-xs text-slate-400 leading-relaxed">Connect to any relational or NoSQL database. Auto-discover schemas, profile data quality, classify columns with AI.</p>
+      <div class="mt-4 space-y-1.5">
+        {databases.map((db) => (
+          <div class="flex items-center gap-2 rounded-md bg-white/[0.02] px-2.5 py-1.5 text-xs text-slate-400">
+            <span>{db.icon}</span> {db.name}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Documents -->
+    <div class="glass-card rounded-xl p-6">
+      <div class="mb-3 text-2xl">📄</div>
+      <h3 class="text-base font-bold text-white">Documents</h3>
+      <p class="mt-2 text-xs text-slate-400 leading-relaxed">AI-powered document parsing. Upload any document type — the platform extracts structured entities automatically.</p>
+      <div class="mt-4 space-y-1.5">
+        <div class="rounded-md bg-pink-500/[0.06] px-2.5 py-1.5 text-xs text-pink-300">📑 PDF — parse & extract</div>
+        <div class="rounded-md bg-pink-500/[0.06] px-2.5 py-1.5 text-xs text-pink-300">📝 Word — parse & extract</div>
+      </div>
+      <div class="mt-3 flex flex-wrap gap-1">
+        {['CVs', 'Invoices', 'Contracts', 'Reports'].map((uc) => (
+          <span class="rounded bg-pink-500/10 px-2 py-0.5 text-[9px] text-pink-300">{uc}</span>
+        ))}
+      </div>
+    </div>
+
+    <!-- Files -->
+    <div class="glass-card rounded-xl p-6">
+      <div class="mb-3 text-2xl">📊</div>
+      <h3 class="text-base font-bold text-white">Spreadsheets & Files</h3>
+      <p class="mt-2 text-xs text-slate-400 leading-relaxed">Import structured data from spreadsheets and flat files. Auto-detect schemas, data types, and relationships.</p>
+      <div class="mt-4 space-y-1.5">
+        <div class="rounded-md bg-green-500/[0.06] px-2.5 py-1.5 text-xs text-green-300">📗 Excel (.xlsx)</div>
+        <div class="rounded-md bg-green-500/[0.06] px-2.5 py-1.5 text-xs text-green-300">📋 CSV</div>
+      </div>
+      <div class="mt-3 flex flex-wrap gap-1">
+        {['Auto schema', 'Type detect', 'Multi-sheet'].map((c) => (
+          <span class="rounded bg-green-500/10 px-2 py-0.5 text-[9px] text-green-300">{c}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+</FeatureLayout>

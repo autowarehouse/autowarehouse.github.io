@@ -1,0 +1,61 @@
+---
+import SectionHeading from '@components/ui/SectionHeading.astro';
+
+const agenticFeatures = ['Auto DDL', 'Parallel DAG', 'Quality Gates', 'SCD Type 2'];
+const exportTargets = ['Airflow DAGs', 'dbt Models', 'SQL Scripts', 'Spark Jobs', 'Snowflake'];
+---
+
+<section class="reveal bg-[var(--bg-secondary)] py-20">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="mb-10 text-center">
+      <SectionHeading
+        step="Step 4"
+        stepColor="var(--step-execute)"
+        title="Run It Your Way"
+        description="Execute within AutoWarehouse, or export code to your existing tools."
+      />
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <!-- Agentic Mode -->
+      <div class="relative glass-card rounded-xl p-6">
+        <span class="absolute right-4 top-4 rounded-full bg-green-500/10 px-2.5 py-0.5 text-[9px] font-semibold text-green-400">BUILT-IN</span>
+        <div class="text-2xl">🤖</div>
+        <h3 class="mt-2 text-lg font-bold text-white">Agentic ETL Engine</h3>
+        <p class="mt-2 text-xs leading-relaxed text-slate-400">
+          AI agent builds and runs your pipeline end-to-end. 5-phase wizard with human-in-the-loop approval. DAG-based parallel execution with real-time monitoring.
+        </p>
+        <div class="mt-4 flex flex-wrap gap-1.5">
+          {agenticFeatures.map((f) => (
+            <span class="rounded bg-green-500/10 px-2 py-1 text-[10px] text-green-300">{f}</span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Export Mode -->
+      <div class="relative glass-card rounded-xl p-6">
+        <span class="absolute right-4 top-4 rounded-full bg-yellow-500/10 px-2.5 py-0.5 text-[9px] font-semibold text-yellow-400">EXPORT</span>
+        <div class="text-2xl">📦</div>
+        <h3 class="mt-2 text-lg font-bold text-white">Code Generation</h3>
+        <p class="mt-2 text-xs leading-relaxed text-slate-400">
+          Generate production-ready code for your existing stack. Take the generated artifacts, deploy them in your own environment. You own the code.
+        </p>
+        <div class="mt-4 flex flex-wrap gap-1.5">
+          {exportTargets.map((t) => (
+            <span class="rounded bg-yellow-500/10 px-2 py-1 text-[10px] text-yellow-300">⬡ {t}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 rounded-lg border border-white/[0.06] bg-white/[0.01] p-4 text-center">
+      <p class="text-sm text-slate-400">
+        <strong class="text-white">You're always in control.</strong> AutoWarehouse designs the pipeline — you decide how and where it runs.
+      </p>
+    </div>
+
+    <div class="mt-4 text-center">
+      <a href="/features/etl-engine" class="text-sm font-medium text-green-400 hover:text-green-300">→ ETL Engine</a>
+    </div>
+  </div>
+</section>
