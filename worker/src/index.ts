@@ -32,8 +32,17 @@ interface Env {
   CONTACT_FROM: string;
 }
 
-export async function parsePayload(_request: Request): Promise<ContactPayload> {
-  throw new Error('not implemented');
+export async function parsePayload(request: Request): Promise<ContactPayload> {
+  const form = await request.formData();
+  const get = (k: string): string => (form.get(k) ?? '').toString();
+  return {
+    name: get('name'),
+    email: get('email'),
+    company: get('company'),
+    usecase: get('usecase'),
+    website: get('website'),
+    turnstileToken: get('cf-turnstile-response'),
+  };
 }
 
 export function validate(_p: ContactPayload): ValidationResult {
