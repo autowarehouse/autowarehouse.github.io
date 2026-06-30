@@ -1,5 +1,5 @@
 import { describe, test, expect, afterEach, mock } from 'bun:test';
-import { parsePayload, validate, isSpam, buildEmail, verifyTurnstile } from './index';
+import worker, { parsePayload, validate, isSpam, buildEmail, verifyTurnstile } from './index';
 
 function formRequest(fields: Record<string, string>): Request {
   const body = new FormData();
@@ -141,5 +141,63 @@ describe('verifyTurnstile', () => {
   test('returns false when siteverify rejects', async () => {
     globalThis.fetch = (async () => new Response(JSON.stringify({ success: false }))) as unknown as typeof fetch;
     expect(await verifyTurnstile('tok', 'secret', null)).toBe(false);
+  });
+});
+
+function fakeEnv(send: (o: unknown) => Promise<{ messageId?: string }>) {
+  return {
+    EMAIL: { send },
+    TURNSTILE_SECRET: 'secret',
+    CONTACT_TO: 'info@intellica.net',
+    CONTACT_FROM: 'noreply@autowarehouse.ai',
+  };
+}
+
+const okFields = {
+  name: 'Ada',
+  email: 'ada@example.com',
+  company: 'Engines',
+  usecase: 'Unify data',
+  website: '',
+  'cf-turnstile-response': 'tok',
+};
+
+describe('fetch handler', () => {
+  test('rejects non-POST with 405', async () => {
+    const res = await worker.fetch(
+      new Request('https://autowarehouse.ai/api/contact'),
+      fakeEnv(async () => ({})) as never,
+    );
+    expect(res.status).toBe(405);
+  });
+
+  test('rejects a filled honeypot with 400 before sending', async () => {
+    const send = mock(async () => ({}));
+    const res = await worker.fetch(formRequest({ ...okFields, website: 'bot' }), fakeEnv(send) as never);
+    expect(res.status).toBe(400);
+    expect(send).not.toHaveBeenCalled();
+  });
+
+  test('sends and returns 200 on a valid human submission', async () => {
+    globalThis.fetch = (async () => new Response(JSON.stringify({ success: true }))) as unknown as typeof fetch;
+    const send = mock(async () => ({ messageId: 'm1' }));
+    const res = await worker.fetch(formRequest(okFields), fakeEnv(send) as never);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ ok: true });
+    expect(send).toHaveBeenCalledTimes(1);
+    const arg = send.mock.calls[0][0] as { to: string; replyTo: string };
+    expect(arg.to).toBe('info@intellica.net');
+    expect(arg.replyTo).toBe('ada@example.com');
+  });
+
+  test('returns 502 when send throws', async () => {
+    globalThis.fetch = (async () => new Response(JSON.stringify({ success: true }))) as unknown as typeof fetch;
+    const res = await worker.fetch(
+      formRequest(okFields),
+      fakeEnv(async () => {
+        throw new Error('boom');
+      }) as never,
+    );
+    expect(res.status).toBe(502);
   });
 });

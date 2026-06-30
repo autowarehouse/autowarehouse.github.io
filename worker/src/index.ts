@@ -100,11 +100,38 @@ export async function verifyTurnstile(token: string, secret: string, ip: string 
   return data.success === true;
 }
 
+function json(status: number, body: unknown): Response {
+  return new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });
+}
+
 export default {
-  async fetch(_request: Request, _env: Env): Promise<Response> {
-    return new Response(JSON.stringify({ ok: false, error: 'not-implemented' }), {
-      status: 501,
-      headers: { 'content-type': 'application/json' },
-    });
+  async fetch(request: Request, env: Env): Promise<Response> {
+    if (request.method !== 'POST') return json(405, { ok: false, error: 'method' });
+
+    const payload = await parsePayload(request);
+    if (isSpam(payload)) return json(400, { ok: false, error: 'verification' });
+
+    const ip = request.headers.get('CF-Connecting-IP');
+    const human = await verifyTurnstile(payload.turnstileToken, env.TURNSTILE_SECRET, ip);
+    if (!human) return json(400, { ok: false, error: 'verification' });
+
+    const { ok, errors } = validate(payload);
+    if (!ok) return json(400, { ok: false, error: 'validation', fields: errors });
+
+    const { subject, html, text } = buildEmail(payload);
+    try {
+      await env.EMAIL.send({
+        to: env.CONTACT_TO,
+        from: { email: env.CONTACT_FROM, name: 'AutoWarehouse' },
+        replyTo: payload.email,
+        subject,
+        html,
+        text,
+      });
+    } catch (err) {
+      console.error('EMAIL.send failed', err);
+      return json(502, { ok: false, error: 'send' });
+    }
+    return json(200, { ok: true });
   },
 } satisfies ExportedHandler<Env>;
