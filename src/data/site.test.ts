@@ -54,4 +54,9 @@ describe('contact details', () => {
     expect(CONTACT.phoneHref.startsWith('tel:')).toBe(true);
     expect(CONTACT.address.length).toBeGreaterThan(0);
   });
+
+  test('CONTACT has a Turnstile site key', () => {
+    expect(typeof CONTACT.turnstileSiteKey).toBe('string');
+    expect(CONTACT.turnstileSiteKey.length).toBeGreaterThan(0);
+  });
 });

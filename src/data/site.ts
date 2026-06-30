@@ -129,6 +129,7 @@ export const CONTACT = {
   intellica: 'https://www.intellica.net',
   linkedin: 'https://www.linkedin.com/company/intellica',
   careers: 'https://www.intellica.net/careers',
+  turnstileSiteKey: '1x00000000000000000000AA',
 };
 
 export const FOOTER_GROUPS = [
