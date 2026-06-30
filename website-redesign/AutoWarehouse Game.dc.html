@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#16110c;color:#f3eedd;font-family:'Space Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  ::selection{background:#ffce1f;color:#16110c}
+  @keyframes awBelt{to{background-position-x:-72px}}
+  @keyframes awCrate{0%{transform:translateX(-160px)}100%{transform:translateX(1100px)}}
+  @keyframes awGlow{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.25)}}
+  @keyframes awBlink{0%,48%{opacity:1}49%,100%{opacity:0}}
+  @keyframes awUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes awPop{0%{opacity:0;transform:scale(.7)}60%{transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+  @keyframes awSpin{to{transform:rotate(360deg)}}
+  @keyframes awMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes awDot{0%{left:-6%}100%{left:106%}}
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail" data-bg-color="#16110c">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#16110c"></rect>
+    <polygon points="450,250 750,250 900,420 750,590 450,590 300,420" fill="#ffce1f"></polygon>
+    <text x="600" y="465" text-anchor="middle" fill="#16110c" font-family="monospace" font-weight="800" font-size="150">AW</text>
+    <rect x="120" y="640" width="960" height="40" fill="#f25c1f"></rect>
+  </svg>
+</template>
+<!-- ============ TOP NAV ============ -->
+<header style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:rgba(22,17,12,.82);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,206,31,.2)">
+  <a href="#top" style="display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit">
+    <span style="display:grid;place-items:center;width:34px;height:34px;background:#ffce1f;color:#16110c;clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%);font:800 12px 'JetBrains Mono',monospace">AW</span>
+    <span style="font:800 16px 'Archivo',sans-serif;letter-spacing:-.03em">Auto<span style="opacity:.55">Warehouse</span></span>
+  </a>
+  <nav style="display:flex;gap:6px">
+    <a href="#game" style="padding:8px 13px;font:700 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.07em;color:rgba(243,238,221,.7);text-decoration:none">How it works</a>
+    <a href="#proof" style="padding:8px 13px;font:700 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.07em;color:rgba(243,238,221,.7);text-decoration:none">Platform</a>
+    <a href="#gov" style="padding:8px 13px;font:700 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.07em;color:rgba(243,238,221,.7);text-decoration:none">Governance</a>
+  </nav>
+  <a href="#cta" style="display:inline-flex;align-items:center;min-height:38px;padding:0 16px;background:#ffce1f;color:#16110c;border-radius:999px;font:800 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;box-shadow:3px 3px 0 #f25c1f">Book a build review</a>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" style="position:relative;padding:64px 28px 30px;max-width:1240px;margin:0 auto;overflow:hidden">
+  <div style="position:absolute;inset:0;background:linear-gradient(rgba(255,206,31,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,206,31,.04) 1px,transparent 1px);background-size:32px 32px;pointer-events:none"></div>
+  <div style="position:relative">
+    <div style="display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(255,206,31,.4);border-radius:999px;padding:7px 13px;font:800 10px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#ffce1f"><span style="width:7px;height:7px;border-radius:50%;background:#41d18a;animation:awGlow 1.8s ease infinite"></span>Interactive build simulation · playable</div>
+    <h1 style="margin:22px 0 0;font:900 clamp(48px,8vw,104px)/.84 'Archivo',sans-serif;letter-spacing:-.05em;color:#fff">Don't read about<br>your warehouse.<br><span style="background:#f25c1f;color:#16110c;padding:0 .07em">Build it.</span></h1>
+    <p style="max-width:560px;margin:26px 0 0;font:400 clamp(15px,1.6vw,18px)/1.55 'JetBrains Mono',monospace;color:rgba(243,238,221,.72)">Play the full data-warehouse lifecycle as a mission. Pick your sources, watch the AI agent work, approve as the engineer, then ask the warehouse a question. One governed DataModel underneath it all.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">
+      <a href="#game" style="display:inline-flex;align-items:center;gap:9px;min-height:52px;padding:0 24px;background:#ffce1f;color:#16110c;border-radius:999px;font:800 13px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;box-shadow:5px 5px 0 #f25c1f">▶ Start the build</a>
+      <a href="#proof" style="display:inline-flex;align-items:center;min-height:52px;padding:0 22px;border:2px solid rgba(243,238,221,.4);border-radius:999px;font:800 13px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;color:#f3eedd">See the platform</a>
+    </div>
+
+    <div style="position:relative;margin-top:40px;border:1px solid rgba(255,206,31,.25);border-radius:14px;background:#0d0a07;padding:16px 16px 18px;overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><span style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(243,238,221,.45)">System map · model-first</span><span style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#41d18a">● live data flow</span></div>
+      <div style="display:flex;align-items:stretch;gap:9px;flex-wrap:wrap">
+        <div style="flex:1 1 110px;min-width:100px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+          <div style="font:700 9px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:rgba(243,238,221,.45);margin-bottom:1px">Sources</div>
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid rgba(243,238,221,.16);border-radius:8px;padding:7px 9px;background:#120d09"><span style="width:5px;height:16px;border-radius:2px;background:#1f5f99"></span><span style="font:700 10px 'JetBrains Mono',monospace;color:#f3eedd">HR DB</span></div>
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid rgba(243,238,221,.16);border-radius:8px;padding:7px 9px;background:#120d09"><span style="width:5px;height:16px;border-radius:2px;background:#36a0d6"></span><span style="font:700 10px 'JetBrains Mono',monospace;color:#f3eedd">CV Pool</span></div>
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid rgba(243,238,221,.16);border-radius:8px;padding:7px 9px;background:#120d09"><span style="width:5px;height:16px;border-radius:2px;background:#2f8c52"></span><span style="font:700 10px 'JetBrains Mono',monospace;color:#f3eedd">Payroll</span></div>
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid rgba(243,238,221,.16);border-radius:8px;padding:7px 9px;background:#120d09"><span style="width:5px;height:16px;border-radius:2px;background:#f25c1f"></span><span style="font:700 10px 'JetBrains Mono',monospace;color:#f3eedd">APIs</span></div>
+        </div>
+
+        <div style="flex:0 0 34px;align-self:center;position:relative;height:28px"><div style="position:absolute;top:50%;left:0;right:7px;height:2px;background:rgba(243,238,221,.2);transform:translateY(-50%)"></div><div style="position:absolute;top:50%;right:0;transform:translateY(-50%);color:rgba(243,238,221,.45);font:900 11px 'JetBrains Mono',monospace">▶</div><span style="position:absolute;top:50%;margin-top:-3px;width:6px;height:6px;border-radius:50%;background:#f25c1f;animation:awDot 1.7s linear infinite"></span><span style="position:absolute;top:50%;margin-top:-3px;width:6px;height:6px;border-radius:50%;background:#ffce1f;animation:awDot 1.7s linear infinite .85s"></span></div>
+
+        <div style="flex:1.3 1 146px;min-width:138px;border:1px solid rgba(255,206,31,.25);border-radius:11px;background:#120d09;padding:13px 14px;display:flex;flex-direction:column;gap:7px;transition:transform .2s" style-hover="transform:translateY(-3px)"><div style="display:flex;align-items:center;justify-content:space-between"><span style="font:800 10px 'JetBrains Mono',monospace;color:#ffce1f">01 · DISCOVER</span><span style="font:800 8px 'JetBrains Mono',monospace;color:#16110c;background:#f25c1f;border-radius:4px;padding:2px 5px">AI</span></div><div style="font:800 15px 'Archivo',sans-serif;color:#fff;letter-spacing:-.02em">Source system analysis</div><div style="font:600 10px/1.5 'JetBrains Mono',monospace;color:rgba(243,238,221,.55)">schema · PII · entities · relationships</div></div>
+
+        <div style="flex:0 0 50px;align-self:center;position:relative;height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(243,238,221,.2);transform:translateY(-50%)"></div><span style="position:absolute;top:50%;margin-top:-3px;width:6px;height:6px;border-radius:50%;background:#ffce1f;animation:awDot 1.7s linear infinite .4s"></span><span style="position:relative;z-index:2;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#41d18a;color:#16110c;font:800 10px 'JetBrains Mono',monospace;border:2px solid #0d0a07">✓</span><span style="font:700 7px 'JetBrains Mono',monospace;color:#41d18a;letter-spacing:.05em;margin-top:2px">APPROVE</span></div>
+
+        <div style="flex:1.7 1 178px;min-width:166px;position:relative;border:2px solid #f25c1f;border-radius:13px;background:radial-gradient(circle at 50% 42%,rgba(242,92,31,.2),transparent 70%),#140d09;padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 0 0 4px rgba(242,92,31,.08)"><span style="position:absolute;top:9px;left:12px;font:800 10px 'JetBrains Mono',monospace;color:#f25c1f">02 · MODEL</span><span style="position:absolute;top:9px;right:12px;font:800 8px 'JetBrains Mono',monospace;color:#16110c;background:#41d18a;border-radius:4px;padding:2px 5px">CORE</span><div style="width:46px;height:46px;border-radius:50%;border:2px dashed rgba(255,206,31,.6);display:grid;place-items:center;margin-top:8px;animation:awSpin 16s linear infinite"><span style="width:16px;height:16px;border-radius:50%;background:#f25c1f;animation:awGlow 2.2s ease infinite"></span></div><div style="margin-top:11px;font:900 17px 'Archivo',sans-serif;letter-spacing:-.03em;color:#fff">Governed DataModel</div><div style="font:800 12px 'JetBrains Mono',monospace;color:#ffce1f;margin-top:2px">HRDM</div><div style="font:600 9px 'JetBrains Mono',monospace;color:rgba(243,238,221,.55);margin-top:6px">foundation · analytical · semantic</div></div>
+
+        <div style="flex:0 0 50px;align-self:center;position:relative;height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(243,238,221,.2);transform:translateY(-50%)"></div><span style="position:absolute;top:50%;margin-top:-3px;width:6px;height:6px;border-radius:50%;background:#41d18a;animation:awDot 1.7s linear infinite .6s"></span><span style="position:relative;z-index:2;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#41d18a;color:#16110c;font:800 10px 'JetBrains Mono',monospace;border:2px solid #0d0a07">✓</span><span style="font:700 7px 'JetBrains Mono',monospace;color:#41d18a;letter-spacing:.05em;margin-top:2px">APPROVE</span></div>
+
+        <div style="flex:1.3 1 146px;min-width:138px;border:1px solid rgba(65,209,138,.3);border-radius:11px;background:#120d09;padding:13px 14px;display:flex;flex-direction:column;gap:9px;transition:transform .2s" style-hover="transform:translateY(-3px)"><div style="display:flex;align-items:center;justify-content:space-between"><span style="font:800 10px 'JetBrains Mono',monospace;color:#41d18a">03 · DELIVER</span><span style="font:800 8px 'JetBrains Mono',monospace;color:#16110c;background:#41d18a;border-radius:4px;padding:2px 5px">BU</span></div><div style="display:flex;gap:7px"><div style="flex:1;border:1px solid rgba(243,238,221,.16);border-radius:8px;padding:9px;text-align:center;font:800 11px 'Archivo',sans-serif;color:#fff">Report</div><div style="flex:1;border:1px solid rgba(243,238,221,.16);border-radius:8px;padding:9px;text-align:center;font:800 11px 'Archivo',sans-serif;color:#fff">Chat</div></div><div style="font:600 10px/1.5 'JetBrains Mono',monospace;color:rgba(243,238,221,.55)">governed answers · NL-to-SQL</div></div>
+
+      </div>
+      <div style="margin-top:13px;font:500 11px 'JetBrains Mono',monospace;color:rgba(243,238,221,.5);text-align:center">Discovery, mapping, ETL, reports &amp; Talk-to-DWH all read one governed DataModel.</div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:34px;margin-top:26px">
+      <div><div data-count="6" style="font:900 30px 'Archivo',sans-serif;color:#ffce1f">0</div><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:rgba(243,238,221,.5)">source types</div></div>
+      <div><div data-count="10" style="font:900 30px 'Archivo',sans-serif;color:#f25c1f">0</div><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:rgba(243,238,221,.5)">build stations</div></div>
+      <div><div data-count="99.4" data-suffix="%" style="font:900 30px 'Archivo',sans-serif;color:#41d18a">0</div><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:rgba(243,238,221,.5)">auto-mapped</div></div>
+      <div><div data-count="0" style="font:900 30px 'Archivo',sans-serif;color:#fff">0</div><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:rgba(243,238,221,.5)">ungoverned answers</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE GAME ============ -->
+<section id="game" style="max-width:1240px;margin:0 auto;padding:30px 28px 20px">
+  <!-- HUD -->
+  <div style="border:2px solid #ffce1f;border-radius:18px 18px 0 0;background:#0d0a07;padding:16px 20px">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px">
+      <div style="display:flex;align-items:center;gap:10px"><span style="font:800 12px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#ffce1f">▸ DWH BUILD · MISSION</span><span style="font:600 11px 'JetBrains Mono',monospace;color:rgba(243,238,221,.5)">station {{ current.num }} / 10</span></div>
+      <!-- characters -->
+      <div style="display:flex;gap:8px">
+        <sc-for list="{{ chars }}" as="c" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid {{ c.border }};border-radius:999px;padding:5px 11px 5px 5px;background:{{ c.bg }};opacity:{{ c.op }};transition:opacity .3s">
+            <span style="display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:{{ c.color }};color:#16110c;font:800 9px 'JetBrains Mono',monospace">{{ c.code }}</span>
+            <span style="font:700 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;color:#f3eedd">{{ c.name }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <button onClick="{{ restart }}" style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(243,238,221,.3);border-radius:999px;padding:7px 13px;font:700 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;color:rgba(243,238,221,.75)" style-hover="border-color:#f25c1f;color:#f25c1f">↻ Restart</button>
+    </div>
+    <!-- progress -->
+    <div style="margin-top:14px;height:8px;border-radius:999px;background:rgba(243,238,221,.12);overflow:hidden"><div style="height:100%;border-radius:999px;background:linear-gradient(90deg,#f25c1f,#ffce1f);width:{{ progressPct }}%;transition:width .5s ease"></div></div>
+    <!-- artifacts -->
+    <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:13px">
+      <sc-for list="{{ artifacts }}" as="a" hint-placeholder-count="8">
+        <span style="display:inline-flex;align-items:center;gap:6px;border:1px solid {{ a.bd }};border-radius:6px;padding:4px 9px;font:700 9px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;color:{{ a.fg }};background:{{ a.bg }};transition:all .3s">{{ a.icon }} {{ a.n }}</span>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- BODY: map + stage -->
+  <div style="display:flex;flex-wrap:wrap;gap:0;border:2px solid #ffce1f;border-top:none;border-radius:0 0 18px 18px;overflow:hidden">
+    <!-- mission map -->
+    <div style="flex:1 1 248px;min-width:228px;background:#0a0805;border-right:1px solid rgba(255,206,31,.2);padding:16px 14px">
+      <div style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(243,238,221,.4);margin:2px 6px 12px">Mission map</div>
+      <sc-for list="{{ stations }}" as="st" hint-placeholder-count="10">
+        <div style="display:flex;align-items:center;gap:11px;padding:9px 8px;border-radius:9px;background:{{ st.rowbg }};border:1px solid {{ st.rowbd }};margin-bottom:4px;transition:all .25s">
+          <span style="position:relative;display:grid;place-items:center;width:26px;height:26px;flex:none;border-radius:7px;background:{{ st.badgeBg }};color:{{ st.badgeFg }};font:800 11px 'JetBrains Mono',monospace">{{ st.badge }}<sc-if value="{{ st.active }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;right:-4px;top:-4px;width:9px;height:9px;border-radius:50%;background:#41d18a;animation:awGlow 1.4s ease infinite"></span></sc-if></span>
+          <div style="flex:1;min-width:0">
+            <div style="font:700 11px 'JetBrains Mono',monospace;color:{{ st.labelFg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ st.label }}</div>
+          </div>
+          <span style="font:800 8px 'JetBrains Mono',monospace;color:#16110c;background:{{ st.ownerColor }};border-radius:4px;padding:2px 5px">{{ st.owner }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- stage -->
+    <div style="flex:3 1 560px;min-width:300px;position:relative;background:radial-gradient(circle at 80% 0%,rgba(242,92,31,.07),transparent 50%),#120d09;padding:24px 26px;min-height:560px;display:flex;flex-direction:column">
+      <!-- stage header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px dashed rgba(255,206,31,.28);padding-bottom:14px;margin-bottom:18px">
+        <div>
+          <div style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#ffce1f">Station {{ current.num }} · {{ current.label }}</div>
+          <div style="font:800 clamp(22px,3vw,30px)/1 'Archivo',sans-serif;letter-spacing:-.04em;margin-top:8px;color:#fff">{{ current.instruction }}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex:none"><span style="display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:{{ current.ownerColor }};color:#16110c;font:800 11px 'JetBrains Mono',monospace">{{ current.owner }}</span><span style="font:700 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.6);max-width:90px;line-height:1.2">{{ current.ownerName }}</span></div>
+      </div>
+
+      <!-- STEP 1 — SOURCES -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px">
+            <sc-for list="{{ sourceList }}" as="src" hint-placeholder-count="6">
+              <button onClick="{{ src.onToggle }}" style="text-align:left;border:2px solid {{ src.bd }};border-radius:13px;padding:14px;background:{{ src.bg }};transition:all .18s;position:relative" style-hover="transform:translateY(-3px)">
+                <div style="display:flex;align-items:center;justify-content:space-between"><span style="display:grid;place-items:center;width:32px;height:32px;border-radius:8px;background:{{ src.chipBg }};color:{{ src.chipFg }};font:800 11px 'JetBrains Mono',monospace">{{ src.code }}</span><span style="width:20px;height:20px;border-radius:50%;border:2px solid {{ src.dotBd }};background:{{ src.dotBg }};display:grid;place-items:center;color:#16110c;font:800 11px 'JetBrains Mono',monospace">{{ src.check }}</span></div>
+                <div style="margin-top:13px;font:800 15px 'Archivo',sans-serif;letter-spacing:-.02em;color:{{ src.nameFg }}">{{ src.name }}</div>
+                <div style="margin-top:3px;font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;color:rgba(243,238,221,.45)">{{ src.type }} · {{ src.cols }} cols</div>
+              </button>
+            </sc-for>
+          </div>
+          <div style="flex:1"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:18px;padding-top:16px;border-top:1px dashed rgba(255,206,31,.28)">
+            <div style="font:600 12px 'JetBrains Mono',monospace;color:rgba(243,238,221,.7)"><b style="color:#ffce1f">{{ selCount }}</b> systems selected</div>
+            <button onClick="{{ runDiscovery }}" style="display:inline-flex;align-items:center;gap:9px;min-height:48px;padding:0 22px;border-radius:9px;background:{{ btn1bg }};color:{{ btn1fg }};font:800 12px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:{{ btn1sh }};opacity:{{ btn1op }}">▶ Run agent discovery</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- STEP 2 — DISCOVERY -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:12px"><span style="display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:#f25c1f;color:#16110c;font:800 10px 'JetBrains Mono',monospace;animation:awSpin 2.4s linear infinite">◆</span><div style="flex:1"><div style="font:700 12px 'JetBrains Mono',monospace;color:#fff">{{ discHeadline }}</div><div style="margin-top:7px;height:7px;border-radius:999px;background:rgba(243,238,221,.12);overflow:hidden"><div style="height:100%;background:#f25c1f;width:{{ discPct }}%;transition:width .2s linear"></div></div></div><span style="font:800 13px 'JetBrains Mono',monospace;color:#f25c1f">{{ discPct }}%</span></div>
+          <div style="margin-top:16px;flex:1;border:1px solid rgba(255,206,31,.18);border-radius:11px;background:#080605;padding:14px 16px;font:500 12px/1.85 'JetBrains Mono',monospace;overflow:auto;min-height:230px">
+            <div style="color:rgba(243,238,221,.4)">// agent.discovery — scanning estate</div>
+            <sc-for list="{{ discLines }}" as="ln" hint-placeholder-count="3">
+              <div style="animation:awUp .3s ease"><span style="color:{{ ln.color }}">{{ ln.tag }}</span> {{ ln.x }}</div>
+            </sc-for>
+            <sc-if value="{{ discRun }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;width:8px;height:14px;background:#41d18a;animation:awBlink 1s step-end infinite;vertical-align:-2px"></span></sc-if>
+          </div>
+          <sc-if value="{{ discDone }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px">
+              <div style="border:1px solid rgba(65,209,138,.4);border-radius:10px;padding:12px 14px;background:rgba(65,209,138,.08);animation:awPop .4s ease"><div style="font:900 26px 'Archivo',sans-serif;color:#41d18a">{{ discResults.entities }}</div><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.55)">entities found</div></div>
+              <div style="border:1px solid rgba(255,206,31,.4);border-radius:10px;padding:12px 14px;background:rgba(255,206,31,.08);animation:awPop .4s ease .08s both"><div style="font:900 26px 'Archivo',sans-serif;color:#ffce1f">{{ discResults.pii }}</div><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.55)">PII fields flagged</div></div>
+              <div style="border:1px solid rgba(243,238,221,.25);border-radius:10px;padding:12px 14px;animation:awPop .4s ease .16s both"><div style="font:900 26px 'Archivo',sans-serif;color:#fff">{{ discResults.rels }}</div><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.55)">relationships</div></div>
+            </div>
+            <div style="display:flex;justify-content:flex-end;margin-top:16px"><button onClick="{{ toReview }}" style="display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 20px;border-radius:9px;background:#ffce1f;color:#16110c;font:800 12px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:4px 4px 0 #f25c1f">→ Send to engineer review</button></div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- STEP 3 — REVIEW DISCOVERY -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:10px;border:1px solid rgba(65,209,138,.35);border-radius:10px;background:rgba(65,209,138,.07);padding:12px 14px;font:600 12px 'JetBrains Mono',monospace;color:#41d18a">⬡ Human-in-the-loop checkpoint — nothing proceeds without your approval.</div>
+          <div style="display:grid;gap:9px;margin-top:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(243,238,221,.18);border-radius:9px;padding:13px 15px"><span style="font:600 12px 'JetBrains Mono',monospace;color:#f3eedd">Schema discovery · {{ selCount }} systems parsed</span><span style="font:800 10px 'JetBrains Mono',monospace;color:#41d18a">✓ READY</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(243,238,221,.18);border-radius:9px;padding:13px 15px"><span style="font:600 12px 'JetBrains Mono',monospace;color:#f3eedd">PII handling · {{ discResults.pii }} fields → masked policy</span><span style="font:800 10px 'JetBrains Mono',monospace;color:#41d18a">✓ READY</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(243,238,221,.18);border-radius:9px;padding:13px 15px"><span style="font:600 12px 'JetBrains Mono',monospace;color:#f3eedd">Entity & relationship graph</span><span style="font:800 10px 'JetBrains Mono',monospace;color:#41d18a">✓ READY</span></div>
+          </div>
+          <div style="flex:1"></div>
+          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,206,31,.28)"><button onClick="{{ approveDiscovery }}" style="display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 22px;border-radius:9px;background:#41d18a;color:#16110c;font:800 12px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:4px 4px 0 #2a8c5e">✓ Approve discovery</button></div>
+        </div>
+      </sc-if>
+
+      <!-- STEP 4 — MODEL & MAP -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:14px;border:1px solid rgba(255,206,31,.3);border-radius:12px;background:linear-gradient(90deg,rgba(242,92,31,.12),transparent);padding:14px 16px">
+            <span style="display:grid;place-items:center;width:42px;height:42px;border-radius:10px;background:#f25c1f;color:#16110c;font:900 13px 'Archivo',sans-serif">HRDM</span>
+            <div style="flex:1"><div style="font:800 16px 'Archivo',sans-serif;letter-spacing:-.02em;color:#fff">DataModel selected — HRDM</div><div style="font:600 10px 'JetBrains Mono',monospace;color:rgba(243,238,221,.55);margin-top:2px">foundation · analytical · semantic — the governed center of the build</div></div>
+            <span style="font:800 9px 'JetBrains Mono',monospace;color:#16110c;background:#41d18a;border-radius:5px;padding:4px 8px">MODEL-FIRST</span>
+          </div>
+          <div style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:rgba(243,238,221,.45);margin:16px 2px 8px">AI-suggested field mappings</div>
+          <div style="border:1px solid rgba(243,238,221,.14);border-radius:11px;overflow:hidden">
+            <sc-for list="{{ mappings }}" as="m" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:1fr auto 1.1fr 76px 64px;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid rgba(243,238,221,.08);background:{{ m.rowbg }};animation:awUp .35s ease both;animation-delay:{{ m.delay }}">
+                <span style="font:600 11px 'JetBrains Mono',monospace;color:#f3eedd">{{ m.src }}</span>
+                <span style="color:{{ m.arrow }};font-weight:800">→</span>
+                <span style="font:600 11px 'JetBrains Mono',monospace;color:rgba(243,238,221,.75)">{{ m.tgt }}</span>
+                <span style="height:6px;border-radius:999px;background:rgba(243,238,221,.12);overflow:hidden"><span style="display:block;height:100%;background:{{ m.confColor }};width:{{ m.conf }}%"></span></span>
+                <span style="font:800 10px 'JetBrains Mono',monospace;text-align:right;color:{{ m.confColor }}">{{ m.confLabel }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex:1"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding-top:14px;border-top:1px dashed rgba(255,206,31,.28)"><div style="font:600 11px 'JetBrains Mono',monospace;color:rgba(243,238,221,.6)"><b style="color:#e0533c">{{ mapLowCount }}</b> low-confidence mappings need a human</div><button onClick="{{ toMapReview }}" style="display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 20px;border-radius:9px;background:#ffce1f;color:#16110c;font:800 12px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:4px 4px 0 #f25c1f">→ Review mappings</button></div>
+        </div>
+      </sc-if>
+
+      <!-- STEP 5 — APPROVE MAP -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:10px;border:1px solid rgba(255,206,31,.35);border-radius:10px;background:rgba(255,206,31,.07);padding:12px 14px;font:600 12px 'JetBrains Mono',monospace;color:#ffce1f">⬡ Resolve each flagged mapping, then approve. The agent suggests — you decide.</div>
+          <div style="border:1px solid rgba(243,238,221,.14);border-radius:11px;overflow:hidden;margin-top:14px">
+            <sc-for list="{{ mappings }}" as="m" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:1fr auto 1.1fr 80px;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid rgba(243,238,221,.08);background:{{ m.rowbg }}">
+                <span style="font:600 11px 'JetBrains Mono',monospace;color:#f3eedd">{{ m.src }}</span>
+                <span style="color:{{ m.arrow }};font-weight:800">→</span>
+                <span style="font:600 11px 'JetBrains Mono',monospace;color:rgba(243,238,221,.75)">{{ m.tgt }}</span>
+                <span style="text-align:right">{{ m.action }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex:1"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding-top:14px;border-top:1px dashed rgba(255,206,31,.28)"><div style="font:600 11px 'JetBrains Mono',monospace;color:rgba(243,238,221,.6)"><b style="color:#41d18a">{{ mapFixedCount }}</b> / {{ mapLowCount }} resolved</div><button onClick="{{ approveMap }}" style="display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 22px;border-radius:9px;background:{{ btn5bg }};color:{{ btn5fg }};font:800 12px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:{{ btn5sh }};opacity:{{ btn5op }}">✓ Approve mappings</button></div>
+        </div>
+      </sc-if>
+
+      <!-- STEP 6 — ETL BUILD -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:12px"><span style="font:700 12px 'JetBrains Mono',monospace;color:#fff">Agent forging ETL infrastructure…</span><div style="flex:1;height:7px;border-radius:999px;background:rgba(243,238,221,.12);overflow:hidden"><div style="height:100%;background:#f25c1f;width:{{ etlPct }}%;transition:width .2s linear"></div></div><span style="font:800 13px 'JetBrains Mono',monospace;color:#f25c1f">{{ etlPct }}%</span></div>
+          <div style="display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin-top:22px">
+            <sc-for list="{{ dagNodes }}" as="n" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:9px;width:104px">
+                  <span style="display:grid;place-items:center;width:50px;height:50px;border-radius:13px;border:2px solid {{ n.bd }};background:{{ n.bg }};color:{{ n.fg }};font:800 15px 'Archivo',sans-serif;transition:all .3s">{{ n.icon }}</span>
+                  <span style="font:700 9px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.03em;text-align:center;color:{{ n.labelFg }};line-height:1.25">{{ n.name }}</span>
+                </div>
+                <sc-if value="{{ n.connector }}" hint-placeholder-val="{{ false }}"><span style="width:22px;height:2px;background:{{ n.connColor }};margin-bottom:24px"></span></sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;border:1px solid rgba(255,206,31,.18);border-radius:11px;background:#080605;padding:13px 16px;font:500 12px/1.8 'JetBrains Mono',monospace;color:rgba(243,238,221,.7);min-height:96px">
+            <sc-for list="{{ etlLog }}" as="ln" hint-placeholder-count="3"><div style="animation:awUp .3s ease"><span style="color:{{ ln.color }}">{{ ln.tag }}</span> {{ ln.x }}</div></sc-for>
+          </div>
+          <div style="flex:1"></div>
+          <sc-if value="{{ etlDone }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:flex-end;margin-top:14px"><button onClick="{{ toEtlReview }}" style="display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 20px;border-radius:9px;background:#ffce1f;color:#16110c;font:800 12px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:4px 4px 0 #f25c1f">→ Review ETL plan</button></div></sc-if>
+        </div>
+      </sc-if>
+
+      <!-- STEP 7 — APPROVE ETL -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:10px;border:1px solid rgba(65,209,138,.35);border-radius:10px;background:rgba(65,209,138,.07);padding:12px 14px;font:600 12px 'JetBrains Mono',monospace;color:#41d18a">⬡ ETL plan ready. Approve to start a governed, traceable run.</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px">
+            <div style="border:1px solid rgba(243,238,221,.16);border-radius:10px;padding:13px 15px"><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.5)">objects</div><div style="font:900 24px 'Archivo',sans-serif;color:#ffce1f;margin-top:4px">38</div><div style="font:500 10px 'JetBrains Mono',monospace;color:rgba(243,238,221,.5)">DDL · tables + views</div></div>
+            <div style="border:1px solid rgba(243,238,221,.16);border-radius:10px;padding:13px 15px"><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.5)">load strategy</div><div style="font:900 24px 'Archivo',sans-serif;color:#ffce1f;margin-top:4px">SCD2</div><div style="font:500 10px 'JetBrains Mono',monospace;color:rgba(243,238,221,.5)">history preserved</div></div>
+            <div style="border:1px solid rgba(243,238,221,.16);border-radius:10px;padding:13px 15px"><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.5)">quality gates</div><div style="font:900 24px 'Archivo',sans-serif;color:#ffce1f;margin-top:4px">7</div><div style="font:500 10px 'JetBrains Mono',monospace;color:rgba(243,238,221,.5)">block on fail</div></div>
+            <div style="border:1px solid rgba(243,238,221,.16);border-radius:10px;padding:13px 15px"><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.5)">DAG tasks</div><div style="font:900 24px 'Archivo',sans-serif;color:#ffce1f;margin-top:4px">21</div><div style="font:500 10px 'JetBrains Mono',monospace;color:rgba(243,238,221,.5)">ordered · retryable</div></div>
+          </div>
+          <div style="flex:1"></div>
+          <div style="display:flex;justify-content:flex-end;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,206,31,.28)"><button onClick="{{ startExec }}" style="display:inline-flex;align-items:center;gap:9px;min-height:48px;padding:0 24px;border-radius:9px;background:#41d18a;color:#16110c;font:800 13px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:4px 4px 0 #2a8c5e">▶ Approve &amp; start execution</button></div>
+        </div>
+      </sc-if>
+
+      <!-- STEP 8 — DWH LOAD -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:12px"><span style="font:700 12px 'JetBrains Mono',monospace;color:#fff">Loading governed warehouse…</span><div style="flex:1;height:7px;border-radius:999px;background:rgba(243,238,221,.12);overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,#f25c1f,#41d18a);width:{{ loadPct }}%;transition:width .2s linear"></div></div><span style="font:800 13px 'JetBrains Mono',monospace;color:#41d18a">{{ loadPct }}%</span></div>
+          <div style="position:relative;margin-top:18px;height:74px;border-top:2px solid #ffce1f;border-bottom:2px solid #ffce1f;background:#0d0a07;overflow:hidden;border-radius:4px">
+            <div style="position:absolute;bottom:20px;left:0;width:44px;height:34px;background:#f25c1f;border:2px solid #16110c;border-radius:3px;display:grid;place-items:center;font:800 9px 'JetBrains Mono',monospace;color:#16110c;animation:awCrate 2.4s linear infinite">ROW</div>
+            <div style="position:absolute;bottom:20px;left:0;width:44px;height:34px;background:#ffce1f;border:2px solid #16110c;border-radius:3px;display:grid;place-items:center;font:800 9px 'JetBrains Mono',monospace;color:#16110c;animation:awCrate 2.4s linear infinite .8s">ROW</div>
+            <div style="position:absolute;bottom:20px;left:0;width:44px;height:34px;background:#f3eedd;border:2px solid #16110c;border-radius:3px;display:grid;place-items:center;font:800 9px 'JetBrains Mono',monospace;color:#16110c;animation:awCrate 2.4s linear infinite 1.6s">ROW</div>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:20px;background:repeating-linear-gradient(-45deg,#2a2118 0 10px,#1c1610 10px 20px);animation:awBelt .9s linear infinite;border-top:2px solid #ffce1f"></div>
+          </div>
+          <div style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:rgba(243,238,221,.45);margin:18px 2px 9px">Warehouse tables coming online</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px">
+            <sc-for list="{{ whTables }}" as="t" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:9px;border:1px solid {{ t.bd }};border-radius:9px;padding:11px 13px;background:{{ t.bg }};transition:all .3s"><span style="width:9px;height:9px;border-radius:50%;background:{{ t.dot }}"></span><span style="font:600 11px 'JetBrains Mono',monospace;color:{{ t.fg }}">{{ t.name }}</span><span style="margin-left:auto;font:800 8px 'JetBrains Mono',monospace;color:{{ t.dot }}">{{ t.state }}</span></div>
+            </sc-for>
+          </div>
+          <div style="flex:1"></div>
+          <sc-if value="{{ loadDone }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:flex-end;margin-top:14px"><button onClick="{{ toReport }}" style="display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 20px;border-radius:9px;background:#ffce1f;color:#16110c;font:800 12px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:4px 4px 0 #f25c1f">→ View agent report</button></div></sc-if>
+        </div>
+      </sc-if>
+
+      <!-- STEP 9 — REPORT -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+            <div style="border:1px solid rgba(65,209,138,.4);border-radius:11px;padding:14px;background:rgba(65,209,138,.08)"><div style="font:900 30px 'Archivo',sans-serif;color:#41d18a">21</div><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.55)">jobs succeeded</div></div>
+            <div style="border:1px solid rgba(255,206,31,.4);border-radius:11px;padding:14px;background:rgba(255,206,31,.08)"><div style="font:900 30px 'Archivo',sans-serif;color:#ffce1f">2</div><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.55)">warnings</div></div>
+            <div style="border:1px solid rgba(224,83,60,.4);border-radius:11px;padding:14px;background:rgba(224,83,60,.06)"><div style="font:900 30px 'Archivo',sans-serif;color:#e0533c">0</div><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.55)">blocking issues</div></div>
+            <div style="border:1px solid rgba(243,238,221,.2);border-radius:11px;padding:14px"><div style="font:900 30px 'Archivo',sans-serif;color:#fff">100%</div><div style="font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;color:rgba(243,238,221,.55)">QC passed</div></div>
+          </div>
+          <div style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:rgba(243,238,221,.45);margin:18px 2px 9px">Agent recommendations</div>
+          <div style="display:grid;gap:8px">
+            <div style="display:flex;gap:10px;border:1px solid rgba(243,238,221,.16);border-radius:9px;padding:12px 14px;font:600 12px 'JetBrains Mono',monospace;color:#f3eedd"><span style="color:#ffce1f">▹</span> Add a freshness SLA on the payroll extract (last load +6h).</div>
+            <div style="display:flex;gap:10px;border:1px solid rgba(243,238,221,.16);border-radius:9px;padding:12px 14px;font:600 12px 'JetBrains Mono',monospace;color:#f3eedd"><span style="color:#ffce1f">▹</span> Promote <b style="color:#41d18a">sem_workforce_kpi</b> to a certified semantic view.</div>
+          </div>
+          <div style="flex:1"></div>
+          <div style="display:flex;justify-content:flex-end;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,206,31,.28)"><button onClick="{{ toTalk }}" style="display:inline-flex;align-items:center;gap:9px;min-height:48px;padding:0 24px;border-radius:9px;background:#41d18a;color:#16110c;font:800 13px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:4px 4px 0 #2a8c5e">→ Open Talk-to-DWH</button></div>
+        </div>
+      </sc-if>
+
+      <!-- STEP 10 — TALK TO DWH -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:rgba(243,238,221,.45);margin:0 2px 9px">Ask the warehouse — natural language</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ questions }}" as="q" hint-placeholder-count="3">
+              <button onClick="{{ q.onAsk }}" style="text-align:left;border:1.5px solid {{ q.bd }};border-radius:999px;padding:9px 14px;font:600 11px 'JetBrains Mono',monospace;color:{{ q.fg }};background:{{ q.bg }};transition:all .18s" style-hover="border-color:#41d18a">{{ q.short }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ hasAnswer }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:16px;border:1px solid rgba(243,238,221,.16);border-radius:12px;overflow:hidden;animation:awUp .35s ease">
+              <div style="display:flex;align-items:center;gap:9px;padding:11px 14px;background:#080605;border-bottom:1px solid rgba(243,238,221,.1)"><span style="display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#41d18a;color:#16110c;font:800 8px 'JetBrains Mono',monospace">BU</span><span style="font:600 12px 'JetBrains Mono',monospace;color:#f3eedd">{{ answer.q }}</span></div>
+              <div style="padding:14px 16px">
+                <div style="font:600 10px 'JetBrains Mono',monospace;color:rgba(243,238,221,.4);margin-bottom:6px">// NL → SQL</div>
+                <div style="font:500 11px/1.6 'JetBrains Mono',monospace;color:#ffce1f;background:#0d0a07;border-radius:8px;padding:11px 13px;border:1px solid rgba(255,206,31,.2)">{{ answer.sql }}</div>
+                <div style="display:flex;align-items:flex-end;gap:14px;height:150px;margin-top:18px;padding:0 4px">
+                  <sc-for list="{{ answer.bars }}" as="b" hint-placeholder-count="4">
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end">
+                      <span style="font:800 13px 'Archivo',sans-serif;color:#fff">{{ b.val }}</span>
+                      <div style="width:100%;border-radius:6px 6px 0 0;background:{{ b.color }};height:{{ b.pct }}%;transition:height .6s cubic-bezier(.2,1,.4,1)"></div>
+                      <span style="font:600 10px 'JetBrains Mono',monospace;color:rgba(243,238,221,.6)">{{ b.label }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="display:flex;gap:9px;margin-top:14px;border-top:1px dashed rgba(255,206,31,.25);padding-top:13px"><span style="color:#41d18a;font-weight:800">◆</span><span style="font:600 12px/1.5 'JetBrains Mono',monospace;color:#f3eedd">{{ answer.insight }}</span></div>
+              </div>
+            </div>
+          </sc-if>
+          <div style="flex:1"></div>
+          <div style="display:flex;justify-content:flex-end;margin-top:14px"><button onClick="{{ finish }}" style="display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 22px;border-radius:9px;background:#ffce1f;color:#16110c;font:800 12px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:4px 4px 0 #f25c1f">✓ Complete mission</button></div>
+        </div>
+      </sc-if>
+
+      <!-- COMPLETION -->
+      <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;background:rgba(8,6,5,.92);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;z-index:5;animation:awUp .4s ease">
+          <div style="display:grid;place-items:center;width:64px;height:64px;background:#41d18a;color:#16110c;clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%);font:900 18px 'Archivo',sans-serif">✓</div>
+          <div style="font:900 clamp(30px,5vw,52px)/.95 'Archivo',sans-serif;letter-spacing:-.05em;color:#fff;margin-top:20px">Warehouse shipped.</div>
+          <p style="max-width:440px;margin:14px 0 0;font:500 13px/1.6 'JetBrains Mono',monospace;color:rgba(243,238,221,.7)">From raw estate to governed answers — discovered, mapped, human-approved, built and queried. Every artifact traces back to one DataModel.</p>
+          <div style="display:flex;gap:11px;margin-top:24px;flex-wrap:wrap;justify-content:center">
+            <button onClick="{{ restart }}" style="display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 22px;border-radius:9px;background:#ffce1f;color:#16110c;font:800 12px 'JetBrains Mono',monospace;text-transform:uppercase;box-shadow:4px 4px 0 #f25c1f">↻ Play again</button>
+            <a href="#cta" style="display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:2px solid rgba(243,238,221,.4);border-radius:9px;font:800 12px 'JetBrains Mono',monospace;text-transform:uppercase;color:#f3eedd;text-decoration:none">Book a real build review</a>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROOF / MODEL-FIRST ============ -->
+<section id="proof" style="max-width:1240px;margin:0 auto;padding:60px 28px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;align-items:center">
+    <div>
+      <div style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#ffce1f">Model-first by design</div>
+      <h2 style="margin:14px 0 0;font:900 clamp(34px,4.5vw,60px)/.9 'Archivo',sans-serif;letter-spacing:-.05em;color:#fff">The DataModel is<br>the whole platform.</h2>
+      <p style="max-width:520px;margin:20px 0 0;font:400 15px/1.6 'JetBrains Mono',monospace;color:rgba(243,238,221,.7)">Discovery, mapping, ETL, reporting, dashboards and Talk-to-DWH don't each invent their own truth. They all read and write one governed model — so an executive's answer and an engineer's pipeline are provably the same thing.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+      <sc-for list="{{ proof }}" as="p" hint-placeholder-count="10">
+        <div style="border:1px solid rgba(255,206,31,.22);border-radius:11px;padding:14px;background:#0d0a07" style-hover="border-color:#f25c1f"><div style="font:800 11px 'JetBrains Mono',monospace;color:#f25c1f">{{ p.no }}</div><div style="margin-top:9px;font:700 13px/1.2 'Archivo',sans-serif;letter-spacing:-.02em;color:#f3eedd">{{ p.t }}</div></div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GOVERNANCE ============ -->
+<section id="gov" style="max-width:1240px;margin:0 auto;padding:10px 28px 50px">
+  <div style="border:2px solid #ffce1f;border-radius:18px;background:linear-gradient(90deg,rgba(242,92,31,.1),transparent);padding:26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px;align-items:center">
+    <div style="font:800 clamp(20px,2.4vw,28px)/1 'Archivo',sans-serif;letter-spacing:-.03em;color:#fff">Enterprise governance,<br>not a demo toy.</div>
+    <div style="display:flex;align-items:center;gap:11px"><span style="font:900 22px 'Archivo',sans-serif;color:#ffce1f">RBAC</span><span style="font:600 11px 'JetBrains Mono',monospace;color:rgba(243,238,221,.6)">role-scoped access on every object</span></div>
+    <div style="display:flex;align-items:center;gap:11px"><span style="font:900 22px 'Archivo',sans-serif;color:#ffce1f">AUDIT</span><span style="font:600 11px 'JetBrains Mono',monospace;color:rgba(243,238,221,.6)">every agent action &amp; approval logged</span></div>
+    <div style="display:flex;align-items:center;gap:11px"><span style="font:900 22px 'Archivo',sans-serif;color:#ffce1f">ISOLATION</span><span style="font:600 11px 'JetBrains Mono',monospace;color:rgba(243,238,221,.6)">per-tenant workspaces · OIDC</span></div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section id="cta" style="max-width:1240px;margin:0 auto;padding:20px 28px 70px">
+  <div style="border:2px solid #ffce1f;border-radius:24px;background:#0d0a07;padding:clamp(30px,5vw,60px);text-align:center;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:linear-gradient(rgba(255,206,31,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,206,31,.04) 1px,transparent 1px);background-size:30px 30px;pointer-events:none"></div>
+    <div style="position:relative">
+      <h2 style="margin:0;font:900 clamp(34px,5.5vw,72px)/.86 'Archivo',sans-serif;letter-spacing:-.05em;color:#fff">Ready to build<br>the real one?</h2>
+      <p style="max-width:520px;margin:20px auto 0;font:400 15px/1.6 'JetBrains Mono',monospace;color:rgba(243,238,221,.7)">Bring your messiest sources. We'll run a live build review and show your governed warehouse taking shape.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px">
+        <a href="#top" style="display:inline-flex;align-items:center;min-height:52px;padding:0 26px;background:#ffce1f;color:#16110c;border-radius:999px;font:800 13px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;box-shadow:5px 5px 0 #f25c1f">Book a build review</a>
+        <a href="#game" style="display:inline-flex;align-items:center;min-height:52px;padding:0 24px;border:2px solid rgba(243,238,221,.4);border-radius:999px;font:800 13px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;color:#f3eedd">Replay the build</a>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;margin-top:30px;padding-top:22px;border-top:1px solid rgba(243,238,221,.12);font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:rgba(243,238,221,.45)">
+    <span>AutoWarehouse · model-first DWH automation</span>
+    <span>Discover · Model · Map · Build · Govern · Ship</span>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  SOURCES = [
+    { id:'hrdb', name:'HR Database', type:'PostgreSQL', code:'HR', cols:42 },
+    { id:'cv', name:'CV Pool', type:'Documents', code:'CV', cols:18 },
+    { id:'payroll', name:'Payroll', type:'Oracle', code:'PR', cols:36 },
+    { id:'ats', name:'ATS', type:'REST API', code:'AT', cols:24 },
+    { id:'excel', name:'Excel Sheets', type:'Spreadsheets', code:'XL', cols:15 },
+    { id:'api', name:'Ops APIs', type:'REST / JSON', code:'AP', cols:29 },
+  ];
+  MAPPINGS = [
+    { src:'emp_no', tgt:'dim_employee.employee_key', conf:99 },
+    { src:'hire_dt', tgt:'dim_employee.valid_from', conf:97 },
+    { src:'salary', tgt:'fact_comp.amount', conf:62, low:true },
+    { src:'dept_code', tgt:'dim_department.dept_key', conf:95 },
+    { src:'mgr_id', tgt:'dim_employee.manager_key', conf:58, low:true },
+    { src:'cv_text', tgt:'stg_cv.raw_blob', conf:71, low:true },
+  ];
+  DAG = ['Generate DDL','Extract sources','Load SCD2','Quality gates','Build reports'];
+  DAGICON = ['❒','⇲','◳','◈','▤'];
+  WH = ['dim_employee','dim_department','fact_headcount','fact_comp','sem_workforce_kpi','sem_turnover'];
+  QUESTIONS = [
+    { short:'Headcount by department?', q:'What is our current headcount by department?',
+      sql:'SELECT d.dept_name, COUNT(*) FROM dim_employee e JOIN dim_department d USING(dept_key) WHERE e.is_current GROUP BY 1',
+      data:[{l:'Eng',v:82},{l:'Sales',v:54},{l:'Ops',v:38},{l:'HR',v:16}],
+      insight:'Engineering is the largest function at 43% of total headcount.' },
+    { short:'12-month turnover trend?', q:'Show the 12-month turnover trend.',
+      sql:'SELECT period, turnover_rate FROM sem_turnover ORDER BY period',
+      data:[{l:'Q1',v:6},{l:'Q2',v:9},{l:'Q3',v:7},{l:'Q4',v:4}],
+      insight:'Turnover peaked at 9% in Q2 and has since fallen to a 4% low.' },
+    { short:'Where is vacancy pressure?', q:'Which departments have the most vacancy pressure?',
+      sql:'SELECT dept_name, vacancy_pressure FROM sem_workforce_kpi ORDER BY 2 DESC',
+      data:[{l:'Sales',v:71},{l:'Eng',v:48},{l:'Ops',v:33},{l:'HR',v:12}],
+      insight:'Sales shows the highest vacancy pressure at 71 — prioritise hiring there.' },
+  ];
+  PROOF = ['Multi-source discovery','AI-assisted mapping','Human-in-the-loop review','HRDM model templates','DAG-based ETL','SCD Type 2 history','Quality gates','Agent-generated reports','NL-to-SQL · Talk-to-DWH','RBAC · audit · isolation'];
+  STATIONS = [
+    { label:'Select sources', owner:'DE', instruction:'Select your source systems' },
+    { label:'Agent discovery', owner:'AI', instruction:'Agent is scanning the estate' },
+    { label:'Review discovery', owner:'DE', instruction:'Approve the discovery results' },
+    { label:'Model & mapping', owner:'AI', instruction:'Agent maps sources to HRDM' },
+    { label:'Approve mappings', owner:'DE', instruction:'Resolve & approve the mappings' },
+    { label:'ETL build', owner:'AI', instruction:'Agent forges the ETL line' },
+    { label:'Approve ETL', owner:'DE', instruction:'Approve the ETL plan' },
+    { label:'DWH load', owner:'AI', instruction:'Loading the warehouse' },
+    { label:'Agent report', owner:'AI', instruction:'Agent reports the run' },
+    { label:'Talk-to-DWH', owner:'BU', instruction:'Ask the warehouse anything' },
+  ];
+  CHARS = {
+    AI:{ code:'AI', name:'AI Agent', color:'#f25c1f' },
+    DE:{ code:'DE', name:'Data Engineer', color:'#ffce1f' },
+    BU:{ code:'BU', name:'Business User', color:'#41d18a' },
+  };
+
+  state = {
+    step:1,
+    sources:{ hrdb:false, cv:false, payroll:false, ats:false, excel:false, api:false },
+    discTick:0, discRun:false, discDone:false, discApproved:false,
+    mapFixed:[], mapApproved:false,
+    etlTick:0, etlRun:false, etlDone:false, etlApproved:false,
+    loadTick:0, loadRun:false, loadDone:false,
+    activeQ:null, done:false,
+  };
+
+  // ---- helpers ----
+  pad(n){ return n < 10 ? '0'+n : ''+n; }
+  selected(){ return this.SOURCES.filter(s => this.state.sources[s.id]); }
+  go(n){ this.setState({ step:n }); }
+
+  toggle(id){ if(this.state.step!==1) return; this.setState(s => ({ sources:{ ...s.sources, [id]:!s.sources[id] } })); }
+
+  discAll(){
+    const sel = this.selected(); const out = [];
+    sel.forEach(s => out.push({ tag:'[ok]', color:'#41d18a', x:`schema parsed · ${s.name} (${s.cols} cols)` }));
+    sel.forEach(s => out.push({ tag:'[ok]', color:'#41d18a', x:`entities classified · ${s.code}` }));
+    out.push({ tag:'[pii]', color:'#ffce1f', x:`PII detected · ${sel.length+2} fields flagged` });
+    out.push({ tag:'[ok]', color:'#41d18a', x:'relationship graph built' });
+    out.push({ tag:'[ok]', color:'#41d18a', x:'source quality ranked' });
+    out.push({ tag:'[done]', color:'#41d18a', x:'discovery report compiled' });
+    return out;
+  }
+
+  startProc(key, max, ms){
+    clearInterval(this['_t_'+key]);
+    this.setState({ [key+'Tick']:0, [key+'Run']:true, [key+'Done']:false });
+    this['_t_'+key] = setInterval(() => {
+      this.setState(s => {
+        const t = s[key+'Tick'] + 1;
+        if (t >= max) { clearInterval(this['_t_'+key]); return { [key+'Tick']:max, [key+'Run']:false, [key+'Done']:true }; }
+        return { [key+'Tick']:t };
+      });
+    }, ms);
+  }
+
+  fix(i){ this.setState(s => s.mapFixed.includes(i) ? null : ({ mapFixed:[...s.mapFixed, i] })); }
+  ask(i){ this.setState({ activeQ:i }); }
+
+  restart(){
+    ['disc','etl','load'].forEach(k => clearInterval(this['_t_'+k]));
+    this.setState({
+      step:1, sources:{ hrdb:false, cv:false, payroll:false, ats:false, excel:false, api:false },
+      discTick:0, discRun:false, discDone:false, discApproved:false,
+      mapFixed:[], mapApproved:false,
+      etlTick:0, etlRun:false, etlDone:false, etlApproved:false,
+      loadTick:0, loadRun:false, loadDone:false, activeQ:null, done:false,
+    });
+  }
+
+  // ---- counters ----
+  fmt(el, v){ const raw = el.dataset.count; const dec = (raw.split('.')[1]||'').length; const suf = el.dataset.suffix||''; return Number(v.toFixed(dec)).toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf; }
+  componentDidMount(){
+    const els = Array.from(document.querySelectorAll('[data-count]'));
+    const run = (el) => {
+      if (el.__d) return; el.__d = true;
+      const target = parseFloat(el.dataset.count); const t0 = Date.now();
+      const id = setInterval(() => {
+        const p = Math.min(1,(Date.now()-t0)/1400); el.textContent = this.fmt(el, target*(1-Math.pow(1-p,3)));
+        if (p>=1) clearInterval(id);
+      }, 30);
+    };
+    this._cf = setTimeout(() => els.forEach(run), 500);
+  }
+  componentWillUnmount(){ ['disc','etl','load'].forEach(k => clearInterval(this['_t_'+k])); clearTimeout(this._cf); }
+
+  renderVals(){
+    const st = this.state;
+    const step = st.step;
+    const sel = this.selected();
+    const selCount = sel.length;
+    const stn = this.STATIONS[step-1];
+    const owner = stn.owner;
+
+    // characters
+    const chars = Object.keys(this.CHARS).map(k => {
+      const c = this.CHARS[k]; const on = owner === k;
+      return { ...c, op: on ? '1' : '.4', bg: on ? 'rgba(255,255,255,.06)' : 'transparent', border: on ? c.color : 'rgba(243,238,221,.18)' };
+    });
+
+    // stations
+    const stations = this.STATIONS.map((s,i) => {
+      const n = i+1; const done = n < step; const active = n === step;
+      return {
+        label:s.label, owner:s.owner, badge: done ? '✓' : this.pad(n),
+        active,
+        ownerColor: this.CHARS[s.owner].color,
+        rowbg: active ? 'rgba(255,206,31,.1)' : 'transparent',
+        rowbd: active ? 'rgba(255,206,31,.5)' : 'transparent',
+        badgeBg: done ? '#41d18a' : active ? '#ffce1f' : 'rgba(243,238,221,.1)',
+        badgeFg: (done||active) ? '#16110c' : 'rgba(243,238,221,.5)',
+        labelFg: active ? '#fff' : done ? 'rgba(243,238,221,.7)' : 'rgba(243,238,221,.4)',
+      };
+    });
+
+    // artifacts
+    const ART = [ {n:'Survey',at:1},{n:'Discovery',at:2},{n:'HRDM',at:4},{n:'Mappings',at:5},{n:'ETL DAG',at:6},{n:'Warehouse',at:8},{n:'Report',at:9},{n:'Insights',at:10} ];
+    const artifacts = ART.map(a => {
+      const unlocked = a.at===10 ? st.done : step > a.at;
+      return { n:a.n, icon: unlocked ? '◆' : '◇',
+        fg: unlocked ? '#16110c' : 'rgba(243,238,221,.4)',
+        bg: unlocked ? '#ffce1f' : 'transparent',
+        bd: unlocked ? '#ffce1f' : 'rgba(243,238,221,.18)' };
+    });
+
+    // current header
+    const current = { num:this.pad(step), label:stn.label, instruction:stn.instruction, owner, ownerName:this.CHARS[owner].name, ownerColor:this.CHARS[owner].color };
+
+    // step1 source cards
+    const sourceList = this.SOURCES.map(s => {
+      const a = !!st.sources[s.id];
+      return { ...s, active:a, onToggle:()=>this.toggle(s.id),
+        bd: a ? '#ffce1f' : 'rgba(243,238,221,.18)',
+        bg: a ? 'rgba(255,206,31,.1)' : '#0d0a07',
+        chipBg: a ? '#ffce1f' : 'rgba(243,238,221,.12)',
+        chipFg: a ? '#16110c' : '#f3eedd',
+        nameFg: a ? '#fff' : '#f3eedd',
+        dotBd: a ? '#ffce1f' : 'rgba(243,238,221,.3)',
+        dotBg: a ? '#ffce1f' : 'transparent',
+        check: a ? '✓' : '' };
+    });
+    const canDisc = selCount >= 1;
+    const btn1bg = canDisc ? '#ffce1f' : 'rgba(243,238,221,.12)';
+    const btn1fg = canDisc ? '#16110c' : 'rgba(243,238,221,.4)';
+    const btn1sh = canDisc ? '4px 4px 0 #f25c1f' : 'none';
+    const btn1op = canDisc ? '1' : '.6';
+
+    // discovery
+    const discMax = Math.max(1, this.discAll().length);
+    const discLines = this.discAll().slice(0, st.discTick);
+    const discPct = Math.round(st.discTick / discMax * 100);
+    const discHeadline = st.discDone ? `Discovery complete · ${selCount} systems scanned` : `Scanning ${selCount} source systems…`;
+    const discResults = { entities: sel.reduce((a,s)=>a+Math.round(s.cols/4),0), pii: selCount+2, rels: selCount*2+1 };
+
+    // mappings
+    const lowIdx = this.MAPPINGS.map((m,i)=>m.low?i:-1).filter(i=>i>=0);
+    const mapLowCount = lowIdx.length;
+    const mapFixedCount = st.mapFixed.length;
+    const mappings = this.MAPPINGS.map((m,i) => {
+      const fixed = st.mapFixed.includes(i);
+      const isLow = m.low && !fixed;
+      const conf = (m.low && fixed) ? 96 : m.conf;
+      const confColor = isLow ? '#e0533c' : conf>=90 ? '#41d18a' : conf>=75 ? '#ffce1f' : '#e0533c';
+      let action;
+      if (!m.low) action = React.createElement('span',{style:{font:"800 9px 'JetBrains Mono',monospace",color:'#41d18a'}},'✓ AUTO');
+      else if (fixed) action = React.createElement('span',{style:{font:"800 9px 'JetBrains Mono',monospace",color:'#41d18a'}},'✓ FIXED');
+      else action = React.createElement('button',{ onClick:()=>this.fix(i), style:{ font:"800 9px 'JetBrains Mono',monospace", color:'#16110c', background:'#e0533c', border:'none', borderRadius:'6px', padding:'6px 10px', cursor:'pointer', textTransform:'uppercase' } },'Fix');
+      return { src:m.src, tgt:m.tgt, conf, confLabel: isLow ? 'LOW '+conf : conf+'%', confColor,
+        arrow: isLow ? '#e0533c' : '#41d18a',
+        rowbg: isLow ? 'rgba(224,83,60,.08)' : fixed ? 'rgba(65,209,138,.06)' : 'transparent',
+        delay:(i*0.06)+'s', action };
+    });
+    const allFixed = mapFixedCount >= mapLowCount;
+    const btn5bg = allFixed ? '#41d18a' : 'rgba(243,238,221,.12)';
+    const btn5fg = allFixed ? '#16110c' : 'rgba(243,238,221,.4)';
+    const btn5sh = allFixed ? '4px 4px 0 #2a8c5e' : 'none';
+    const btn5op = allFixed ? '1' : '.6';
+
+    // etl dag
+    const etlMax = 11;
+    const dagNodes = this.DAG.map((name,i) => {
+      const doneN = st.etlTick >= i*2+2; const running = !doneN && st.etlTick >= i*2+1;
+      return { name, icon:this.DAGICON[i],
+        bd: doneN ? '#41d18a' : running ? '#f25c1f' : 'rgba(243,238,221,.2)',
+        bg: doneN ? 'rgba(65,209,138,.15)' : running ? 'rgba(242,92,31,.18)' : 'transparent',
+        fg: doneN ? '#41d18a' : running ? '#f25c1f' : 'rgba(243,238,221,.4)',
+        labelFg: (doneN||running) ? '#f3eedd' : 'rgba(243,238,221,.4)',
+        connector: i < this.DAG.length-1,
+        connColor: doneN ? '#41d18a' : 'rgba(243,238,221,.2)' };
+    });
+    const etlPct = Math.round(st.etlTick / etlMax * 100);
+    const etlAllLog = [ {tag:'[ok]',color:'#41d18a',x:'DDL generated · 38 objects'}, {tag:'[ok]',color:'#41d18a',x:'extract complete · all sources'}, {tag:'[ok]',color:'#41d18a',x:'SCD2 dimensions loaded'}, {tag:'[ok]',color:'#41d18a',x:'quality gates passed · 7/7'}, {tag:'[done]',color:'#41d18a',x:'reports built · DAG green'} ];
+    const etlLog = etlAllLog.slice(0, Math.min(etlAllLog.length, Math.floor(st.etlTick/2)));
+
+    // load
+    const loadMax = this.WH.length*2 + 1;
+    const loadPct = Math.round(st.loadTick / loadMax * 100);
+    const whTables = this.WH.map((name,i) => {
+      const on = st.loadTick >= i*2+2;
+      return { name, bd: on ? 'rgba(65,209,138,.4)' : 'rgba(243,238,221,.14)', bg: on ? 'rgba(65,209,138,.08)' : 'transparent',
+        dot: on ? '#41d18a' : 'rgba(243,238,221,.3)', fg: on ? '#f3eedd' : 'rgba(243,238,221,.5)', state: on ? 'LIVE' : '…' };
+    });
+
+    // talk
+    const questions = this.QUESTIONS.map((q,i) => {
+      const on = st.activeQ === i;
+      return { short:q.short, onAsk:()=>this.ask(i),
+        bd: on ? '#41d18a' : 'rgba(243,238,221,.25)', fg: on ? '#41d18a' : '#f3eedd', bg: on ? 'rgba(65,209,138,.1)' : 'transparent' };
+    });
+    const hasAnswer = st.activeQ !== null;
+    let answer = null;
+    if (hasAnswer) {
+      const q = this.QUESTIONS[st.activeQ]; const mx = Math.max(...q.data.map(d=>d.v));
+      answer = { q:q.q, sql:q.sql, insight:q.insight,
+        bars:q.data.map((d,i)=>({ label:d.l, val:d.v, pct: Math.round(d.v/mx*100), color: i===0 ? '#f25c1f' : '#ffce1f' })) };
+    }
+
+    const progressPct = st.done ? 100 : Math.round((step-1)/9*100);
+
+    return {
+      current, chars, stations, artifacts, progressPct,
+      s1:step===1, s2:step===2, s3:step===3, s4:step===4, s5:step===5, s6:step===6, s7:step===7, s8:step===8, s9:step===9, s10:step===10, done:st.done,
+      sourceList, selCount, runDiscovery:()=>{ if(!canDisc) return; this.go(2); this.startProc('disc', discMax, 200); },
+      btn1bg, btn1fg, btn1sh, btn1op,
+      discLines, discPct, discRun:st.discRun, discDone:st.discDone, discHeadline, discResults,
+      toReview:()=>this.go(3), approveDiscovery:()=>{ this.setState({discApproved:true}); this.go(4); },
+      mappings, mapLowCount, mapFixedCount, toMapReview:()=>this.go(5),
+      approveMap:()=>{ if(!allFixed) return; this.setState({mapApproved:true}); this.go(6); this.startProc('etl', etlMax, 230); },
+      btn5bg, btn5fg, btn5sh, btn5op,
+      dagNodes, etlPct, etlLog, etlDone:st.etlDone, toEtlReview:()=>this.go(7),
+      startExec:()=>{ this.setState({etlApproved:true}); this.go(8); this.startProc('load', loadMax, 190); },
+      loadPct, whTables, loadDone:st.loadDone, toReport:()=>this.go(9),
+      toTalk:()=>this.go(10),
+      questions, hasAnswer, answer, finish:()=>this.setState({done:true}),
+      restart:()=>this.restart(),
+      proof: this.PROOF.map((t,i)=>({ no:this.pad(i+1), t })),
+    };
+  }
+}
+</script>
+</body>
+</html>

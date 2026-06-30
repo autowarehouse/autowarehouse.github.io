@@ -1,25 +1,30 @@
 ---
 interface Props {
-  step?: string;
-  stepColor?: string;
-  title: string;
-  description?: string;
+  eyebrow?: string;
+  title: string;        // may contain inline HTML (e.g. <br>, <span class="highlight">)
+  lead?: string;
+  align?: 'left' | 'center';
+  class?: string;
 }
-
-const { step, stepColor, title, description } = Astro.props;
+const { eyebrow, title, lead, align = 'left', class: cls = '' } = Astro.props;
 ---
-
-<div class="mb-8">
-  {step && (
-    <div
-      class="mb-2 text-[10px] font-semibold uppercase tracking-[2px]"
-      style={stepColor ? `color: ${stepColor}` : ''}
-    >
-      {step}
-    </div>
-  )}
-  <h2 class="text-2xl font-extrabold text-white md:text-3xl">{title}</h2>
-  {description && (
-    <p class="mt-3 max-w-xl text-sm leading-relaxed text-slate-400">{description}</p>
-  )}
+<div class={`aw-heading ${align === 'center' ? 'is-center' : ''} ${cls}`}>
+  {eyebrow && <div class="eyebrow">{eyebrow}</div>}
+  <h2 class="aw-h2" set:html={title}></h2>
+  {lead && <p class="aw-lead">{lead}</p>}
 </div>
+
+<style>
+  .aw-heading { max-width: 760px; }
+  .aw-heading.is-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .aw-h2 {
+    margin: 14px 0 0;
+    font: 900 clamp(30px, 4.5vw, 56px) / 0.92 var(--font-display);
+    letter-spacing: -0.04em; color: var(--ink);
+  }
+  .aw-lead {
+    margin: 18px 0 0; max-width: 580px;
+    font: 400 clamp(14px, 1.5vw, 16px) / 1.6 var(--font-mono); color: var(--ink-muted);
+  }
+  .is-center .aw-lead { margin-left: auto; margin-right: auto; }
+</style>

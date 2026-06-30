@@ -1,265 +1,446 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
-import Badge from '@components/ui/Badge.astro';
-import GradientOrb from '@components/ui/GradientOrb.astro';
-import PipelineBar from '@components/ui/PipelineBar.astro';
-import TechStackGrid from '@components/common/TechStackGrid.astro';
 
-const techStack = [
-  { name: 'Enterprise Web Platform', description: 'Multi-tenant UI with role-based dashboards and real-time collaboration' },
-  { name: 'AI Agent Engine', description: 'Multi-agent orchestration for discovery, mapping, and documentation' },
-  { name: 'LLM Gateway', description: 'Local-first LLM integration — Ollama, vLLM, LiteLLM, or any compatible runtime' },
-  { name: 'Data Profiling Engine', description: 'Automated database discovery, column profiling, anomaly detection' },
-  { name: 'ETL Code Generator', description: 'Deterministic, plugin-based exporters for Airflow, dbt, Snowflake, Spark, PL/SQL' },
-  { name: 'Data Quality Engine', description: 'Null analysis, cardinality checks, anomaly flags, completeness scoring' },
-  { name: 'Metadata Store', description: 'PostgreSQL with vector extensions for semantic search and audit trails' },
-  { name: 'Container-Native', description: 'Docker Compose and Kubernetes-ready with Helm charts' },
+const STACK = [
+  { no: '01', t: 'Enterprise Web Platform', b: 'Multi-tenant UI, role-based dashboards, and real-time collaboration across teams.' },
+  { no: '02', t: 'AI Agent Engine', b: 'Multi-agent orchestration for discovery, mapping, and documentation.' },
+  { no: '03', t: 'LLM Gateway', b: 'Local-first: Ollama, vLLM, LiteLLM, or any compatible runtime.' },
+  { no: '04', t: 'Data Profiling Engine', b: 'Automated discovery, column profiling, and anomaly detection.' },
+  { no: '05', t: 'ETL Code Generator', b: 'Deterministic, plugin-based exporters for Airflow, dbt, Snowflake, Spark, PL/SQL.' },
+  { no: '06', t: 'Data Quality Engine', b: 'Null analysis, cardinality, anomaly flags, and completeness scoring.' },
+  { no: '07', t: 'Metadata Store', b: 'PostgreSQL with vector extensions for semantic search and audit.' },
+  { no: '08', t: 'Container-Native', b: 'Docker Compose & Kubernetes-ready with Helm charts.' },
 ];
 
-const security = [
-  { icon: '🔐', title: 'AES-256-GCM', desc: 'Encryption for all credentials' },
-  { icon: '🔑', title: 'OIDC-First Auth', desc: 'Keycloak, Auth0, LDAP support' },
-  { icon: '🛡️', title: 'RBAC', desc: '30+ granular permissions' },
-  { icon: '📋', title: 'Audit Logging', desc: 'Full traceability for every AI decision and data operation' },
+const SECURITY = [
+  { k: 'AES-256-GCM', t: 'Credential Encryption', b: 'Encryption for all credentials, at rest and in transit.' },
+  { k: 'OIDC-FIRST', t: 'Identity & Auth', b: 'OIDC-first authentication: Keycloak, Auth0, LDAP.' },
+  { k: 'RBAC', t: 'Access Control', b: '30+ granular permissions enforced on every object.' },
+  { k: 'AUDIT', t: 'Audit Logging', b: 'Full traceability for every AI decision and data operation.' },
+];
+
+const ISOLATION = [
+  {
+    t: 'Air-Gapped Deployment',
+    b: 'The app, AI engine, LLM runtime, and database all run on your infrastructure — no internet required. Built for banking, defense, and government environments.',
+  },
+  {
+    t: 'Local LLM — No Cloud AI',
+    b: 'Run Ollama, vLLM, or LiteLLM locally. Schemas, column names, business rules, and mapping logic are never sent to an external service.',
+  },
+  {
+    t: 'Zero Data Exfiltration',
+    b: 'Read-only source profiling. Generated code runs in your own tools. No data is ever copied, cached, or transmitted out of your environment.',
+  },
+  {
+    t: 'Compliance Ready',
+    b: 'Aligned with KVKK, GDPR, PCI-DSS, and SOC 2. Data residency by design, with full audit trails on every operation.',
+  },
+];
+
+const ECOSYSTEM = [
+  { tag: 'Data Models', name: 'IFDM · ITDM · HRDM', b: 'Industry warehouse models for Finance, Telecom, and HR.', c: 'var(--orange)' },
+  { tag: 'Quality', name: 'ICC', b: 'Central data consistency: reconciliation rules, quality gates, and drift monitoring.', c: 'var(--green)' },
+  { tag: 'NL Analytics', name: 'Talk To', b: 'Ask questions in plain language, get SQL and visualizations back.', c: 'var(--yellow)' },
+  { tag: 'Orchestration', name: 'Orqenta', b: 'Workflow orchestration purpose-built for regulated environments.', c: 'var(--alert)' },
+];
+
+const ARCH = [
+  { layer: 'Presentation', sys: 'Web App', parts: ['Dashboards', 'Data Studio', 'Auth'], c: 'var(--yellow)' },
+  { layer: 'AI Engine', sys: 'Multi-Agent Orchestration', parts: ['Discovery', 'Mapping', 'NL-SQL'], c: 'var(--orange)' },
+  { layer: 'ETL Runtime', sys: 'Worker Pool + Code Generator', parts: ['Execution', 'Profiling', 'Export'], c: 'var(--green)' },
+  { layer: 'Data', sys: 'Metadata & Vector Store', parts: ['Catalog', 'Embeddings', 'Audit'], c: 'var(--alert)' },
+];
+
+const PRINCIPLES = [
+  { no: '01', t: 'Data Sovereignty', b: 'Your data, your infrastructure, your control — nothing leaves your perimeter.' },
+  { no: '02', t: 'Elastic Scaling', b: 'Scale workers horizontally and tenants independently as workloads grow.' },
+  { no: '03', t: 'Zero Downtime Updates', b: 'Roll out new versions without interrupting running pipelines or analytics.' },
 ];
 ---
 
-<PageLayout title="Platform" description="AutoWarehouse platform architecture: self-hosted, multi-tenant, AI-powered. Tech stack, security (AES-256-GCM, RBAC), deployment options, and Intellica ecosystem integration.">
-  <!-- Hero -->
-  <section class="relative overflow-hidden py-20">
-    <GradientOrb color="blue" size="400px" position="top: -100px; right: -100px;" />
-    <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
-      <Badge>Platform Overview</Badge>
-      <h1 class="mt-4 text-3xl font-extrabold text-white md:text-5xl">Built for Enterprise Data</h1>
-      <p class="mt-4 text-base text-slate-400">
+<PageLayout
+  title="Platform"
+  description="AutoWarehouse platform architecture: self-hosted, multi-tenant, AI-powered. Tech stack, security (AES-256-GCM, RBAC), deployment options, and Intellica ecosystem integration."
+>
+  <!-- ░░ HERO ░░ -->
+  <section class="hero grid-bg">
+    <div class="shell hero-in">
+      <div class="eyebrow">Platform Overview</div>
+      <h1 class="hero-h">Built for <span class="highlight">Enterprise</span> Data</h1>
+      <p class="hero-sub">
         Multi-tenant, AI-powered, self-hosted. One platform from source ingestion to business intelligence.
       </p>
+      <div class="hero-cta">
+        <a href="/contact" class="btn btn-primary">Request a demo</a>
+        <a href="/use-cases" class="btn btn-outline">See use cases</a>
+      </div>
     </div>
   </section>
 
-  <!-- Pipeline -->
-  <section class="bg-[var(--bg-secondary)] py-8">
-    <PipelineBar />
-  </section>
-
-  <!-- Tech Stack -->
-  <section class="py-16">
-    <div class="mx-auto max-w-6xl px-6">
-      <h2 class="mb-8 text-center text-2xl font-extrabold text-white">Platform Capabilities</h2>
-      <TechStackGrid items={techStack} />
+  <!-- ░░ PLATFORM CAPABILITIES ░░ -->
+  <section class="shell sec">
+    <div class="eyebrow" style="color:var(--orange)">Platform Capabilities</div>
+    <h2 class="sec-h">A complete data stack,<br />in one deployable unit</h2>
+    <div class="stack-grid">
+      {STACK.map((s) => (
+        <article class="stack-card reveal">
+          <div class="stack-no">{s.no}</div>
+          <h3 class="stack-t">{s.t}</h3>
+          <p class="stack-b">{s.b}</p>
+        </article>
+      ))}
     </div>
   </section>
 
-  <!-- Security -->
-  <section class="bg-[var(--bg-secondary)] py-16">
-    <div class="mx-auto max-w-6xl px-6">
-      <h2 class="mb-8 text-center text-2xl font-extrabold text-white">Security & Compliance</h2>
-      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {security.map((s) => (
-          <div class="glass-card rounded-xl p-5 text-center">
-            <div class="text-2xl">{s.icon}</div>
-            <div class="mt-2 text-sm font-semibold text-white">{s.title}</div>
-            <div class="mt-1 text-xs text-slate-400">{s.desc}</div>
-          </div>
+  <!-- ░░ SECURITY & COMPLIANCE ░░ -->
+  <section class="shell sec">
+    <div class="eyebrow" style="color:var(--green)">Security &amp; Compliance</div>
+    <h2 class="sec-h">Hardened by default</h2>
+    <div class="sec-grid">
+      {SECURITY.map((s) => (
+        <article class="sec-card reveal">
+          <div class="sec-card-k">{s.k}</div>
+          <h3 class="sec-card-t">{s.t}</h3>
+          <p class="sec-card-b">{s.b}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ░░ COMPLETE DATA ISOLATION ░░ -->
+  <section class="iso grid-bg reveal">
+    <div class="shell">
+      <div class="eyebrow">Complete Data Isolation</div>
+      <h2 class="sec-h">Your data never leaves<br />your environment</h2>
+      <p class="iso-sub">
+        AutoWarehouse runs entirely within your network perimeter. No cloud dependency, no external API calls,
+        no data leaves your environment — ever.
+      </p>
+      <div class="iso-grid">
+        {ISOLATION.map((i) => (
+          <article class="iso-card reveal">
+            <span class="iso-check" aria-hidden="true">✓</span>
+            <div>
+              <h3 class="iso-t">{i.t}</h3>
+              <p class="iso-b">{i.b}</p>
+            </div>
+          </article>
         ))}
       </div>
-    </div>
-  </section>
-
-  <!-- Data Isolation -->
-  <section class="py-16">
-    <div class="mx-auto max-w-5xl px-6">
-      <h2 class="mb-3 text-center text-2xl font-extrabold text-white">Complete Data Isolation</h2>
-      <p class="mx-auto mb-10 max-w-2xl text-center text-sm text-slate-400">
-        AutoWarehouse runs entirely within your network perimeter. No cloud dependency, no external API calls, no data leaves your environment — ever.
-      </p>
-
-      <div class="glass-card rounded-xl p-6 mb-6">
-        <div class="grid gap-6 md:grid-cols-2">
-          <div>
-            <h3 class="text-sm font-bold text-white flex items-center gap-2">
-              <span class="text-green-400">✓</span> Air-Gapped Deployment
-            </h3>
-            <p class="mt-2 text-xs leading-relaxed text-slate-400">
-              The entire platform — application, AI engine, LLM runtime, and database — runs on your infrastructure without any internet connectivity requirement. Deploy in fully isolated, air-gapped networks that meet the strictest security requirements of banking, defense, and government environments.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-sm font-bold text-white flex items-center gap-2">
-              <span class="text-green-400">✓</span> Local LLM — No Cloud AI
-            </h3>
-            <p class="mt-2 text-xs leading-relaxed text-slate-400">
-              AI capabilities run on self-hosted LLM runtimes (Ollama, vLLM, LiteLLM). Your source schemas, column names, business rules, and mapping logic are never sent to any external service. The AI engine lives inside your firewall.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-sm font-bold text-white flex items-center gap-2">
-              <span class="text-green-400">✓</span> Zero Data Exfiltration
-            </h3>
-            <p class="mt-2 text-xs leading-relaxed text-slate-400">
-              AutoWarehouse connects to your source databases read-only for profiling and discovery. Generated ETL code runs in your own pipeline tools (Airflow, dbt, Spark). No data is copied, cached, or transmitted outside your environment.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-sm font-bold text-white flex items-center gap-2">
-              <span class="text-green-400">✓</span> Compliance Ready
-            </h3>
-            <p class="mt-2 text-xs leading-relaxed text-slate-400">
-              Designed for regulated industries: KVKK, GDPR, PCI-DSS, SOC 2 — the platform's architecture ensures data residency compliance by design. Full audit trails for every AI decision and data operation.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="rounded-xl border border-green-500/15 bg-green-500/5 p-5 text-center">
-        <p class="text-xs leading-relaxed text-green-300/80">
-          <span class="font-semibold text-green-300">For enterprise security teams:</span> AutoWarehouse requires no outbound network access. It can be deployed in environments with no internet connectivity. All dependencies — including LLM weights — are bundled in the container images.
+      <div class="iso-note reveal">
+        <span class="iso-note-k">Enterprise Security Note</span>
+        <p class="iso-note-b">
+          AutoWarehouse requires no outbound network access. All dependencies — including LLM weights — are
+          bundled in the container images.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Intellica Ecosystem -->
-  <section class="py-16">
-    <div class="mx-auto max-w-6xl px-6">
-      <h2 class="mb-3 text-center text-2xl font-extrabold text-white">Intellica Ecosystem</h2>
-      <p class="mb-8 text-center text-sm text-slate-400">
-        AutoWarehouse integrates with and builds upon Intellica's proven product family
-      </p>
-      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <div class="glass-card rounded-xl p-5">
-          <div class="text-xs font-semibold text-blue-400">Data Models</div>
-          <div class="mt-1 text-sm font-semibold text-white">IFDM · ITDM · HRDM</div>
-          <p class="mt-2 text-xs text-slate-400">Industry-standard warehouse models for Finance, Telecom, and HR — refined across dozens of deployments</p>
-        </div>
-        <div class="glass-card rounded-xl p-5">
-          <div class="text-xs font-semibold text-purple-400">Quality</div>
-          <div class="mt-1 text-sm font-semibold text-white">ICC</div>
-          <p class="mt-2 text-xs text-slate-400">Central data consistency management — reconciliation rules, quality gates, and drift monitoring</p>
-        </div>
-        <div class="glass-card rounded-xl p-5">
-          <div class="text-xs font-semibold text-pink-400">NL Analytics</div>
-          <div class="mt-1 text-sm font-semibold text-white">Talk To</div>
-          <p class="mt-2 text-xs text-slate-400">Natural language data interaction — ask questions, get SQL queries and visualizations instantly</p>
-        </div>
-        <div class="glass-card rounded-xl p-5">
-          <div class="text-xs font-semibold text-green-400">Orchestration</div>
-          <div class="mt-1 text-sm font-semibold text-white">Orqenta</div>
-          <p class="mt-2 text-xs text-slate-400">Workflow orchestration and automation for regulated environments and complex data pipelines</p>
-        </div>
-      </div>
+  <!-- ░░ INTELLICA ECOSYSTEM ░░ -->
+  <section class="shell sec">
+    <div class="eyebrow" style="color:var(--orange)">Intellica Ecosystem</div>
+    <h2 class="sec-h">Built alongside a proven<br />data &amp; AI portfolio</h2>
+    <div class="eco-grid">
+      {ECOSYSTEM.map((e) => (
+        <article class="eco-card reveal" style={`--c:${e.c}`}>
+          <div class="eco-tag">{e.tag}</div>
+          <div class="eco-name">{e.name}</div>
+          <p class="eco-b">{e.b}</p>
+        </article>
+      ))}
     </div>
   </section>
 
-  <!-- Deployment -->
-  <section class="bg-[var(--bg-secondary)] py-16">
-    <div class="mx-auto max-w-6xl px-6">
-      <h2 class="mb-3 text-center text-2xl font-extrabold text-white">Deploy Your Way</h2>
-      <p class="mb-10 text-center text-sm text-slate-400">
-        Self-hosted on your infrastructure. No cloud lock-in. Choose the topology that fits your scale.
+  <!-- ░░ DEPLOY YOUR WAY ░░ -->
+  <section class="shell sec">
+    <div class="eyebrow" style="color:var(--green)">Deploy Your Way</div>
+    <h2 class="sec-h">Three topologies,<br />one platform</h2>
+    <div class="dep-grid">
+      <!-- Development & POC -->
+      <article class="dep-card reveal">
+        <div class="dep-head">
+          <span class="dep-no">01</span>
+          <div>
+            <div class="dep-kicker">Development &amp; POC</div>
+            <h3 class="dep-t">Single Machine</h3>
+          </div>
+        </div>
+        <p class="dep-lead">Docker Compose on one VM or laptop.</p>
+        <code class="dep-code">$ docker compose up -d</code>
+        <ul class="dep-list">
+          <li><span class="dep-svc">autowarehouse-db</span> metadata &amp; vector store</li>
+          <li><span class="dep-svc">autowarehouse-web</span> app server</li>
+          <li><span class="dep-svc">autowarehouse-worker</span> ETL engine</li>
+          <li><span class="dep-svc">autowarehouse-llm</span> local LLM</li>
+        </ul>
+        <div class="dep-foot">
+          <span class="dep-foot-k">Min resources</span>
+          <span class="dep-foot-v">4 vCPU · 16GB RAM · 100GB SSD</span>
+        </div>
+      </article>
+
+      <!-- Production -->
+      <article class="dep-card reveal dep-card--rec">
+        <div class="dep-head">
+          <span class="dep-no">02</span>
+          <div>
+            <div class="dep-kicker">Production</div>
+            <h3 class="dep-t">Multi-Container</h3>
+          </div>
+          <span class="dep-badge">Recommended</span>
+        </div>
+        <p class="dep-lead">Scale-out deployment with managed dependencies.</p>
+        <ul class="dep-list dep-list--bullets">
+          <li>External PostgreSQL (RDS / Cloud SQL / on-prem)</li>
+          <li>Horizontal worker scaling</li>
+          <li>Local LLM</li>
+          <li>Reverse proxy (Nginx / Traefik) + TLS</li>
+          <li>Log aggregation &amp; health checks</li>
+        </ul>
+        <div class="dep-foot">
+          <span class="dep-foot-k">Recommended</span>
+          <span class="dep-foot-v">8+ vCPU · 32+GB RAM · HA storage</span>
+        </div>
+      </article>
+
+      <!-- Enterprise Scale -->
+      <article class="dep-card reveal">
+        <div class="dep-head">
+          <span class="dep-no">03</span>
+          <div>
+            <div class="dep-kicker">Enterprise Scale</div>
+            <h3 class="dep-t">Kubernetes</h3>
+          </div>
+        </div>
+        <p class="dep-lead">Cloud-native orchestration at scale.</p>
+        <ul class="dep-list dep-list--bullets">
+          <li>Helm chart</li>
+          <li>HPA auto-scaling</li>
+          <li>Namespace tenant isolation</li>
+          <li>Prometheus + Grafana</li>
+          <li>Backup &amp; DR</li>
+        </ul>
+        <div class="dep-foot">
+          <span class="dep-foot-k">Supported</span>
+          <span class="dep-foot-v">EKS · AKS · GKE · On-prem K8s</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ░░ PLATFORM ARCHITECTURE ░░ -->
+  <section class="shell sec">
+    <div class="eyebrow" style="color:var(--orange)">Platform Architecture</div>
+    <h2 class="sec-h">Four layers, one model</h2>
+    <div class="arch">
+      {ARCH.map((a, i) => (
+        <div class="arch-band reveal" style={`--c:${a.c}`}>
+          <div class="arch-band-l">
+            <span class="arch-idx">L{i + 1}</span>
+            <div>
+              <div class="arch-layer">{a.layer}</div>
+              <div class="arch-sys">{a.sys}</div>
+            </div>
+          </div>
+          <div class="arch-parts">
+            {a.parts.map((p) => <span class="arch-chip">{p}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ░░ KEY PRINCIPLES ░░ -->
+  <section class="shell sec">
+    <div class="eyebrow" style="color:var(--green)">Key Principles</div>
+    <h2 class="sec-h">What we never compromise</h2>
+    <div class="prin-grid">
+      {PRINCIPLES.map((p) => (
+        <article class="prin-card reveal">
+          <div class="prin-no">{p.no}</div>
+          <h3 class="prin-t">{p.t}</h3>
+          <p class="prin-b">{p.b}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ░░ FINAL CTA ░░ -->
+  <section class="shell cta-sec">
+    <div class="card-frame cta-card grid-bg reveal">
+      <h2 class="cta-h">Ready to deploy on<br />your own terms?</h2>
+      <p class="cta-lead">
+        Self-hosted, air-gapped, and yours end to end. Let's map AutoWarehouse to your infrastructure.
       </p>
-
-      <!-- Deployment Tiers -->
-      <div class="grid gap-4 md:grid-cols-3">
-        <!-- Dev / POC -->
-        <div class="glass-card rounded-xl p-6">
-          <div class="text-[10px] font-semibold uppercase tracking-[2px] text-blue-400">Development & POC</div>
-          <h3 class="mt-2 text-sm font-bold text-white">Single Machine</h3>
-          <p class="mt-2 text-xs text-slate-400">Docker Compose on a single VM or laptop. Ideal for evaluation, development, and proof-of-concept deployments.</p>
-          <div class="mt-4 rounded-lg bg-black/30 p-3">
-            <code class="block text-[11px] leading-relaxed text-slate-300">
-              <span class="text-slate-500">$</span> docker compose up -d<br />
-              <span class="text-green-400">✓</span> autowarehouse-db — metadata & vector store<br />
-              <span class="text-green-400">✓</span> autowarehouse-web — application server<br />
-              <span class="text-green-400">✓</span> autowarehouse-worker — ETL processing engine<br />
-              <span class="text-green-400">✓</span> autowarehouse-llm — local LLM runtime
-            </code>
-          </div>
-          <div class="mt-3 text-[10px] text-slate-500">Min: 4 vCPU · 16 GB RAM · 100 GB SSD</div>
-        </div>
-
-        <!-- Production -->
-        <div class="glass-card rounded-xl border-blue-500/20 p-6">
-          <div class="text-[10px] font-semibold uppercase tracking-[2px] text-purple-400">Production</div>
-          <h3 class="mt-2 text-sm font-bold text-white">Multi-Container</h3>
-          <p class="mt-2 text-xs text-slate-400">Isolated services with dedicated resources, external database, and self-hosted LLM runtime. Production-ready with monitoring.</p>
-          <div class="mt-4 space-y-1.5 text-[11px] text-slate-300">
-            <div class="flex items-center gap-2"><span class="text-purple-400">◆</span> External PostgreSQL (RDS, Cloud SQL, on-prem)</div>
-            <div class="flex items-center gap-2"><span class="text-purple-400">◆</span> Horizontal worker scaling (N ETL workers)</div>
-            <div class="flex items-center gap-2"><span class="text-purple-400">◆</span> Local LLM: Ollama, vLLM, or LiteLLM</div>
-            <div class="flex items-center gap-2"><span class="text-purple-400">◆</span> Reverse proxy (Nginx / Traefik) + TLS</div>
-            <div class="flex items-center gap-2"><span class="text-purple-400">◆</span> Log aggregation & health checks</div>
-          </div>
-          <div class="mt-3 text-[10px] text-slate-500">Rec: 8+ vCPU · 32+ GB RAM · HA storage</div>
-        </div>
-
-        <!-- Enterprise / K8s -->
-        <div class="glass-card rounded-xl p-6">
-          <div class="text-[10px] font-semibold uppercase tracking-[2px] text-green-400">Enterprise Scale</div>
-          <h3 class="mt-2 text-sm font-bold text-white">Kubernetes</h3>
-          <p class="mt-2 text-xs text-slate-400">Helm charts for full Kubernetes orchestration. Auto-scaling, multi-tenant isolation, and enterprise-grade observability.</p>
-          <div class="mt-4 space-y-1.5 text-[11px] text-slate-300">
-            <div class="flex items-center gap-2"><span class="text-green-400">◆</span> Helm chart with configurable values</div>
-            <div class="flex items-center gap-2"><span class="text-green-400">◆</span> HPA auto-scaling (web + workers)</div>
-            <div class="flex items-center gap-2"><span class="text-green-400">◆</span> Namespace-level tenant isolation</div>
-            <div class="flex items-center gap-2"><span class="text-green-400">◆</span> Prometheus + Grafana monitoring</div>
-            <div class="flex items-center gap-2"><span class="text-green-400">◆</span> Backup & disaster recovery</div>
-          </div>
-          <div class="mt-3 text-[10px] text-slate-500">EKS · AKS · GKE · On-prem K8s</div>
-        </div>
-      </div>
-
-      <!-- Architecture Diagram -->
-      <div class="mt-10 glass-card rounded-xl p-6">
-        <div class="mb-4 text-center text-[10px] font-semibold uppercase tracking-[2px] text-slate-500">Platform Architecture</div>
-        <div class="grid gap-3 md:grid-cols-4">
-          <div class="rounded-lg bg-blue-500/10 border border-blue-500/20 p-3 text-center">
-            <div class="text-[10px] font-semibold uppercase tracking-wider text-blue-400">Presentation</div>
-            <div class="mt-1 text-xs text-slate-300">Web Application</div>
-            <div class="mt-0.5 text-[10px] text-slate-500">Dashboards · Data Studio · Auth</div>
-          </div>
-          <div class="rounded-lg bg-purple-500/10 border border-purple-500/20 p-3 text-center">
-            <div class="text-[10px] font-semibold uppercase tracking-wider text-purple-400">AI Engine</div>
-            <div class="mt-1 text-xs text-slate-300">Multi-Agent Orchestration</div>
-            <div class="mt-0.5 text-[10px] text-slate-500">Discovery · Mapping · NL-SQL</div>
-          </div>
-          <div class="rounded-lg bg-green-500/10 border border-green-500/20 p-3 text-center">
-            <div class="text-[10px] font-semibold uppercase tracking-wider text-green-400">ETL Runtime</div>
-            <div class="mt-1 text-xs text-slate-300">Worker Pool + Code Generator</div>
-            <div class="mt-0.5 text-[10px] text-slate-500">Execution · Profiling · Export</div>
-          </div>
-          <div class="rounded-lg bg-yellow-500/10 border border-yellow-500/20 p-3 text-center">
-            <div class="text-[10px] font-semibold uppercase tracking-wider text-yellow-400">Data Layer</div>
-            <div class="mt-1 text-xs text-slate-300">Metadata & Vector Store</div>
-            <div class="mt-0.5 text-[10px] text-slate-500">Catalog · Embeddings · Audit</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Key Principles -->
-      <div class="mt-6 grid gap-3 md:grid-cols-3">
-        <div class="flex items-start gap-3 rounded-lg p-3">
-          <span class="mt-0.5 text-lg">🔓</span>
-          <div>
-            <div class="text-xs font-semibold text-white">Data Sovereignty</div>
-            <div class="text-[11px] text-slate-400">Your data never leaves your infrastructure. No external API calls required — run LLMs locally with Ollama, vLLM, or LiteLLM.</div>
-          </div>
-        </div>
-        <div class="flex items-start gap-3 rounded-lg p-3">
-          <span class="mt-0.5 text-lg">📈</span>
-          <div>
-            <div class="text-xs font-semibold text-white">Elastic Scaling</div>
-            <div class="text-[11px] text-slate-400">Scale ETL workers independently from the web tier. Process 10 tables or 10,000 — the architecture adapts to your workload.</div>
-          </div>
-        </div>
-        <div class="flex items-start gap-3 rounded-lg p-3">
-          <span class="mt-0.5 text-lg">🔄</span>
-          <div>
-            <div class="text-xs font-semibold text-white">Zero Downtime Updates</div>
-            <div class="text-[11px] text-slate-400">Rolling deployments with database migrations. Update the platform without interrupting running ETL jobs or active sessions.</div>
-          </div>
-        </div>
+      <div class="cta-row">
+        <a href="/contact" class="btn btn-primary cta-btn">Request a demo</a>
+        <a href="/use-cases" class="btn btn-outline cta-btn">Explore use cases</a>
       </div>
     </div>
   </section>
 </PageLayout>
+
+<style>
+  /* ── shared section rhythm ── */
+  .sec { padding-top: 60px; }
+  .sec-h {
+    margin: 12px 0 30px;
+    font: 900 clamp(26px, 3.4vw, 42px)/0.95 var(--font-display);
+    letter-spacing: -0.04em; color: var(--ink);
+  }
+
+  /* ── HERO ── */
+  .hero { position: relative; overflow: hidden; }
+  .hero-in { padding-top: 44px; padding-bottom: 36px; }
+  .hero-h {
+    margin: 14px 0 0;
+    font: 900 clamp(38px, 6vw, 72px)/0.88 var(--font-display);
+    letter-spacing: -0.05em; color: var(--ink);
+  }
+  .hero-sub {
+    max-width: 600px; margin: 22px 0 0;
+    font: 400 clamp(14px, 1.6vw, 17px)/1.55 var(--font-mono); color: var(--ink-muted);
+  }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+  /* ── PLATFORM CAPABILITIES ── */
+  .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .stack-card {
+    padding: 20px; border: 1px solid var(--line-soft); border-radius: 12px; background: var(--panel);
+    border-top: 3px solid var(--orange); transition: transform .18s ease, border-color .2s ease;
+  }
+  .stack-card:hover { transform: translateY(-3px); border-color: var(--orange); }
+  .stack-no { font: 800 12px var(--font-mono); color: var(--orange); letter-spacing: .08em; }
+  .stack-t { margin: 12px 0 0; font: 800 17px/1.1 var(--font-display); letter-spacing: -0.02em; color: var(--ink); }
+  .stack-b { margin: 9px 0 0; font: 400 13px/1.55 var(--font-body); color: var(--ink-muted); }
+
+  /* ── SECURITY ── */
+  .sec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+  .sec-card {
+    padding: 20px; border: 1px solid var(--line-soft); border-radius: 12px; background: var(--panel);
+    border-left: 3px solid var(--green); transition: transform .18s ease, border-color .2s ease;
+  }
+  .sec-card:hover { transform: translateY(-3px); border-color: var(--green); }
+  .sec-card-k { font: 800 12px var(--font-mono); color: var(--green); letter-spacing: .08em; }
+  .sec-card-t { margin: 10px 0 0; font: 800 16px/1.1 var(--font-display); letter-spacing: -0.02em; color: var(--ink); }
+  .sec-card-b { margin: 8px 0 0; font: 400 13px/1.55 var(--font-body); color: var(--ink-muted); }
+
+  /* ── DATA ISOLATION ── */
+  .iso { position: relative; overflow: hidden; margin-top: 60px; padding: 60px 0; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+  .iso-sub {
+    max-width: 620px; margin: 18px 0 0;
+    font: 400 clamp(14px, 1.5vw, 16px)/1.6 var(--font-mono); color: var(--ink-muted);
+  }
+  .iso-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; margin-top: 32px; }
+  .iso-card {
+    display: flex; gap: 14px; align-items: flex-start; padding: 22px;
+    border: 1px solid var(--line); border-radius: 14px; background: var(--panel); transition: transform .18s ease;
+  }
+  .iso-card:hover { transform: translateY(-3px); }
+  .iso-check {
+    flex: none; display: grid; place-items: center; width: 30px; height: 30px;
+    border-radius: 8px; background: var(--green); color: var(--on-accent);
+    font: 800 16px var(--font-mono);
+  }
+  .iso-t { margin: 0; font: 800 17px/1.1 var(--font-display); letter-spacing: -0.02em; color: var(--ink); }
+  .iso-b { margin: 9px 0 0; font: 400 13px/1.6 var(--font-body); color: var(--ink-muted); }
+  .iso-note {
+    margin-top: 22px; padding: 22px 24px; border-radius: 14px;
+    border: 2px solid var(--yellow);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--orange) 12%, transparent), transparent);
+  }
+  .iso-note-k { font: 800 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--yellow); }
+  .iso-note-b { margin: 10px 0 0; font: 500 14px/1.6 var(--font-mono); color: var(--ink); max-width: 760px; }
+
+  /* ── ECOSYSTEM ── */
+  .eco-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .eco-card {
+    padding: 22px; border: 1px solid var(--line-soft); border-radius: 14px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--c) 9%, var(--panel)), var(--panel));
+    border-top: 3px solid var(--c); transition: transform .18s ease;
+  }
+  .eco-card:hover { transform: translateY(-3px); }
+  .eco-tag { font: 800 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
+  .eco-name { margin: 8px 0 0; font: 900 20px/1 var(--font-display); letter-spacing: -0.03em; color: var(--ink); }
+  .eco-b { margin: 11px 0 0; font: 400 13px/1.55 var(--font-body); color: var(--ink-muted); }
+
+  /* ── DEPLOY ── */
+  .dep-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  .dep-card {
+    display: flex; flex-direction: column; padding: 24px; border: 1px solid var(--line-soft);
+    border-radius: 16px; background: var(--panel); transition: transform .18s ease, border-color .2s ease;
+  }
+  .dep-card:hover { transform: translateY(-3px); }
+  .dep-card--rec { border: 2px solid var(--yellow); }
+  .dep-head { display: flex; align-items: flex-start; gap: 14px; }
+  .dep-no { font: 900 24px var(--font-display); color: var(--ink-dim); letter-spacing: -0.02em; line-height: 1; }
+  .dep-kicker { font: 800 10px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-dim); }
+  .dep-t { margin: 5px 0 0; font: 900 22px/1 var(--font-display); letter-spacing: -0.03em; color: var(--ink); }
+  .dep-badge {
+    margin-left: auto; align-self: flex-start; padding: 5px 10px; border-radius: 999px;
+    background: var(--yellow); color: var(--on-accent);
+    font: 800 9px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
+  }
+  .dep-lead { margin: 16px 0 0; font: 400 13px/1.5 var(--font-body); color: var(--ink-muted); }
+  .dep-code {
+    display: block; margin: 14px 0 0; padding: 11px 14px; border-radius: 9px;
+    background: var(--terminal); border: 1px solid var(--line-soft);
+    font: 600 13px var(--font-mono); color: var(--green); overflow-x: auto;
+  }
+  .dep-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 9px; }
+  .dep-list li { font: 400 12.5px/1.45 var(--font-body); color: var(--ink-muted); }
+  .dep-svc { display: inline-block; font: 700 11px var(--font-mono); color: var(--orange); margin-right: 6px; }
+  .dep-list--bullets li { position: relative; padding-left: 18px; }
+  .dep-list--bullets li::before {
+    content: '▸'; position: absolute; left: 0; top: 0; color: var(--yellow); font: 700 12px var(--font-mono);
+  }
+  .dep-foot {
+    margin-top: 18px; padding-top: 16px;
+    display: flex; flex-direction: column; gap: 4px; border-top: 1px dashed var(--line);
+  }
+  .dep-foot-k { font: 800 9px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-dim); }
+  .dep-foot-v { font: 700 12px var(--font-mono); color: var(--ink); }
+
+  /* ── ARCHITECTURE ── */
+  .arch { display: grid; gap: 10px; }
+  .arch-band {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 22px; border-radius: 14px; border: 1px solid var(--line-soft); background: var(--panel);
+    border-left: 5px solid var(--c); transition: transform .18s ease;
+  }
+  .arch-band:hover { transform: translateX(4px); }
+  .arch-band-l { display: flex; align-items: center; gap: 16px; min-width: 240px; }
+  .arch-idx {
+    flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px;
+    background: color-mix(in srgb, var(--c) 16%, transparent); color: var(--c);
+    font: 900 14px var(--font-mono); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent);
+  }
+  .arch-layer { font: 900 19px/1 var(--font-display); letter-spacing: -0.03em; color: var(--ink); }
+  .arch-sys { margin-top: 5px; font: 500 12px var(--font-mono); color: var(--ink-muted); }
+  .arch-parts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .arch-chip {
+    padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line-soft);
+    background: var(--panel-2); font: 700 11px var(--font-mono); letter-spacing: .04em; color: var(--ink-muted);
+  }
+
+  /* ── PRINCIPLES ── */
+  .prin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+  .prin-card {
+    padding: 26px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel);
+    transition: transform .18s ease, border-color .2s ease;
+  }
+  .prin-card:hover { transform: translateY(-4px); border-color: var(--yellow); }
+  .prin-no { font: 900 30px var(--font-display); color: var(--yellow); letter-spacing: -0.04em; line-height: 1; }
+  .prin-t { margin: 14px 0 0; font: 900 21px/1 var(--font-display); letter-spacing: -0.03em; color: var(--ink); }
+  .prin-b { margin: 11px 0 0; font: 400 14px/1.6 var(--font-body); color: var(--ink-muted); }
+
+  /* ── CTA ── */
+  .cta-sec { padding-top: 64px; padding-bottom: 80px; }
+  .cta-card { position: relative; overflow: hidden; padding: clamp(32px, 5vw, 60px); text-align: center; }
+  .cta-h { margin: 0; font: 900 clamp(30px, 5vw, 60px)/0.88 var(--font-display); letter-spacing: -0.05em; color: var(--ink); }
+  .cta-lead { max-width: 540px; margin: 20px auto 0; font: 400 15px/1.6 var(--font-mono); color: var(--ink-muted); }
+  .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+  .cta-btn { min-height: 52px; padding: 0 26px; font-size: 13px; }
+</style>

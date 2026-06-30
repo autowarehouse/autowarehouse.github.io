@@ -1,60 +1,209 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
-import Badge from '@components/ui/Badge.astro';
-import GradientOrb from '@components/ui/GradientOrb.astro';
-import ContactForm from '@components/common/ContactForm.astro';
+import { CONTACT } from '@data/site';
 ---
 
-<PageLayout title="Contact" description="Request a demo of AutoWarehouse. Contact the Intellica team: +90 216 688 45 46, info@intellica.net. Ataşehir, Istanbul.">
-  <section class="relative overflow-hidden py-20">
-    <GradientOrb color="purple" size="350px" position="top: -80px; left: -60px;" />
+<PageLayout
+  title="Contact"
+  description="Request a demo of AutoWarehouse. Contact the Intellica team: +90 216 688 45 46, info@intellica.net. Ataşehir, Istanbul."
+>
+  <!-- hero -->
+  <section class="ch grid-bg">
+    <div class="shell ch-inner">
+      <div class="eyebrow">Get in Touch</div>
+      <h1 class="ch-h1">Request a <span class="highlight">Demo</span></h1>
+      <p class="ch-sub">
+        See AutoWarehouse in action. Tell us about your data warehouse needs and we'll set up a
+        personalized walkthrough.
+      </p>
+    </div>
+  </section>
 
-    <div class="relative z-10 mx-auto max-w-4xl px-6">
-      <div class="grid gap-12 md:grid-cols-2">
-        <!-- Form -->
-        <div>
-          <Badge>Get in Touch</Badge>
-          <h1 class="mt-4 text-3xl font-extrabold text-white">Request a Demo</h1>
-          <p class="mt-3 mb-8 text-sm text-slate-400">
-            See AutoWarehouse in action. Tell us about your data warehouse needs and we'll set up a personalized walkthrough.
-          </p>
-          <ContactForm />
+  <!-- two-column: work-order form + contact card -->
+  <section class="shell cl">
+    <div class="cl-grid">
+      <!-- LEFT: work-order form -->
+      <div class="wo reveal">
+        <div class="wo-head">
+          <div class="wo-head-l">
+            <span class="wo-tag">Work Order</span>
+            <span class="wo-id mono-label">AW · DEMO REQUEST</span>
+          </div>
+          <span class="wo-status pill">OPEN</span>
         </div>
+        <div class="barcode wo-barcode" aria-hidden="true"></div>
 
-        <!-- Info -->
-        <div class="flex flex-col justify-center gap-4">
-          <div class="glass-card rounded-xl p-6">
-            <h3 class="mb-4 text-sm font-semibold text-white">Contact Information</h3>
-            <div class="space-y-4 text-sm text-slate-400">
-              <div>
-                <div class="text-xs font-medium text-slate-500">Phone</div>
-                <div class="text-slate-300">+90 216 688 45 46</div>
-              </div>
-              <div>
-                <div class="text-xs font-medium text-slate-500">Email</div>
-                <a href="mailto:info@intellica.net" class="text-blue-400 hover:text-blue-300">info@intellica.net</a>
-              </div>
-              <div>
-                <div class="text-xs font-medium text-slate-500">Office</div>
-                <div class="text-slate-300">Atatürk Mah. Turgut Özal Blv.<br/>Gardenya 1 Plaza, Floor 1<br/>Ataşehir, Istanbul, Turkey</div>
-              </div>
-            </div>
+        <!--
+          Formspree integration: replace REPLACE_FORM_ID with the real Formspree
+          form ID before going live (https://formspree.io/forms).
+        -->
+        <form class="wo-form" method="POST" action="https://formspree.io/f/REPLACE_FORM_ID">
+          <div class="wo-field">
+            <label class="wo-label" for="name">
+              <span class="wo-no">01</span> Name <span class="wo-req">required</span>
+            </label>
+            <input class="wo-input" type="text" id="name" name="name" placeholder="Your name" required />
           </div>
 
-          <div class="glass-card rounded-xl p-6">
-            <h3 class="mb-4 text-sm font-semibold text-white">Other Resources</h3>
-            <div class="space-y-4 text-sm text-slate-400">
-              <div>
-                <div class="text-xs font-medium text-slate-500">Company</div>
-                <a href="https://www.intellica.net" target="_blank" rel="noopener" class="text-blue-400 hover:text-blue-300">Intellica</a>
-              </div>
-                <div class="text-xs font-medium text-slate-500">LinkedIn</div>
-                <a href="https://www.linkedin.com/company/intellica" target="_blank" rel="noopener" class="text-blue-400 hover:text-blue-300">Intellica on LinkedIn</a>
-              </div>
-            </div>
+          <div class="wo-field">
+            <label class="wo-label" for="email">
+              <span class="wo-no">02</span> Email <span class="wo-req">required</span>
+            </label>
+            <input class="wo-input" type="email" id="email" name="email" placeholder="you@company.com" required />
           </div>
-        </div>
+
+          <div class="wo-field">
+            <label class="wo-label" for="company">
+              <span class="wo-no">03</span> Company <span class="wo-opt">optional</span>
+            </label>
+            <input class="wo-input" type="text" id="company" name="company" placeholder="Company name" />
+          </div>
+
+          <div class="wo-field">
+            <label class="wo-label" for="usecase">
+              <span class="wo-no">04</span> Use Case
+            </label>
+            <textarea
+              class="wo-input wo-textarea"
+              id="usecase"
+              name="usecase"
+              rows="5"
+              placeholder="Tell us about your data warehouse needs..."></textarea>
+          </div>
+
+          <div class="wo-foot">
+            <button type="submit" class="btn btn-primary">Request Demo</button>
+            <span class="wo-note mono-label">We reply within 1 business day</span>
+          </div>
+        </form>
       </div>
+
+      <!-- RIGHT: contact info + resources -->
+      <aside class="ci reveal">
+        <div class="panel ci-card">
+          <div class="eyebrow" style="color:var(--orange)">Direct Lines</div>
+          <h2 class="ci-h">Talk to the team</h2>
+
+          <a class="ci-row" href={CONTACT.phoneHref}>
+            <span class="ci-glyph" aria-hidden="true">☏</span>
+            <span class="ci-body">
+              <span class="ci-k mono-label">Phone</span>
+              <span class="ci-v">{CONTACT.phone}</span>
+            </span>
+          </a>
+
+          <a class="ci-row" href={`mailto:${CONTACT.email}`}>
+            <span class="ci-glyph" aria-hidden="true">✉</span>
+            <span class="ci-body">
+              <span class="ci-k mono-label">Email</span>
+              <span class="ci-v">{CONTACT.email}</span>
+            </span>
+          </a>
+
+          <div class="ci-row ci-row-static">
+            <span class="ci-glyph" aria-hidden="true">⌖</span>
+            <span class="ci-body">
+              <span class="ci-k mono-label">Office</span>
+              <span class="ci-addr">
+                {CONTACT.address.map((line) => <span class="ci-addr-line">{line}</span>)}
+              </span>
+            </span>
+          </div>
+
+          <div class="ci-resources">
+            <div class="mono-label ci-res-h">Resources</div>
+            <div class="ci-res-links">
+              <a class="ci-res" href={CONTACT.intellica} target="_blank" rel="noopener noreferrer">
+                <span class="ci-res-arrow" aria-hidden="true">▸</span> Intellica
+                <span class="ci-res-ext" aria-hidden="true">↗</span>
+              </a>
+              <a class="ci-res" href={CONTACT.linkedin} target="_blank" rel="noopener noreferrer">
+                <span class="ci-res-arrow" aria-hidden="true">▸</span> LinkedIn
+                <span class="ci-res-ext" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ci-strip caution-tape" aria-hidden="true"></div>
+      </aside>
     </div>
   </section>
 </PageLayout>
+
+<style>
+  /* hero */
+  .ch { position: relative; overflow: hidden; }
+  .ch-inner { padding-top: 40px; padding-bottom: 30px; }
+  .ch-h1 { margin: 14px 0 0; font: 900 clamp(38px, 6vw, 72px)/0.9 var(--font-display); letter-spacing: -0.05em; color: var(--ink); }
+  .ch-sub { max-width: 600px; margin: 22px 0 0; font: 400 clamp(14px, 1.6vw, 17px)/1.55 var(--font-mono); color: var(--ink-muted); }
+
+  /* layout */
+  .cl { padding-top: 56px; padding-bottom: 72px; }
+  .cl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; align-items: start; }
+
+  /* work-order form */
+  .wo { border: 2px solid var(--yellow); border-radius: 18px; background: var(--panel); padding: clamp(20px, 3vw, 30px); }
+  .wo-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .wo-head-l { display: flex; flex-direction: column; gap: 6px; }
+  .wo-tag { font: 900 clamp(20px, 2.6vw, 28px) var(--font-display); letter-spacing: -0.03em; color: var(--ink); }
+  .wo-id { color: var(--ink-dim); }
+  .wo-status { color: var(--green); border-color: color-mix(in srgb, var(--green) 45%, transparent); }
+  .wo-barcode { height: 26px; margin: 18px 0 20px; opacity: 0.5; }
+
+  .wo-form { display: grid; gap: 16px; }
+  .wo-field { display: flex; flex-direction: column; gap: 8px; }
+  .wo-label { display: flex; align-items: center; gap: 8px; font: 700 11px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+  .wo-no { font: 800 10px var(--font-mono); color: var(--orange); }
+  .wo-req { font: 600 9px var(--font-mono); letter-spacing: 0.06em; color: var(--orange); border: 1px solid color-mix(in srgb, var(--orange) 40%, transparent); border-radius: 999px; padding: 1px 7px; }
+  .wo-opt { font: 600 9px var(--font-mono); letter-spacing: 0.06em; color: var(--ink-dim); border: 1px solid var(--line-soft); border-radius: 999px; padding: 1px 7px; }
+
+  .wo-input {
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--ink);
+    font: 500 14px var(--font-body);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  }
+  .wo-input::placeholder { color: var(--ink-dim); }
+  .wo-input:hover { border-color: var(--ink-faint); }
+  .wo-input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px color-mix(in srgb, var(--orange) 18%, transparent); background: var(--panel); }
+  .wo-textarea { resize: vertical; min-height: 110px; line-height: 1.55; }
+
+  .wo-foot { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 6px; padding-top: 18px; border-top: 1px dashed var(--line); }
+  .wo-note { color: var(--ink-dim); }
+
+  /* contact info card */
+  .ci { display: flex; flex-direction: column; gap: 16px; }
+  .ci-card { padding: clamp(20px, 3vw, 28px); }
+  .ci-h { margin: 12px 0 20px; font: 900 clamp(22px, 2.6vw, 30px) var(--font-display); letter-spacing: -0.03em; color: var(--ink); }
+
+  .ci-row { display: flex; align-items: center; gap: 14px; padding: 13px 0; text-decoration: none; border-top: 1px solid var(--line-soft); transition: padding-left 0.18s ease; }
+  .ci-row:first-of-type { border-top: none; }
+  a.ci-row:hover { padding-left: 4px; }
+  a.ci-row:hover .ci-v { color: var(--orange); }
+  a.ci-row:hover .ci-glyph { border-color: var(--orange); color: var(--orange); }
+  .ci-row-static { align-items: flex-start; }
+
+  .ci-glyph { flex-shrink: 0; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); color: var(--yellow); font-size: 17px; transition: border-color 0.18s ease, color 0.18s ease; }
+  .ci-row-static .ci-glyph { margin-top: 2px; }
+  .ci-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .ci-k { color: var(--ink-dim); }
+  .ci-v { font: 700 15px var(--font-display); letter-spacing: -0.01em; color: var(--ink); word-break: break-word; transition: color 0.18s ease; }
+  .ci-addr { display: flex; flex-direction: column; gap: 2px; }
+  .ci-addr-line { font: 500 13px/1.45 var(--font-body); color: var(--ink-muted); }
+
+  .ci-resources { margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--line); }
+  .ci-res-h { color: var(--ink-dim); }
+  .ci-res-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+  .ci-res { display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px; border: 1px solid var(--line-soft); border-radius: 10px; background: var(--panel-2); font: 700 12px var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: border-color 0.18s ease, color 0.18s ease, transform 0.18s ease; }
+  .ci-res:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
+  .ci-res-arrow { color: var(--orange); }
+  .ci-res-ext { color: var(--ink-dim); font-size: 11px; }
+  .ci-res:hover .ci-res-ext { color: var(--orange); }
+
+  .ci-strip { height: 14px; border-radius: 6px; opacity: 0.6; }
+</style>

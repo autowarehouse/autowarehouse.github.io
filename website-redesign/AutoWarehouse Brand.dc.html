@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#e7e0d0;color:#16110c;font-family:'Space Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .bs-intro{padding:38px 40px 4px;max-width:1000px}
+  .bs-eyebrow{font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.3em;text-transform:uppercase;color:#a8642a}
+  .bs-h{font:800 34px/1.04 'Archivo',sans-serif;letter-spacing:-.035em;margin:14px 0 8px}
+  .bs-sub{font:400 14px/1.6 'JetBrains Mono',monospace;color:#5a4c34;max-width:780px}
+  .bs-sec{padding:34px 40px 38px;border-top:1px solid rgba(22,16,6,.16)}
+  .bs-lab{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+  .bs-num{font:700 11px/1 'JetBrains Mono',monospace;background:#16110c;color:#f1ead9;padding:4px 8px;border-radius:6px}
+  .bs-title{font:800 18px/1.1 'Archivo',sans-serif;letter-spacing:-.03em}
+  .bs-note{font:400 12px/1.6 'JetBrains Mono',monospace;color:#5a4c34;max-width:680px;margin:0 0 22px}
+  .bs-row{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+  .bs-col{display:flex;flex-direction:column;gap:8px}
+  .bs-tag{font:600 10px/1.3 'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#7a6b52}
+  .bs-card{border:2px solid #16110c;border-radius:13px;overflow:hidden;background:#fbf7ee;box-shadow:6px 6px 0 rgba(22,16,6,.12)}
+  .wm{font:800 26px/0.95 'Archivo',sans-serif;letter-spacing:-.045em}
+  .wm .mut{opacity:.5}
+  .pill{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(22,16,6,.4);border-radius:999px;padding:6px 11px;font:600 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em}
+  .gridbg{background:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:22px 22px}
+</style>
+</helmet>
+
+<div class="bs-intro">
+  <div class="bs-eyebrow">AutoWarehouse · brand · Agent Ribbon</div>
+  <div class="bs-h">Agent Ribbon — developed</div>
+  <p class="bs-sub">The chosen mark, refined into variants, locked into reusable arrangements, reduced to one-color print versions, and shown frozen (no animation) in real static contexts: slides, a PDF cover, an in-deck PPTX layout, favicons, a card, and an avatar. The orange ribbon = the AI agent binding the three layers; in static media it's a solid stroke.</p>
+</div>
+
+<!-- ============ 01 · MARK VARIANTS ============ -->
+<section class="bs-sec" id="variants">
+  <div class="bs-lab"><span class="bs-num">01</span><span class="bs-title">The mark — four executions</span></div>
+  <p class="bs-note">All static (solid ribbon). R1 is the recommended primary; the rest trade precision for boldness or softness. Each shown on light and reversed on dark.</p>
+  <div class="bs-row">
+
+    <div class="bs-col" id="R1">
+      <span class="bs-tag">R1 · Canonical (recommended)</span>
+      <div class="bs-card" style="box-shadow:6px 6px 0 rgba(242,92,31,.3)">
+        <div style="display:flex;align-items:center;gap:14px;padding:22px 26px;background:#fbf7ee;color:#16110c">
+          <svg width="56" height="56" viewBox="0 0 64 64"><polygon points="18,13 46,13 39,21 11,21" fill="none" stroke="currentColor" stroke-width="2.5"/><polygon points="18,29 46,29 39,37 11,37" fill="none" stroke="currentColor" stroke-width="2.5"/><polygon points="18,45 46,45 39,53 11,53" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 17 C 30 17, 34 33, 54 33 C 34 33, 30 49, 10 49" fill="none" stroke="#f25c1f" stroke-width="3.6" stroke-linecap="round"/></svg>
+          <span class="wm">Auto<span class="mut">Warehouse</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:20px 26px;background:#16110c;color:#f1ead9">
+          <svg width="46" height="46" viewBox="0 0 64 64"><polygon points="18,13 46,13 39,21 11,21" fill="none" stroke="currentColor" stroke-width="2.5"/><polygon points="18,29 46,29 39,37 11,37" fill="none" stroke="currentColor" stroke-width="2.5"/><polygon points="18,45 46,45 39,53 11,53" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 17 C 30 17, 34 33, 54 33 C 34 33, 30 49, 10 49" fill="none" stroke="#f25c1f" stroke-width="3.6" stroke-linecap="round"/></svg>
+          <span class="wm" style="font-size:22px">Auto<span class="mut">Warehouse</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bs-col" id="R2">
+      <span class="bs-tag">R2 · Solid slabs</span>
+      <div class="bs-card">
+        <div style="display:flex;align-items:center;gap:14px;padding:22px 26px;background:#fbf7ee;color:#16110c">
+          <svg width="56" height="56" viewBox="0 0 64 64"><polygon points="18,12 47,12 40,22 11,22" fill="currentColor"/><polygon points="18,28 47,28 40,38 11,38" fill="currentColor"/><polygon points="18,44 47,44 40,54 11,54" fill="currentColor"/><path d="M9 17 C 30 17, 35 33, 55 33 C 35 33, 30 49, 9 49" fill="none" stroke="#f25c1f" stroke-width="4" stroke-linecap="round"/></svg>
+          <span class="wm">Auto<span class="mut">Warehouse</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:20px 26px;background:#16110c;color:#f1ead9">
+          <svg width="46" height="46" viewBox="0 0 64 64"><polygon points="18,12 47,12 40,22 11,22" fill="currentColor"/><polygon points="18,28 47,28 40,38 11,38" fill="currentColor"/><polygon points="18,44 47,44 40,54 11,54" fill="currentColor"/><path d="M9 17 C 30 17, 35 33, 55 33 C 35 33, 30 49, 9 49" fill="none" stroke="#f25c1f" stroke-width="4" stroke-linecap="round"/></svg>
+          <span class="wm" style="font-size:22px">Auto<span class="mut">Warehouse</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bs-col" id="R3">
+      <span class="bs-tag">R3 · Soft / rounded</span>
+      <div class="bs-card">
+        <div style="display:flex;align-items:center;gap:14px;padding:22px 26px;background:#fbf7ee;color:#16110c">
+          <svg width="56" height="56" viewBox="0 0 64 64"><rect x="12" y="14" width="40" height="7" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="12" y="30" width="40" height="7" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="12" y="46" width="40" height="7" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 17.5 C 30 17.5, 34 33.5, 54 33.5 C 34 33.5, 30 49.5, 10 49.5" fill="none" stroke="#f25c1f" stroke-width="3.6" stroke-linecap="round"/></svg>
+          <span class="wm">Auto<span class="mut">Warehouse</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:20px 26px;background:#16110c;color:#f1ead9">
+          <svg width="46" height="46" viewBox="0 0 64 64"><rect x="12" y="14" width="40" height="7" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="12" y="30" width="40" height="7" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="12" y="46" width="40" height="7" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 17.5 C 30 17.5, 34 33.5, 54 33.5 C 34 33.5, 30 49.5, 10 49.5" fill="none" stroke="#f25c1f" stroke-width="3.6" stroke-linecap="round"/></svg>
+          <span class="wm" style="font-size:22px">Auto<span class="mut">Warehouse</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bs-col" id="R4">
+      <span class="bs-tag">R4 · Ribbon-forward</span>
+      <div class="bs-card">
+        <div style="display:flex;align-items:center;gap:14px;padding:22px 26px;background:#fbf7ee;color:#16110c">
+          <svg width="56" height="56" viewBox="0 0 64 64"><polygon points="20,14 44,14 38,21 14,21" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="20,29 44,29 38,36 14,36" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="20,44 44,44 38,51 14,51" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 16 C 32 16, 36 32, 58 32 C 36 32, 32 48, 8 48" fill="none" stroke="#f25c1f" stroke-width="5" stroke-linecap="round"/></svg>
+          <span class="wm">Auto<span class="mut">Warehouse</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:20px 26px;background:#16110c;color:#f1ead9">
+          <svg width="46" height="46" viewBox="0 0 64 64"><polygon points="20,14 44,14 38,21 14,21" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="20,29 44,29 38,36 14,36" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="20,44 44,44 38,51 14,51" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 16 C 32 16, 36 32, 58 32 C 36 32, 32 48, 8 48" fill="none" stroke="#f25c1f" stroke-width="5" stroke-linecap="round"/></svg>
+          <span class="wm" style="font-size:22px">Auto<span class="mut">Warehouse</span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ 02 · LOCKUPS ============ -->
+<section class="bs-sec" id="lockups">
+  <div class="bs-lab"><span class="bs-num">02</span><span class="bs-title">Lockups</span></div>
+  <p class="bs-note">Built from R1. Keep clear space ≥ the mark's layer-height on all sides. Minimum mark size 20px on screen, 7mm in print.</p>
+  <div class="bs-row">
+
+    <div class="bs-col">
+      <span class="bs-tag">Horizontal · primary</span>
+      <div class="bs-card"><div style="display:flex;align-items:center;gap:14px;padding:26px 30px;min-width:300px">
+        <dc-import name="RibbonMark" layer="#16110c" accent="#f25c1f" hint-size="50px,50px" style="width:50px;height:50px"></dc-import>
+        <span class="wm">Auto<span class="mut">Warehouse</span></span>
+      </div></div>
+    </div>
+
+    <div class="bs-col">
+      <span class="bs-tag">Stacked · centered</span>
+      <div class="bs-card"><div style="display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 36px">
+        <dc-import name="RibbonMark" layer="#16110c" accent="#f25c1f" hint-size="52px,52px" style="width:52px;height:52px"></dc-import>
+        <span class="wm" style="font-size:22px">Auto<span class="mut">Warehouse</span></span>
+      </div></div>
+    </div>
+
+    <div class="bs-col">
+      <span class="bs-tag">With tagline</span>
+      <div class="bs-card"><div style="display:flex;align-items:center;gap:14px;padding:24px 30px">
+        <dc-import name="RibbonMark" layer="#16110c" accent="#f25c1f" hint-size="50px,50px" style="width:50px;height:50px"></dc-import>
+        <div style="display:flex;flex-direction:column"><span class="wm">Auto<span class="mut">Warehouse</span></span><span style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#a8642a;margin-top:5px">agent flows · model holds</span></div>
+      </div></div>
+    </div>
+
+    <div class="bs-col">
+      <span class="bs-tag">Symbol only</span>
+      <div class="bs-card"><div style="display:grid;place-items:center;padding:24px;min-width:96px">
+        <dc-import name="RibbonMark" layer="#16110c" accent="#f25c1f" hint-size="56px,56px" style="width:56px;height:56px"></dc-import>
+      </div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ 03 · COLORWAYS ============ -->
+<section class="bs-sec" id="colorways">
+  <div class="bs-lab"><span class="bs-num">03</span><span class="bs-title">Colorways &amp; one-color (print / PPTX / PDF)</span></div>
+  <p class="bs-note">For decks, PDFs and print, use a solid version below — never the animated web mark. One-color versions keep the ribbon as a tone of the same ink so the logo survives grayscale and faxes alike.</p>
+  <div class="bs-row">
+
+    <div class="bs-col">
+      <span class="bs-tag">Full color · light</span>
+      <div class="bs-card"><div style="display:grid;place-items:center;padding:26px;background:#fbf7ee;min-width:120px"><dc-import name="RibbonMark" layer="#16110c" accent="#f25c1f" hint-size="58px,58px" style="width:58px;height:58px"></dc-import></div></div>
+    </div>
+    <div class="bs-col">
+      <span class="bs-tag">Reversed · dark</span>
+      <div class="bs-card"><div style="display:grid;place-items:center;padding:26px;background:#16110c;min-width:120px"><dc-import name="RibbonMark" layer="#f1ead9" accent="#f25c1f" hint-size="58px,58px" style="width:58px;height:58px"></dc-import></div></div>
+    </div>
+    <div class="bs-col">
+      <span class="bs-tag">One-color · ink</span>
+      <div class="bs-card"><div style="display:grid;place-items:center;padding:26px;background:#fbf7ee;min-width:120px"><dc-import name="RibbonMark" layer="#16110c" accent="#16110c" hint-size="58px,58px" style="width:58px;height:58px"></dc-import></div></div>
+    </div>
+    <div class="bs-col">
+      <span class="bs-tag">One-color · cream</span>
+      <div class="bs-card"><div style="display:grid;place-items:center;padding:26px;background:#0b2440;min-width:120px"><dc-import name="RibbonMark" layer="#f1ead9" accent="#f1ead9" hint-size="58px,58px" style="width:58px;height:58px"></dc-import></div></div>
+    </div>
+    <div class="bs-col">
+      <span class="bs-tag">All orange</span>
+      <div class="bs-card"><div style="display:grid;place-items:center;padding:26px;background:#fbf7ee;min-width:120px"><dc-import name="RibbonMark" layer="#f25c1f" accent="#f25c1f" hint-size="58px,58px" style="width:58px;height:58px"></dc-import></div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ 04 · STATIC USAGE ============ -->
+<section class="bs-sec" id="usage" style="background:#ddd6c6">
+  <div class="bs-lab"><span class="bs-num">04</span><span class="bs-title">Static usage — slides, PDF, deck, favicon, card</span></div>
+  <p class="bs-note">Frozen mark in real contexts. These are exactly how the identity should appear in a PowerPoint, an exported PDF, a presentation title, and platform icons.</p>
+  <div class="bs-row" style="gap:24px">
+
+    <!-- Presentation title slide 16:9 -->
+    <div class="bs-col">
+      <span class="bs-tag">Presentation · title slide (16:9)</span>
+      <div class="bs-card" style="padding:0;border-radius:10px">
+        <div class="gridbg" style="position:relative;width:468px;height:263px;background-color:#0b2440;color:#f1ead9;padding:26px 30px;display:flex;flex-direction:column;justify-content:space-between;background-size:26px 26px">
+          <div style="display:flex;align-items:center;gap:11px">
+            <dc-import name="RibbonMark" layer="#f1ead9" accent="#f25c1f" hint-size="30px,30px" style="width:30px;height:30px"></dc-import>
+            <span style="font:800 15px 'Archivo',sans-serif;letter-spacing:-.03em">Auto<span style="opacity:.5">Warehouse</span></span>
+          </div>
+          <div>
+            <div style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#ffce1f">Quarterly platform review</div>
+            <div style="font:900 44px/.9 'Archivo',sans-serif;letter-spacing:-.05em;margin-top:10px">From estate<br>to warehouse.</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font:600 10px 'JetBrains Mono',monospace;color:rgba(241,234,217,.6)"><span>Data Platform Team</span><span>2026 · 01</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PDF cover A4 -->
+    <div class="bs-col">
+      <span class="bs-tag">PDF · cover (A4)</span>
+      <div class="bs-card" style="padding:0;border-radius:8px">
+        <div style="position:relative;width:300px;height:424px;background:#fbf7ee;color:#16110c;padding:28px 28px;display:flex;flex-direction:column;justify-content:space-between;border-top:6px solid #f25c1f">
+          <div style="display:flex;align-items:center;gap:11px">
+            <dc-import name="RibbonMark" layer="#16110c" accent="#f25c1f" hint-size="34px,34px" style="width:34px;height:34px"></dc-import>
+            <span style="font:800 15px 'Archivo',sans-serif;letter-spacing:-.03em">Auto<span style="opacity:.5">Warehouse</span></span>
+          </div>
+          <div>
+            <div style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#a8642a">Technical brief · v1.0</div>
+            <div style="font:900 38px/.92 'Archivo',sans-serif;letter-spacing:-.05em;margin-top:12px">Platform<br>Overview</div>
+            <div style="font:400 12px/1.55 'JetBrains Mono',monospace;color:#5a4c34;margin-top:14px;max-width:230px">Model-first data warehouse automation — architecture, governance, and the HRDM reference model.</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(22,16,6,.2);padding-top:12px;font:600 9px 'JetBrains Mono',monospace;color:#7a6b52"><span>autowarehouse.io</span><span>CONFIDENTIAL</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PPTX in-deck content slide -->
+    <div class="bs-col">
+      <span class="bs-tag">PPTX · content slide (in-deck)</span>
+      <div class="bs-card" style="padding:0;border-radius:10px">
+        <div style="position:relative;width:468px;height:263px;background:#fbf7ee;color:#16110c;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #16110c;padding:11px 18px">
+            <div style="display:flex;align-items:center;gap:9px"><dc-import name="RibbonMark" layer="#16110c" accent="#f25c1f" hint-size="22px,22px" style="width:22px;height:22px"></dc-import><span style="font:700 11px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em">The production line</span></div>
+            <span style="font:600 10px 'JetBrains Mono',monospace;color:#7a6b52">Section 02</span>
+          </div>
+          <div style="padding:18px 20px;flex:1">
+            <div style="font:900 26px/.95 'Archivo',sans-serif;letter-spacing:-.04em;max-width:300px">Five governed stations.</div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-top:16px">
+              <div style="height:8px;width:78%;background:rgba(22,16,6,.12);border-radius:3px"></div>
+              <div style="height:8px;width:64%;background:rgba(22,16,6,.12);border-radius:3px"></div>
+              <div style="height:8px;width:70%;background:#f25c1f;opacity:.5;border-radius:3px"></div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(22,16,6,.2);padding:9px 18px;font:600 9px 'JetBrains Mono',monospace;color:#7a6b52"><span>AutoWarehouse · Platform Review</span><span>08 / 24</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Favicon / app icons -->
+    <div class="bs-col">
+      <span class="bs-tag">Favicon &amp; app icons</span>
+      <div class="bs-card"><div style="display:flex;align-items:center;gap:14px;padding:22px 24px;background:#fbf7ee">
+        <div style="display:grid;place-items:center;width:64px;height:64px;border-radius:14px;background:#0b2440"><dc-import name="RibbonMark" layer="#f1ead9" accent="#f25c1f" hint-size="40px,40px" style="width:40px;height:40px"></dc-import></div>
+        <div style="display:grid;place-items:center;width:48px;height:48px;border-radius:11px;background:#f25c1f"><dc-import name="RibbonMark" layer="#16110c" accent="#16110c" hint-size="30px,30px" style="width:30px;height:30px"></dc-import></div>
+        <div style="display:grid;place-items:center;width:32px;height:32px;border-radius:8px;background:#16110c"><dc-import name="RibbonMark" layer="#f1ead9" accent="#f25c1f" hint-size="22px,22px" style="width:22px;height:22px"></dc-import></div>
+        <div style="display:grid;place-items:center;width:20px;height:20px;border-radius:5px;background:#16110c"><dc-import name="RibbonMark" layer="#f1ead9" accent="#f25c1f" hint-size="15px,15px" style="width:15px;height:15px"></dc-import></div>
+      </div></div>
+    </div>
+
+    <!-- Social avatar -->
+    <div class="bs-col">
+      <span class="bs-tag">Social avatar</span>
+      <div class="bs-card"><div style="display:grid;place-items:center;padding:22px;background:#fbf7ee">
+        <div style="display:grid;place-items:center;width:92px;height:92px;border-radius:50%;background:#0b2440"><dc-import name="RibbonMark" layer="#f1ead9" accent="#f25c1f" hint-size="54px,54px" style="width:54px;height:54px"></dc-import></div>
+      </div></div>
+    </div>
+
+    <!-- Business card -->
+    <div class="bs-col">
+      <span class="bs-tag">Business card · front &amp; back</span>
+      <div style="display:flex;gap:14px">
+        <div class="bs-card" style="border-radius:9px"><div class="gridbg" style="display:grid;place-items:center;width:280px;height:168px;background-color:#0b2440;background-size:22px 22px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:10px"><dc-import name="RibbonMark" layer="#f1ead9" accent="#f25c1f" hint-size="44px,44px" style="width:44px;height:44px"></dc-import><span style="font:800 18px 'Archivo',sans-serif;letter-spacing:-.04em;color:#f1ead9">Auto<span style="opacity:.5">Warehouse</span></span></div>
+        </div></div>
+        <div class="bs-card" style="border-radius:9px"><div style="width:280px;height:168px;background:#fbf7ee;padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between">
+          <dc-import name="RibbonMark" layer="#16110c" accent="#f25c1f" hint-size="28px,28px" style="width:28px;height:28px"></dc-import>
+          <div>
+            <div style="font:800 16px 'Archivo',sans-serif;letter-spacing:-.03em">Dağhan Yılmaz</div>
+            <div style="font:600 11px 'JetBrains Mono',monospace;color:#a8642a;margin-top:3px">Lead Data Engineer</div>
+            <div style="font:400 10px/1.6 'JetBrains Mono',monospace;color:#5a4c34;margin-top:10px">dagan@autowarehouse.io<br>+90 212 000 00 00 · autowarehouse.io</div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+</body>
+</html>
