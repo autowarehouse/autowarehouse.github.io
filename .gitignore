@@ -12,5 +12,6 @@ dist/
 pnpm-lock.yaml
 package-lock.json
 docs/superpowers/
+.tokens
 
 
