@@ -1,5 +1,4 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "ignoreDependencies": ["@secretlint/secretlint-rule-preset-recommend", "wrangler", "@cloudflare/workers-types"],
-  "ignore": ["worker/**"]
+  "ignoreDependencies": ["@secretlint/secretlint-rule-preset-recommend"]
 }

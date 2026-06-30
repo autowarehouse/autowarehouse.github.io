@@ -10,10 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "typecheck": "astro check && bun run worker:typecheck",
-    "worker:typecheck": "tsc -p worker/tsconfig.json",
-    "worker:dev": "wrangler dev --config worker/wrangler.jsonc --remote",
-    "worker:deploy": "wrangler deploy --config worker/wrangler.jsonc",
+    "typecheck": "astro check",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "oxlint",
@@ -32,7 +29,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.9",
-    "@cloudflare/workers-types": "4.20260630.1",
     "@secretlint/secretlint-rule-preset-recommend": "13.0.2",
     "@types/bun": "1.3.14",
     "knip": "6.23.0",
@@ -41,7 +37,6 @@
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.8.0",
     "secretlint": "13.0.2",
-    "typescript": "6.0.3",
-    "wrangler": "4.106.0"
+    "typescript": "6.0.3"
   }
 }
