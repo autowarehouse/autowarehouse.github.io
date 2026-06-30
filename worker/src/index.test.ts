@@ -1,5 +1,5 @@
-import { describe, test, expect } from 'bun:test';
-import { parsePayload, validate, isSpam, buildEmail } from './index';
+import { describe, test, expect, afterEach, mock } from 'bun:test';
+import { parsePayload, validate, isSpam, buildEmail, verifyTurnstile } from './index';
 
 function formRequest(fields: Record<string, string>): Request {
   const body = new FormData();
@@ -117,5 +117,29 @@ describe('buildEmail', () => {
     const { html } = buildEmail({ ...base, name: '<script>' });
     expect(html).not.toContain('<script>');
     expect(html).toContain('&lt;script&gt;');
+  });
+});
+
+const realFetch = globalThis.fetch;
+afterEach(() => {
+  globalThis.fetch = realFetch;
+});
+
+describe('verifyTurnstile', () => {
+  test('returns false for an empty token without calling fetch', async () => {
+    const spy = mock(async () => new Response('{}'));
+    globalThis.fetch = spy as unknown as typeof fetch;
+    expect(await verifyTurnstile('', 'secret', null)).toBe(false);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  test('returns true when siteverify succeeds', async () => {
+    globalThis.fetch = (async () => new Response(JSON.stringify({ success: true }))) as unknown as typeof fetch;
+    expect(await verifyTurnstile('tok', 'secret', '1.2.3.4')).toBe(true);
+  });
+
+  test('returns false when siteverify rejects', async () => {
+    globalThis.fetch = (async () => new Response(JSON.stringify({ success: false }))) as unknown as typeof fetch;
+    expect(await verifyTurnstile('tok', 'secret', null)).toBe(false);
   });
 });

@@ -86,8 +86,18 @@ export function buildEmail(p: ContactPayload): { subject: string; html: string; 
   return { subject, html, text };
 }
 
-export async function verifyTurnstile(_token: string, _secret: string, _ip: string | null): Promise<boolean> {
-  throw new Error('not implemented');
+export async function verifyTurnstile(token: string, secret: string, ip: string | null): Promise<boolean> {
+  if (!token) return false;
+  const body = new FormData();
+  body.append('secret', secret);
+  body.append('response', token);
+  if (ip) body.append('remoteip', ip);
+  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    body,
+  });
+  const data = (await res.json()) as { success?: boolean };
+  return data.success === true;
 }
 
 export default {
