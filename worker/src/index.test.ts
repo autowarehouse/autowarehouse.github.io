@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'bun:test';
-import { parsePayload, validate, isSpam } from './index';
+import { parsePayload, validate, isSpam, buildEmail } from './index';
 
 function formRequest(fields: Record<string, string>): Request {
   const body = new FormData();
@@ -94,5 +94,28 @@ describe('isSpam', () => {
   });
   test('spam when honeypot is filled', () => {
     expect(isSpam({ ...base, website: 'http://spam.example' })).toBe(true);
+  });
+});
+
+describe('buildEmail', () => {
+  test('subject includes company when present', () => {
+    const { subject } = buildEmail({ ...base, name: 'Ada', company: 'Engines' });
+    expect(subject).toBe('Demo Request — Ada (Engines)');
+  });
+
+  test('subject is just the name when no company', () => {
+    expect(buildEmail({ ...base, name: 'Ada' }).subject).toBe('Demo Request — Ada');
+  });
+
+  test('text body carries email and usecase', () => {
+    const { text } = buildEmail({ ...base, email: 'ada@x.io', usecase: 'Unify data' });
+    expect(text).toContain('ada@x.io');
+    expect(text).toContain('Unify data');
+  });
+
+  test('html escapes angle brackets', () => {
+    const { html } = buildEmail({ ...base, name: '<script>' });
+    expect(html).not.toContain('<script>');
+    expect(html).toContain('&lt;script&gt;');
   });
 });

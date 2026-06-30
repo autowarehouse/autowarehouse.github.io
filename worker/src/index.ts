@@ -63,8 +63,27 @@ export function isSpam(p: ContactPayload): boolean {
   return p.website.trim().length > 0;
 }
 
-export function buildEmail(_p: ContactPayload): { subject: string; html: string; text: string } {
-  throw new Error('not implemented');
+export function buildEmail(p: ContactPayload): { subject: string; html: string; text: string } {
+  const who = p.company ? `${p.name} (${p.company})` : p.name;
+  const subject = `Demo Request — ${who}`;
+  const text = [
+    `Name: ${p.name}`,
+    `Email: ${p.email}`,
+    `Company: ${p.company || '—'}`,
+    '',
+    'Use case:',
+    p.usecase || '—',
+  ].join('\n');
+  const esc = (s: string): string => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const html = [
+    '<h2>Demo Request</h2>',
+    `<p><strong>Name:</strong> ${esc(p.name)}</p>`,
+    `<p><strong>Email:</strong> ${esc(p.email)}</p>`,
+    `<p><strong>Company:</strong> ${esc(p.company) || '—'}</p>`,
+    '<p><strong>Use case:</strong></p>',
+    `<p>${esc(p.usecase).replace(/\n/g, '<br>') || '—'}</p>`,
+  ].join('\n');
+  return { subject, html, text };
 }
 
 export async function verifyTurnstile(_token: string, _secret: string, _ip: string | null): Promise<boolean> {
