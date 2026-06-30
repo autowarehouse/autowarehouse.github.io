@@ -1,77 +1,480 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
-import Badge from '@components/ui/Badge.astro';
-import Button from '@components/ui/Button.astro';
-import GradientOrb from '@components/ui/GradientOrb.astro';
 
-const faq = [
-  { q: 'Is AutoWarehouse open source?', a: 'The core platform is available for self-hosted deployment. Contact us for licensing details.' },
-  { q: 'What databases do you support?', a: 'PostgreSQL, MySQL, Oracle, MSSQL, and MongoDB. More connectors are on the roadmap.' },
-  { q: 'Can I use my own LLM?', a: 'Yes. AutoWarehouse runs LLMs locally on your infrastructure — Ollama, vLLM, LiteLLM, or any OpenAI-compatible endpoint. Your data never leaves your environment.' },
-  { q: 'How does the ETL code export work?', a: 'AutoWarehouse generates production-ready Airflow DAGs, dbt models, SQL scripts, Spark jobs, or Snowflake code that you deploy in your own environment.' },
+const TIERS = [
+  {
+    name: 'Self-Hosted',
+    tagline: 'Deploy on your infrastructure with full control.',
+    deploy: '$ docker compose up -d',
+    features: [
+      'Docker Compose deployment',
+      'All features included',
+      'Bring your own LLM',
+      'Data stays on-premise',
+      'Priority support',
+    ],
+    cta: { label: 'Contact Sales', href: '/contact' },
+    recommended: true,
+  },
+  {
+    name: 'Managed',
+    tagline: 'We handle infrastructure, you focus on data.',
+    deploy: '$ status: coming-soon',
+    features: [
+      'Fully managed cloud',
+      'Automatic updates',
+      'Built-in LLM access',
+      'SLA guarantees',
+      'Dedicated support',
+    ],
+    cta: { label: 'Coming Soon', href: null },
+    recommended: false,
+  },
+];
+
+const NOTES = [
+  { k: 'All features', v: 'included in every tier' },
+  { k: 'Bring your own LLM', v: 'Ollama · vLLM · LiteLLM' },
+  { k: 'Data stays on-premise', v: 'zero exfiltration' },
+];
+
+const FAQ = [
+  {
+    q: 'Is AutoWarehouse open source?',
+    a: 'The core platform is available for self-hosted deployment. Contact us for licensing details.',
+  },
+  {
+    q: 'Which databases are supported?',
+    a: 'PostgreSQL, MySQL, Oracle, MSSQL, and MongoDB. More connectors are on the roadmap.',
+  },
+  {
+    q: 'Can I use my own LLM?',
+    a: 'Yes. AutoWarehouse runs LLMs locally — Ollama, vLLM, LiteLLM, or any OpenAI-compatible endpoint. Your data never leaves your environment.',
+  },
+  {
+    q: 'How does ETL export work?',
+    a: 'AutoWarehouse generates production-ready Airflow DAGs, dbt models, SQL scripts, Spark jobs, or Snowflake code that you deploy in your own environment.',
+  },
 ];
 ---
 
-<PageLayout title="Pricing" description="Enterprise pricing for AutoWarehouse by Intellica. Self-hosted or managed deployment. All features included, bring your own LLM, data stays on-premise.">
-  <section class="relative overflow-hidden py-20">
-    <GradientOrb color="blue" size="400px" position="top: -100px; right: -100px;" />
-    <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
-      <Badge>Pricing</Badge>
-      <h1 class="mt-4 text-3xl font-extrabold text-white md:text-5xl">Enterprise Pricing</h1>
-      <p class="mt-4 text-base text-slate-400">
+<PageLayout
+  title="Pricing"
+  description="Enterprise pricing for AutoWarehouse by Intellica. Self-hosted or managed deployment. All features included, bring your own LLM, data stays on-premise."
+>
+  <!-- HERO -->
+  <section class="hero grid-bg">
+    <div class="shell hero-inner">
+      <div class="eyebrow">Pricing</div>
+      <h1 class="hero-h">Enterprise <span class="highlight">Pricing</span></h1>
+      <p class="hero-sub">
         Tailored to your data infrastructure needs. Self-hosted on your hardware, or managed by us.
       </p>
     </div>
   </section>
 
-  <section class="pb-20">
-    <div class="mx-auto grid max-w-4xl gap-6 px-6 md:grid-cols-2">
-      <!-- Self-Hosted -->
-      <div class="glass-card rounded-xl p-8">
-        <h3 class="text-lg font-bold text-white">Self-Hosted</h3>
-        <p class="mt-2 text-sm text-slate-400">Deploy on your infrastructure with full control.</p>
-        <ul class="mt-6 space-y-2 text-sm text-slate-300">
-          <li>✓ Docker Compose deployment</li>
-          <li>✓ All features included</li>
-          <li>✓ Bring your own LLM</li>
-          <li>✓ Data stays on-premise</li>
-          <li>✓ Priority support</li>
-        </ul>
-        <div class="mt-8">
-          <Button href="/contact" class="w-full text-center">Contact Sales</Button>
-        </div>
-      </div>
+  <!-- TIERS -->
+  <section class="shell tiers">
+    <div class="tiers-grid">
+      {
+        TIERS.map((tier) => (
+          <article class={`tier reveal ${tier.recommended ? 'tier-rec' : 'tier-muted'}`}>
+            {tier.recommended && <span class="rec-pill">Recommended</span>}
+            <div class="tier-head">
+              <h2 class="tier-name">{tier.name}</h2>
+              <p class="tier-tag">{tier.tagline}</p>
+            </div>
 
-      <!-- Managed -->
-      <div class="glass-card rounded-xl p-8">
-        <h3 class="text-lg font-bold text-white">Managed</h3>
-        <p class="mt-2 text-sm text-slate-400">We handle infrastructure, you focus on data.</p>
-        <ul class="mt-6 space-y-2 text-sm text-slate-300">
-          <li>✓ Fully managed cloud</li>
-          <li>✓ Automatic updates</li>
-          <li>✓ Built-in LLM access</li>
-          <li>✓ SLA guarantees</li>
-          <li>✓ Dedicated support</li>
-        </ul>
-        <div class="mt-8">
-          <Button href="/contact" variant="ghost" class="w-full text-center">Coming Soon</Button>
-        </div>
-      </div>
+            <div class="tier-price">
+              <span class="tier-price-main">Enterprise</span>
+              <span class="tier-price-sub">Custom — scoped to your deployment</span>
+            </div>
+
+            <code class="tier-deploy">{tier.deploy}</code>
+
+            <ul class="tier-feats">
+              {tier.features.map((f) => (
+                <li class="tier-feat">
+                  <span class="feat-check" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span class="feat-label">{f}</span>
+                </li>
+              ))}
+            </ul>
+
+            {tier.cta.href ? (
+              <a href={tier.cta.href} class="btn btn-primary tier-cta">
+                {tier.cta.label}
+              </a>
+            ) : (
+              <span class="btn btn-outline tier-cta is-disabled" aria-disabled="true">
+                {tier.cta.label}
+              </span>
+            )}
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- NOTE LINE -->
+    <div class="note reveal">
+      {
+        NOTES.map((n) => (
+          <div class="note-item">
+            <span class="note-glyph" aria-hidden="true">
+              ◆
+            </span>
+            <span class="note-k">{n.k}</span>
+            <span class="note-v">{n.v}</span>
+          </div>
+        ))
+      }
     </div>
   </section>
 
   <!-- FAQ -->
-  <section class="bg-[var(--bg-secondary)] py-16">
-    <div class="mx-auto max-w-3xl px-6">
-      <h2 class="mb-8 text-center text-2xl font-extrabold text-white">FAQ</h2>
-      <div class="space-y-4">
-        {faq.map((item) => (
-          <div class="glass-card rounded-xl p-5">
-            <h3 class="text-sm font-semibold text-white">{item.q}</h3>
-            <p class="mt-2 text-xs leading-relaxed text-slate-400">{item.a}</p>
-          </div>
-        ))}
+  <section class="shell faq">
+    <div class="eyebrow">FAQ</div>
+    <h2 class="faq-h">Common questions</h2>
+    <div class="faq-list">
+      {
+        FAQ.map((item, i) => (
+          <details class="faq-item reveal" name="pricing-faq">
+            <summary class="faq-q">
+              <span class="faq-no">{String(i + 1).padStart(2, '0')}</span>
+              <span class="faq-q-text">{item.q}</span>
+              <span class="faq-icon" aria-hidden="true">
+                +
+              </span>
+            </summary>
+            <p class="faq-a">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="shell cta">
+    <div class="card-frame grid-bg cta-card reveal">
+      <h2 class="cta-h">Let's scope your<br />deployment.</h2>
+      <p class="cta-lead">
+        Tell us about your data infrastructure. We'll map AutoWarehouse to your environment and walk you through
+        pricing.
+      </p>
+      <div class="cta-row">
+        <a href="/contact" class="btn btn-primary cta-btn">Contact Sales</a>
+        <a href="/platform" class="btn btn-outline cta-btn">See the platform</a>
       </div>
     </div>
   </section>
 </PageLayout>
+
+<style>
+  /* HERO */
+  .hero {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    padding-top: 40px;
+    padding-bottom: 34px;
+  }
+  .hero-h {
+    margin: 14px 0 0;
+    font: 900 clamp(38px, 6vw, 72px)/0.9 var(--font-display);
+    letter-spacing: -0.05em;
+    color: var(--ink);
+  }
+  .hero-sub {
+    max-width: 600px;
+    margin: 22px 0 0;
+    font: 400 clamp(14px, 1.6vw, 17px)/1.55 var(--font-mono);
+    color: var(--ink-muted);
+  }
+
+  /* TIERS */
+  .tiers {
+    padding-top: 56px;
+  }
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+    align-items: stretch;
+  }
+  .tier {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(24px, 3vw, 36px);
+    border-radius: 18px;
+    background: var(--panel);
+  }
+  .tier-rec {
+    border: 2px solid var(--yellow);
+    box-shadow: 6px 6px 0 var(--shadow-block);
+  }
+  .tier-muted {
+    border: 1px solid var(--line-soft);
+  }
+  .tier-muted .tier-name,
+  .tier-muted .tier-price-main {
+    color: var(--ink-muted);
+  }
+
+  .rec-pill {
+    position: absolute;
+    top: -13px;
+    left: clamp(24px, 3vw, 36px);
+    background: var(--yellow);
+    color: var(--on-accent);
+    font: 800 10px var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 13px;
+    border-radius: 999px;
+    box-shadow: 3px 3px 0 var(--orange);
+  }
+
+  .tier-name {
+    margin: 0;
+    font: 900 clamp(26px, 3vw, 36px) var(--font-display);
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .tier-tag {
+    margin: 10px 0 0;
+    font: 400 14px/1.5 var(--font-body);
+    color: var(--ink-muted);
+    max-width: 34ch;
+  }
+
+  .tier-price {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px dashed var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .tier-price-main {
+    font: 900 clamp(22px, 2.6vw, 30px) var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .tier-price-sub {
+    font: 600 11px var(--font-mono);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  .tier-deploy {
+    display: block;
+    margin-top: 16px;
+    background: var(--terminal);
+    color: var(--terminal-ink);
+    border: 1px solid var(--line-soft);
+    border-radius: 9px;
+    padding: 11px 13px;
+    font: 600 12px var(--font-mono);
+    letter-spacing: 0.01em;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .tier-muted .tier-deploy {
+    color: var(--terminal-dim);
+  }
+
+  .tier-feats {
+    list-style: none;
+    margin: 22px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+  .tier-feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+  }
+  .feat-check {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    font: 800 11px var(--font-mono);
+    background: color-mix(in srgb, var(--green) 18%, transparent);
+    color: var(--green);
+    border: 1px solid color-mix(in srgb, var(--green) 45%, transparent);
+  }
+  .tier-muted .feat-check {
+    background: color-mix(in srgb, var(--ink-muted) 12%, transparent);
+    color: var(--ink-dim);
+    border-color: var(--line-soft);
+  }
+  .feat-label {
+    font: 600 14px/1.4 var(--font-body);
+    color: var(--ink);
+  }
+  .tier-muted .feat-label {
+    color: var(--ink-muted);
+  }
+
+  .tier-cta {
+    margin-top: 26px;
+    width: 100%;
+  }
+  .tier-cta.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    border-style: dashed;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+  /* NOTE LINE */
+  .note {
+    margin-top: 28px;
+    padding: 18px 22px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--orange) 8%, transparent), transparent);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+    align-items: center;
+    justify-content: center;
+  }
+  .note-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .note-glyph {
+    color: var(--orange);
+    font-size: 11px;
+  }
+  .note-k {
+    font: 800 11px var(--font-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .note-v {
+    font: 500 12px var(--font-mono);
+    color: var(--ink-muted);
+  }
+
+  /* FAQ */
+  .faq {
+    padding-top: 64px;
+  }
+  .faq-h {
+    margin: 12px 0 28px;
+    font: 900 clamp(26px, 3.4vw, 42px) var(--font-display);
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .faq-item {
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    background: var(--panel);
+    border-left: 3px solid var(--orange);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .faq-item[open] {
+    border-color: var(--line);
+  }
+  .faq-q {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq-q::-webkit-details-marker {
+    display: none;
+  }
+  .faq-no {
+    flex: none;
+    font: 800 12px var(--font-mono);
+    color: var(--orange);
+  }
+  .faq-q-text {
+    flex: 1;
+    font: 800 clamp(15px, 1.8vw, 18px)/1.3 var(--font-display);
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .faq-icon {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    border: 1px solid var(--line);
+    font: 700 16px var(--font-mono);
+    color: var(--yellow);
+    transition: transform 0.22s ease;
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    margin: 0;
+    padding: 0 20px 20px 46px;
+    font: 400 14px/1.6 var(--font-body);
+    color: var(--ink-muted);
+    max-width: 70ch;
+  }
+
+  /* CTA */
+  .cta {
+    padding-top: 56px;
+    padding-bottom: 80px;
+  }
+  .cta-card {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(32px, 5vw, 60px);
+    text-align: center;
+  }
+  .cta-h {
+    margin: 0;
+    font: 900 clamp(30px, 5vw, 60px)/0.88 var(--font-display);
+    letter-spacing: -0.05em;
+    color: var(--ink);
+  }
+  .cta-lead {
+    max-width: 520px;
+    margin: 20px auto 0;
+    font: 400 15px/1.6 var(--font-mono);
+    color: var(--ink-muted);
+  }
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+  .cta-btn {
+    min-height: 52px;
+    padding: 0 26px;
+  }
+</style>

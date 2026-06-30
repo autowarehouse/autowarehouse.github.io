@@ -1,0 +1,416 @@
+---
+import Stat from '@components/ui/Stat.astro';
+---
+
+<section id="top" class="hero grid-bg">
+  <div class="shell hero-inner">
+    <div class="pill"><span class="dot"></span>Interactive build simulation · playable</div>
+
+    <h1 class="hero-h1">Don't read about<br />your warehouse.<br /><span class="highlight">Build it.</span></h1>
+
+    <p class="hero-lead">
+      Play the full data-warehouse lifecycle as a mission. Pick your sources, watch the AI agent work, approve as the
+      engineer, then ask the warehouse a question. One governed DataModel underneath it all.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#game" class="btn btn-primary hero-cta-lg">▶ Start the build</a>
+      <a href="/platform" class="btn btn-outline hero-cta-lg">See the platform</a>
+    </div>
+
+    <!-- model-first system map -->
+    <div class="sysmap panel">
+      <div class="sysmap-top">
+        <span class="mono-label">System map · model-first</span>
+        <span class="sysmap-live">● live data flow</span>
+      </div>
+      <div class="sysmap-flow">
+        <div class="sm-sources">
+          <div class="sm-kicker">Sources</div>
+          {
+            [
+              ['HR DB', '#1f5f99'],
+              ['CV Pool', '#36a0d6'],
+              ['Payroll', '#2f8c52'],
+              ['APIs', '#f25c1f'],
+            ].map(([n, c]) => (
+              <div class="sm-src">
+                <>
+                  <span class="sm-bar" style={`background:${c}`} />
+                  <span>{n}</span>
+                </>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="sm-link">
+          <span class="sm-line"></span><span class="sm-arrow">▶</span><span class="sm-dot d1"></span><span
+            class="sm-dot d2"></span>
+        </div>
+
+        <div class="sm-node">
+          <div class="sm-node-top"><span class="sm-no">01 · DISCOVER</span><span class="sm-tag o">AI</span></div>
+          <div class="sm-node-h">Source system analysis</div>
+          <div class="sm-node-s">schema · PII · entities · relationships</div>
+        </div>
+
+        <div class="sm-gate">
+          <span class="sm-gline"></span><span class="sm-dot d3"></span><span class="sm-tick">✓</span><span
+            class="sm-glabel">APPROVE</span
+          >
+        </div>
+
+        <div class="sm-core">
+          <span class="sm-no abs-l">02 · MODEL</span><span class="sm-tag g abs-r">CORE</span>
+          <div class="sm-ring"><span class="sm-ring-dot"></span></div>
+          <div class="sm-core-h">Governed DataModel</div>
+          <div class="sm-core-k">HRDM</div>
+          <div class="sm-core-s">foundation · analytical · semantic</div>
+        </div>
+
+        <div class="sm-gate">
+          <span class="sm-gline"></span><span class="sm-dot d4"></span><span class="sm-tick">✓</span><span
+            class="sm-glabel">APPROVE</span
+          >
+        </div>
+
+        <div class="sm-node deliver">
+          <div class="sm-node-top"><span class="sm-no g">03 · DELIVER</span><span class="sm-tag g">BU</span></div>
+          <div class="sm-deliver"><div class="sm-pill">Report</div><div class="sm-pill">Chat</div></div>
+          <div class="sm-node-s">governed answers · NL-to-SQL</div>
+        </div>
+      </div>
+      <div class="sysmap-foot">Discovery, mapping, ETL, reports &amp; Talk-to-DWH all read one governed DataModel.</div>
+    </div>
+
+    <div class="hero-stats">
+      <Stat value={6} label="source types" color="yellow" />
+      <Stat value={10} label="build stations" color="orange" />
+      <Stat value={99.4} suffix="%" decimals={1} label="auto-mapped" color="green" />
+      <Stat value={0} label="ungoverned answers" color="ink" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    position: relative;
+    padding-top: 64px;
+    padding-bottom: 24px;
+    max-width: 1240px;
+  }
+  .pill .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: awGlow 1.8s ease infinite;
+  }
+  .hero-h1 {
+    margin: 22px 0 0;
+    font: 900 clamp(44px, 8vw, 100px)/0.84 var(--font-display);
+    letter-spacing: -0.05em;
+    color: var(--ink);
+  }
+  .hero-lead {
+    max-width: 560px;
+    margin: 26px 0 0;
+    font: 400 clamp(15px, 1.6vw, 18px)/1.55 var(--font-mono);
+    color: var(--ink-muted);
+  }
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  .hero-cta-lg {
+    min-height: 52px;
+    padding: 0 24px;
+    font-size: 13px;
+  }
+
+  .sysmap {
+    position: relative;
+    margin-top: 40px;
+    padding: 16px 16px 18px;
+    overflow: hidden;
+  }
+  .sysmap-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .sysmap-live {
+    font: 700 9px var(--font-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .sysmap-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 9px;
+    flex-wrap: wrap;
+  }
+  .sysmap-foot {
+    margin-top: 13px;
+    font: 500 11px var(--font-mono);
+    color: var(--ink-dim);
+    text-align: center;
+  }
+
+  .sm-sources {
+    flex: 1 1 110px;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+  }
+  .sm-kicker {
+    font: 700 9px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    margin-bottom: 1px;
+  }
+  .sm-src {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    padding: 7px 9px;
+    background: var(--panel-2);
+    font: 700 10px var(--font-mono);
+    color: var(--ink);
+  }
+  .sm-bar {
+    width: 5px;
+    height: 16px;
+    border-radius: 2px;
+  }
+
+  .sm-link {
+    flex: 0 0 34px;
+    align-self: center;
+    position: relative;
+    height: 28px;
+  }
+  .sm-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 7px;
+    height: 2px;
+    background: var(--ink-faint);
+    transform: translateY(-50%);
+  }
+  .sm-arrow {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    color: var(--ink-dim);
+    font: 900 11px var(--font-mono);
+  }
+  .sm-dot {
+    position: absolute;
+    top: 50%;
+    margin-top: -3px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: awDot 1.7s linear infinite;
+  }
+  .sm-dot.d1 {
+    background: var(--orange);
+  }
+  .sm-dot.d2 {
+    background: var(--yellow);
+    animation-delay: 0.85s;
+  }
+  .sm-dot.d3 {
+    background: var(--yellow);
+    animation-delay: 0.4s;
+  }
+  .sm-dot.d4 {
+    background: var(--green);
+    animation-delay: 0.6s;
+  }
+
+  .sm-node {
+    flex: 1.3 1 146px;
+    min-width: 138px;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    background: var(--panel-2);
+    padding: 13px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .sm-node.deliver {
+    border-color: color-mix(in srgb, var(--green) 30%, transparent);
+  }
+  .sm-node-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sm-no {
+    font: 800 10px var(--font-mono);
+    color: var(--yellow);
+  }
+  .sm-no.g {
+    color: var(--green);
+  }
+  .sm-tag {
+    font: 800 8px var(--font-mono);
+    color: var(--on-accent);
+    border-radius: 4px;
+    padding: 2px 5px;
+  }
+  .sm-tag.o {
+    background: var(--orange);
+  }
+  .sm-tag.g {
+    background: var(--green);
+  }
+  .sm-node-h {
+    font: 800 15px var(--font-display);
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .sm-node-s {
+    font: 600 10px/1.5 var(--font-mono);
+    color: var(--ink-dim);
+  }
+  .sm-deliver {
+    display: flex;
+    gap: 7px;
+  }
+  .sm-pill {
+    flex: 1;
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    padding: 9px;
+    text-align: center;
+    font: 800 11px var(--font-display);
+    color: var(--ink);
+  }
+
+  .sm-gate {
+    flex: 0 0 50px;
+    align-self: center;
+    position: relative;
+    height: 46px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .sm-gline {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--ink-faint);
+    transform: translateY(-50%);
+  }
+  .sm-tick {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--green);
+    color: var(--on-accent);
+    font: 800 10px var(--font-mono);
+    border: 2px solid var(--panel);
+  }
+  .sm-glabel {
+    font: 700 7px var(--font-mono);
+    color: var(--green);
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  .sm-core {
+    flex: 1.7 1 178px;
+    min-width: 166px;
+    position: relative;
+    border: 2px solid var(--orange);
+    border-radius: 13px;
+    background:
+      radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--orange) 20%, transparent), transparent 70%),
+      var(--panel-2);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--orange) 8%, transparent);
+  }
+  .abs-l {
+    position: absolute;
+    top: 9px;
+    left: 12px;
+  }
+  .abs-r {
+    position: absolute;
+    top: 9px;
+    right: 12px;
+  }
+  .sm-ring {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 2px dashed color-mix(in srgb, var(--yellow) 60%, transparent);
+    display: grid;
+    place-items: center;
+    margin-top: 8px;
+    animation: awSpin 16s linear infinite;
+  }
+  .sm-ring-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--orange);
+    animation: awGlow 2.2s ease infinite;
+  }
+  .sm-core-h {
+    margin-top: 11px;
+    font: 900 17px var(--font-display);
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .sm-core-k {
+    font: 800 12px var(--font-mono);
+    color: var(--yellow);
+    margin-top: 2px;
+  }
+  .sm-core-s {
+    font: 600 9px var(--font-mono);
+    color: var(--ink-dim);
+    margin-top: 6px;
+  }
+
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 34px;
+    margin-top: 26px;
+  }
+</style>

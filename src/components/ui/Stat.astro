@@ -1,0 +1,102 @@
+---
+/**
+ * Animated count-up stat. Uses setInterval (NOT rAF) so it keeps running
+ * in a backgrounded tab — per project gotcha. Falls back to the final
+ * value with no JS.
+ */
+interface Props {
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  label: string;
+  color?: 'ink' | 'yellow' | 'orange' | 'green';
+  decimals?: number;
+  group?: boolean; // thousands separators — set false for years (2006, not 2,006)
+}
+const { value, suffix = '', prefix = '', label, color = 'ink', decimals = 0, group = true } = Astro.props;
+const colorVar = color === 'ink' ? 'var(--ink)' : `var(--${color})`;
+const fmt = (v: number) =>
+  group
+    ? v.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+    : v.toFixed(decimals);
+const display = `${prefix}${fmt(value)}${suffix}`;
+---
+
+<div class="aw-stat">
+  <div
+    class="aw-stat-num"
+    style={`color:${colorVar}`}
+    data-count={value}
+    data-suffix={suffix}
+    data-prefix={prefix}
+    data-decimals={decimals}
+    data-group={group ? '1' : '0'}
+  >
+    {display}
+  </div>
+  <div class="aw-stat-label">{label}</div>
+</div>
+
+<style>
+  .aw-stat-num {
+    font: 900 clamp(26px, 3.4vw, 34px) var(--font-display);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .aw-stat-label {
+    margin-top: 6px;
+    font: 600 10px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    if (window.__awCountInit) return;
+    window.__awCountInit = true;
+    function run(el) {
+      if (el.__d) return;
+      el.__d = true;
+      var target = parseFloat(el.dataset.count);
+      var dec = parseInt(el.dataset.decimals || '0', 10);
+      var suf = el.dataset.suffix || '',
+        pre = el.dataset.prefix || '';
+      var grp = el.dataset.group !== '0';
+      var t0 = Date.now();
+      var id = setInterval(function () {
+        var p = Math.min(1, (Date.now() - t0) / 1300);
+        var v = target * (1 - Math.pow(1 - p, 3));
+        var num = grp
+          ? Number(v.toFixed(dec)).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec })
+          : v.toFixed(dec);
+        el.textContent = pre + num + suf;
+        if (p >= 1) clearInterval(id);
+      }, 30);
+    }
+    function init() {
+      var els = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(run);
+        return;
+      }
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              run(e.target);
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.4 },
+      );
+      els.forEach(function (el) {
+        io.observe(el);
+      });
+    }
+    if (document.readyState !== 'loading') init();
+    else document.addEventListener('DOMContentLoaded', init);
+  })();
+</script>

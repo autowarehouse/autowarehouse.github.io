@@ -1,0 +1,1422 @@
+---
+/**
+ * AutoWarehouse "Build Mission" — playable 10-station DWH lifecycle.
+ * Vanilla-JS island, ported from the prototype state machine.
+ * All colors are theme tokens so it works in dark + light.
+ */
+---
+
+<section id="game" class="g-section">
+  <div class="shell">
+    <div id="aw-game" class="g-wrap" aria-label="Interactive data warehouse build simulation">
+      <noscript>
+        <div class="g-noscript">
+          The interactive build mission needs JavaScript. Explore the platform stages instead:
+          <a href="/platform">Platform overview →</a>
+        </div>
+      </noscript>
+      <div id="g-hud" class="g-hud"></div>
+      <div class="g-body">
+        <div id="g-map" class="g-map"></div>
+        <div id="g-stage" class="g-stage"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .g-section {
+    padding: 14px 0 24px;
+  }
+  .g-wrap {
+    position: relative;
+  }
+  .g-noscript {
+    padding: 24px;
+    border: 2px solid var(--yellow);
+    border-radius: 18px;
+    font: 600 14px var(--font-mono);
+    color: var(--ink-muted);
+  }
+  .g-noscript a {
+    color: var(--orange);
+  }
+
+  /* HUD */
+  .g-hud {
+    border: 2px solid var(--yellow);
+    border-radius: 18px 18px 0 0;
+    background: var(--panel);
+    padding: 16px 20px;
+  }
+  .g-hud-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .g-hud-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .g-hud-title b {
+    font: 800 12px var(--font-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+  .g-hud-title span {
+    font: 600 11px var(--font-mono);
+    color: var(--ink-dim);
+  }
+  .g-chars {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .g-char {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--line-soft);
+    border-radius: 999px;
+    padding: 5px 11px 5px 5px;
+    transition: opacity 0.3s;
+  }
+  .g-char .code {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    color: var(--on-accent);
+    font: 800 9px var(--font-mono);
+  }
+  .g-char .nm {
+    font: 700 10px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+  .g-restart {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--ink-faint);
+    border-radius: 999px;
+    padding: 7px 13px;
+    font: 700 10px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+  }
+  .g-restart:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+  .g-prog {
+    margin-top: 14px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--ink-faint);
+    overflow: hidden;
+  }
+  .g-prog > div {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--orange), var(--yellow));
+    transition: width 0.5s ease;
+  }
+  .g-arts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 13px;
+  }
+  .g-art {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--ink-faint);
+    border-radius: 6px;
+    padding: 4px 9px;
+    font: 700 9px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-dim);
+    transition: all 0.3s;
+  }
+  .g-art.on {
+    border-color: var(--yellow);
+    background: var(--yellow);
+    color: var(--on-accent);
+  }
+
+  /* Body */
+  .g-body {
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid var(--yellow);
+    border-top: none;
+    border-radius: 0 0 18px 18px;
+    overflow: hidden;
+  }
+  .g-map {
+    flex: 1 1 248px;
+    min-width: 228px;
+    background: var(--panel-3);
+    border-right: 1px solid var(--line);
+    padding: 16px 14px;
+  }
+  .g-map-h {
+    font: 700 9px var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 2px 6px 12px;
+  }
+  .g-st {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 8px;
+    border-radius: 9px;
+    border: 1px solid transparent;
+    margin-bottom: 4px;
+    transition: all 0.25s;
+  }
+  .g-st.active {
+    background: color-mix(in srgb, var(--yellow) 12%, transparent);
+    border-color: color-mix(in srgb, var(--yellow) 50%, transparent);
+  }
+  .g-st .badge {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    border-radius: 7px;
+    font: 800 11px var(--font-mono);
+    background: var(--ink-faint);
+    color: var(--ink-dim);
+  }
+  .g-st.done .badge {
+    background: var(--green);
+    color: var(--on-accent);
+  }
+  .g-st.active .badge {
+    background: var(--yellow);
+    color: var(--on-accent);
+  }
+  .g-st .badge .ping {
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: awGlow 1.4s ease infinite;
+  }
+  .g-st .lbl {
+    flex: 1;
+    min-width: 0;
+    font: 700 11px var(--font-mono);
+    color: var(--ink-dim);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .g-st.done .lbl {
+    color: var(--ink-muted);
+  }
+  .g-st.active .lbl {
+    color: var(--ink);
+  }
+  .g-st .own {
+    font: 800 8px var(--font-mono);
+    color: var(--on-accent);
+    border-radius: 4px;
+    padding: 2px 5px;
+  }
+
+  /* Stage */
+  .g-stage {
+    flex: 3 1 560px;
+    min-width: 300px;
+    position: relative;
+    background:
+      radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--orange) 7%, transparent), transparent 50%),
+      var(--panel-2);
+    padding: 24px 26px;
+    min-height: 560px;
+    display: flex;
+    flex-direction: column;
+  }
+  .g-stage-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px dashed var(--line);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  .g-stage-head .k {
+    font: 700 10px var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+  .g-stage-head .t {
+    font: 800 clamp(20px, 3vw, 28px)/1 var(--font-display);
+    letter-spacing: -0.04em;
+    margin-top: 8px;
+    color: var(--ink);
+  }
+  .g-owner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: none;
+  }
+  .g-owner .av {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    color: var(--on-accent);
+    font: 800 11px var(--font-mono);
+  }
+  .g-owner .nm {
+    font: 700 10px var(--font-mono);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    max-width: 90px;
+    line-height: 1.2;
+  }
+  .g-pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .g-spacer {
+    flex: 1;
+  }
+  .g-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
+  }
+  .g-foot.end {
+    justify-content: flex-end;
+  }
+  .g-note {
+    font: 600 12px var(--font-mono);
+    color: var(--ink-muted);
+  }
+
+  .g-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 46px;
+    padding: 0 20px;
+    border-radius: 9px;
+    font: 800 12px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .g-btn.y {
+    background: var(--yellow);
+    color: var(--on-accent);
+    box-shadow: 4px 4px 0 var(--orange);
+  }
+  .g-btn.g {
+    background: var(--green);
+    color: var(--on-accent);
+    box-shadow: 4px 4px 0 color-mix(in srgb, var(--green) 55%, #000);
+  }
+  .g-btn.o {
+    background: var(--orange);
+    color: var(--on-accent);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .g-btn:not(.off):hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--orange);
+  }
+  .g-btn.off {
+    background: var(--ink-faint);
+    color: var(--ink-dim);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  .g-check {
+    border: 1px solid color-mix(in srgb, var(--green) 35%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--green) 8%, transparent);
+    padding: 12px 14px;
+    font: 600 12px var(--font-mono);
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .g-check.y {
+    border-color: color-mix(in srgb, var(--yellow) 35%, transparent);
+    background: color-mix(in srgb, var(--yellow) 8%, transparent);
+    color: var(--yellow);
+  }
+
+  /* source cards */
+  .g-srcgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 11px;
+  }
+  .g-src {
+    text-align: left;
+    border: 2px solid var(--ink-faint);
+    border-radius: 13px;
+    padding: 14px;
+    background: var(--panel);
+    transition: all 0.18s;
+  }
+  .g-src:hover {
+    transform: translateY(-3px);
+  }
+  .g-src.on {
+    border-color: var(--yellow);
+    background: color-mix(in srgb, var(--yellow) 10%, transparent);
+  }
+  .g-src-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .g-src-code {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--ink-faint);
+    color: var(--ink);
+    font: 800 11px var(--font-mono);
+  }
+  .g-src.on .g-src-code {
+    background: var(--yellow);
+    color: var(--on-accent);
+  }
+  .g-src-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--ink-dim);
+    display: grid;
+    place-items: center;
+    color: var(--on-accent);
+    font: 800 11px var(--font-mono);
+  }
+  .g-src.on .g-src-dot {
+    border-color: var(--yellow);
+    background: var(--yellow);
+  }
+  .g-src-name {
+    margin-top: 13px;
+    font: 800 15px var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .g-src-type {
+    margin-top: 3px;
+    font: 600 10px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-dim);
+  }
+
+  /* terminal / log */
+  .g-term {
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    background: var(--terminal);
+    padding: 14px 16px;
+    font: 500 12px/1.85 var(--font-mono);
+    color: var(--terminal-ink);
+    overflow: auto;
+  }
+  .g-term .dim {
+    color: var(--terminal-dim);
+  }
+  .g-term .ln {
+    animation: awUp 0.3s ease;
+  }
+  .g-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--green);
+    animation: awBlink 1s step-end infinite;
+    vertical-align: -2px;
+  }
+
+  .g-progline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .g-progline .bar {
+    flex: 1;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--ink-faint);
+    overflow: hidden;
+  }
+  .g-progline .bar > div {
+    height: 100%;
+    background: var(--orange);
+    transition: width 0.2s linear;
+  }
+  .g-progline .pct {
+    font: 800 13px var(--font-mono);
+    color: var(--orange);
+  }
+  .g-progline .nm {
+    font: 700 12px var(--font-mono);
+    color: var(--ink);
+  }
+
+  .g-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .g-res {
+    border-radius: 10px;
+    padding: 12px 14px;
+    animation: awPop 0.4s ease both;
+  }
+  .g-res .v {
+    font: 900 26px var(--font-display);
+  }
+  .g-res .l {
+    font: 600 10px var(--font-mono);
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  .g-maprow {
+    display: grid;
+    grid-template-columns: 1fr auto 1.1fr 76px 64px;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--ink-faint);
+  }
+  .g-maprow.r5 {
+    grid-template-columns: 1fr auto 1.1fr 80px;
+    padding: 11px 14px;
+  }
+  .g-maptbl {
+    border: 1px solid var(--line-soft);
+    border-radius: 11px;
+    overflow: hidden;
+  }
+  .g-mapsrc {
+    font: 600 11px var(--font-mono);
+    color: var(--ink);
+  }
+  .g-maptgt {
+    font: 600 11px var(--font-mono);
+    color: var(--ink-muted);
+  }
+  .g-confbar {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--ink-faint);
+    overflow: hidden;
+  }
+  .g-confbar > span {
+    display: block;
+    height: 100%;
+  }
+  .g-fix {
+    font: 800 9px var(--font-mono);
+    color: var(--on-accent);
+    background: var(--alert);
+    border-radius: 6px;
+    padding: 6px 10px;
+    text-transform: uppercase;
+  }
+
+  /* DAG */
+  .g-dag {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin-top: 22px;
+  }
+  .g-dagnode {
+    display: flex;
+    align-items: center;
+  }
+  .g-dagnode .col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 104px;
+  }
+  .g-dagnode .ic {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 13px;
+    border: 2px solid var(--ink-faint);
+    font: 800 15px var(--font-display);
+    color: var(--ink-dim);
+    transition: all 0.3s;
+  }
+  .g-dagnode .nm {
+    font: 700 9px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    text-align: center;
+    color: var(--ink-dim);
+    line-height: 1.25;
+  }
+  .g-dagnode .conn {
+    width: 22px;
+    height: 2px;
+    background: var(--ink-faint);
+    margin-bottom: 24px;
+  }
+
+  .g-stats4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .g-statbox {
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    padding: 13px 15px;
+  }
+  .g-statbox .k {
+    font: 600 10px var(--font-mono);
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .g-statbox .v {
+    font: 900 24px var(--font-display);
+    color: var(--yellow);
+    margin-top: 4px;
+  }
+  .g-statbox .s {
+    font: 500 10px var(--font-mono);
+    color: var(--ink-dim);
+  }
+
+  /* belt */
+  .g-belt {
+    position: relative;
+    margin-top: 18px;
+    height: 74px;
+    border-top: 2px solid var(--yellow);
+    border-bottom: 2px solid var(--yellow);
+    background: var(--panel);
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .g-crate {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 44px;
+    height: 34px;
+    border: 2px solid var(--on-accent);
+    border-radius: 3px;
+    display: grid;
+    place-items: center;
+    font: 800 9px var(--font-mono);
+    color: var(--on-accent);
+    animation: awCrate 2.4s linear infinite;
+  }
+  .g-beltbase {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: var(--belt);
+    animation: awBelt 0.9s linear infinite;
+    border-top: 2px solid var(--yellow);
+  }
+
+  .g-whgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 9px;
+  }
+  .g-wh {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid var(--ink-faint);
+    border-radius: 9px;
+    padding: 11px 13px;
+    transition: all 0.3s;
+  }
+  .g-wh.on {
+    border-color: color-mix(in srgb, var(--green) 40%, transparent);
+    background: color-mix(in srgb, var(--green) 8%, transparent);
+  }
+  .g-wh .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--ink-dim);
+  }
+  .g-wh.on .dot {
+    background: var(--green);
+  }
+  .g-wh .nm {
+    font: 600 11px var(--font-mono);
+    color: var(--ink-dim);
+  }
+  .g-wh.on .nm {
+    color: var(--ink);
+  }
+  .g-wh .st {
+    margin-left: auto;
+    font: 800 8px var(--font-mono);
+    color: var(--ink-dim);
+  }
+  .g-wh.on .st {
+    color: var(--green);
+  }
+
+  .g-recs {
+    display: grid;
+    gap: 8px;
+  }
+  .g-rec {
+    display: flex;
+    gap: 10px;
+    border: 1px solid var(--ink-faint);
+    border-radius: 9px;
+    padding: 12px 14px;
+    font: 600 12px var(--font-mono);
+    color: var(--ink);
+  }
+  .g-rec .m {
+    color: var(--yellow);
+  }
+
+  /* talk */
+  .g-qchips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .g-qchip {
+    text-align: left;
+    border: 1.5px solid var(--ink-faint);
+    border-radius: 999px;
+    padding: 9px 14px;
+    font: 600 11px var(--font-mono);
+    color: var(--ink);
+    transition: all 0.18s;
+  }
+  .g-qchip:hover {
+    border-color: var(--green);
+  }
+  .g-qchip.on {
+    border-color: var(--green);
+    color: var(--green);
+    background: color-mix(in srgb, var(--green) 10%, transparent);
+  }
+  .g-answer {
+    margin-top: 16px;
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    overflow: hidden;
+    animation: awUp 0.35s ease;
+  }
+  .g-answer .qbar {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 14px;
+    background: var(--terminal);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .g-answer .qbar .av {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--green);
+    color: var(--on-accent);
+    font: 800 8px var(--font-mono);
+  }
+  .g-answer .qbar .q {
+    font: 600 12px var(--font-mono);
+    color: var(--terminal-ink);
+  }
+  .g-answer .body {
+    padding: 14px 16px;
+  }
+  .g-sql {
+    font: 500 11px/1.6 var(--font-mono);
+    color: var(--yellow);
+    background: var(--terminal);
+    border-radius: 8px;
+    padding: 11px 13px;
+    border: 1px solid var(--line);
+  }
+  .g-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    height: 150px;
+    margin-top: 18px;
+    padding: 0 4px;
+  }
+  .g-chart .col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+  .g-chart .v {
+    font: 800 13px var(--font-display);
+    color: var(--ink);
+  }
+  .g-chart .bar {
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    transition: height 0.6s cubic-bezier(0.2, 1, 0.4, 1);
+  }
+  .g-chart .l {
+    font: 600 10px var(--font-mono);
+    color: var(--ink-muted);
+  }
+  .g-insight {
+    display: flex;
+    gap: 9px;
+    margin-top: 14px;
+    border-top: 1px dashed var(--line);
+    padding-top: 13px;
+  }
+  .g-insight .m {
+    color: var(--green);
+    font-weight: 800;
+  }
+  .g-insight .x {
+    font: 600 12px/1.5 var(--font-mono);
+    color: var(--ink);
+  }
+
+  /* completion */
+  .g-done {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--terminal) 92%, transparent);
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px;
+    z-index: 5;
+    animation: awUp 0.4s ease;
+  }
+  .g-done .seal {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    background: var(--green);
+    color: var(--on-accent);
+    clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0 50%);
+    font: 900 18px var(--font-display);
+  }
+  .g-done h3 {
+    font: 900 clamp(28px, 5vw, 48px)/0.95 var(--font-display);
+    letter-spacing: -0.05em;
+    color: var(--terminal-ink);
+    margin: 20px 0 0;
+  }
+  .g-done p {
+    max-width: 440px;
+    margin: 14px 0 0;
+    font: 500 13px/1.6 var(--font-mono);
+    color: var(--terminal-dim);
+  }
+  .g-done .row {
+    display: flex;
+    gap: 11px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (max-width: 640px) {
+    .g-results {
+      grid-template-columns: 1fr 1fr;
+    }
+    .g-maprow,
+    .g-maprow.r5 {
+      grid-template-columns: 1fr auto 1fr;
+    }
+    .g-maprow .g-confbar,
+    .g-maprow .conflabel {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  type Q = { short: string; q: string; sql: string; data: { l: string; v: number }[]; insight: string };
+  const SOURCES = [
+    { id: 'hrdb', name: 'HR Database', type: 'PostgreSQL', code: 'HR', cols: 42 },
+    { id: 'cv', name: 'CV Pool', type: 'Documents', code: 'CV', cols: 18 },
+    { id: 'payroll', name: 'Payroll', type: 'Oracle', code: 'PR', cols: 36 },
+    { id: 'ats', name: 'ATS', type: 'REST API', code: 'AT', cols: 24 },
+    { id: 'excel', name: 'Excel Sheets', type: 'Spreadsheets', code: 'XL', cols: 15 },
+    { id: 'api', name: 'Ops APIs', type: 'REST / JSON', code: 'AP', cols: 29 },
+  ];
+  const MAPPINGS = [
+    { src: 'emp_no', tgt: 'dim_employee.employee_key', conf: 99 },
+    { src: 'hire_dt', tgt: 'dim_employee.valid_from', conf: 97 },
+    { src: 'salary', tgt: 'fact_comp.amount', conf: 62, low: true },
+    { src: 'dept_code', tgt: 'dim_department.dept_key', conf: 95 },
+    { src: 'mgr_id', tgt: 'dim_employee.manager_key', conf: 58, low: true },
+    { src: 'cv_text', tgt: 'stg_cv.raw_blob', conf: 71, low: true },
+  ];
+  const DAG = ['Generate DDL', 'Extract sources', 'Load SCD2', 'Quality gates', 'Build reports'];
+  const DAGICON = ['❒', '⇲', '◳', '◈', '▤'];
+  const WH = ['dim_employee', 'dim_department', 'fact_headcount', 'fact_comp', 'sem_workforce_kpi', 'sem_turnover'];
+  const QUESTIONS: Q[] = [
+    {
+      short: 'Headcount by department?',
+      q: 'What is our current headcount by department?',
+      sql: 'SELECT d.dept_name, COUNT(*) FROM dim_employee e JOIN dim_department d USING(dept_key) WHERE e.is_current GROUP BY 1',
+      data: [
+        { l: 'Eng', v: 82 },
+        { l: 'Sales', v: 54 },
+        { l: 'Ops', v: 38 },
+        { l: 'HR', v: 16 },
+      ],
+      insight: 'Engineering is the largest function at 43% of total headcount.',
+    },
+    {
+      short: '12-month turnover trend?',
+      q: 'Show the 12-month turnover trend.',
+      sql: 'SELECT period, turnover_rate FROM sem_turnover ORDER BY period',
+      data: [
+        { l: 'Q1', v: 6 },
+        { l: 'Q2', v: 9 },
+        { l: 'Q3', v: 7 },
+        { l: 'Q4', v: 4 },
+      ],
+      insight: 'Turnover peaked at 9% in Q2 and has since fallen to a 4% low.',
+    },
+    {
+      short: 'Where is vacancy pressure?',
+      q: 'Which departments have the most vacancy pressure?',
+      sql: 'SELECT dept_name, vacancy_pressure FROM sem_workforce_kpi ORDER BY 2 DESC',
+      data: [
+        { l: 'Sales', v: 71 },
+        { l: 'Eng', v: 48 },
+        { l: 'Ops', v: 33 },
+        { l: 'HR', v: 12 },
+      ],
+      insight: 'Sales shows the highest vacancy pressure at 71 — prioritise hiring there.',
+    },
+  ];
+  const STATIONS = [
+    { label: 'Select sources', owner: 'DE', instruction: 'Select your source systems' },
+    { label: 'Agent discovery', owner: 'AI', instruction: 'Agent is scanning the estate' },
+    { label: 'Review discovery', owner: 'DE', instruction: 'Approve the discovery results' },
+    { label: 'Model & mapping', owner: 'AI', instruction: 'Agent maps sources to HRDM' },
+    { label: 'Approve mappings', owner: 'DE', instruction: 'Resolve & approve the mappings' },
+    { label: 'ETL build', owner: 'AI', instruction: 'Agent forges the ETL line' },
+    { label: 'Approve ETL', owner: 'DE', instruction: 'Approve the ETL plan' },
+    { label: 'DWH load', owner: 'AI', instruction: 'Loading the warehouse' },
+    { label: 'Agent report', owner: 'AI', instruction: 'Agent reports the run' },
+    { label: 'Talk-to-DWH', owner: 'BU', instruction: 'Ask the warehouse anything' },
+  ];
+  const CHARS: Record<string, { code: string; name: string; color: string }> = {
+    AI: { code: 'AI', name: 'AI Agent', color: 'var(--orange)' },
+    DE: { code: 'DE', name: 'Data Engineer', color: 'var(--yellow)' },
+    BU: { code: 'BU', name: 'Business User', color: 'var(--green)' },
+  };
+  const ART = [
+    { n: 'Survey', at: 1 },
+    { n: 'Discovery', at: 2 },
+    { n: 'HRDM', at: 4 },
+    { n: 'Mappings', at: 5 },
+    { n: 'ETL DAG', at: 6 },
+    { n: 'Warehouse', at: 8 },
+    { n: 'Report', at: 9 },
+    { n: 'Insights', at: 10 },
+  ];
+
+  type State = {
+    step: number;
+    sources: Record<string, boolean>;
+    discTick: number;
+    discRun: boolean;
+    discDone: boolean;
+    mapFixed: number[];
+    etlTick: number;
+    etlRun: boolean;
+    etlDone: boolean;
+    loadTick: number;
+    loadRun: boolean;
+    loadDone: boolean;
+    activeQ: number | null;
+    done: boolean;
+  };
+
+  const root = document.getElementById('aw-game');
+  if (root) {
+    const hudEl = document.getElementById('g-hud')!;
+    const mapEl = document.getElementById('g-map')!;
+    const stageEl = document.getElementById('g-stage')!;
+    const timers: Record<string, number> = {};
+
+    const init = (): State => ({
+      step: 1,
+      sources: { hrdb: false, cv: false, payroll: false, ats: false, excel: false, api: false },
+      discTick: 0,
+      discRun: false,
+      discDone: false,
+      mapFixed: [],
+      etlTick: 0,
+      etlRun: false,
+      etlDone: false,
+      loadTick: 0,
+      loadRun: false,
+      loadDone: false,
+      activeQ: null,
+      done: false,
+    });
+    let s = init();
+
+    const pad = (n: number) => (n < 10 ? '0' + n : '' + n);
+    const selected = () => SOURCES.filter((x) => s.sources[x.id]);
+    const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    function discAll() {
+      const sel = selected();
+      const out: { tag: string; color: string; x: string }[] = [];
+      sel.forEach((x) =>
+        out.push({ tag: '[ok]', color: 'var(--green)', x: `schema parsed · ${x.name} (${x.cols} cols)` }),
+      );
+      sel.forEach((x) => out.push({ tag: '[ok]', color: 'var(--green)', x: `entities classified · ${x.code}` }));
+      out.push({ tag: '[pii]', color: 'var(--yellow)', x: `PII detected · ${sel.length + 2} fields flagged` });
+      out.push({ tag: '[ok]', color: 'var(--green)', x: 'relationship graph built' });
+      out.push({ tag: '[ok]', color: 'var(--green)', x: 'source quality ranked' });
+      out.push({ tag: '[done]', color: 'var(--green)', x: 'discovery report compiled' });
+      return out;
+    }
+
+    function startProc(key: 'disc' | 'etl' | 'load', max: number, ms: number) {
+      clearInterval(timers[key]);
+      (s as any)[key + 'Tick'] = 0;
+      (s as any)[key + 'Run'] = true;
+      (s as any)[key + 'Done'] = false;
+      render();
+      timers[key] = window.setInterval(() => {
+        const t = (s as any)[key + 'Tick'] + 1;
+        if (t >= max) {
+          clearInterval(timers[key]);
+          (s as any)[key + 'Tick'] = max;
+          (s as any)[key + 'Run'] = false;
+          (s as any)[key + 'Done'] = true;
+        } else {
+          (s as any)[key + 'Tick'] = t;
+        }
+        render();
+      }, ms);
+    }
+
+    function go(n: number) {
+      s.step = n;
+      render();
+    }
+
+    const actions: Record<string, (arg?: string) => void> = {
+      toggle: (id) => {
+        if (s.step !== 1 || !id) return;
+        s.sources[id] = !s.sources[id];
+        render();
+      },
+      runDiscovery: () => {
+        if (selected().length < 1) return;
+        s.step = 2;
+        startProc('disc', Math.max(1, discAll().length), 200);
+      },
+      toReview: () => go(3),
+      approveDiscovery: () => go(4),
+      toMapReview: () => go(5),
+      fix: (i) => {
+        const n = Number(i);
+        if (!s.mapFixed.includes(n)) {
+          s.mapFixed.push(n);
+          render();
+        }
+      },
+      approveMap: () => {
+        const low = MAPPINGS.filter((m) => m.low).length;
+        if (s.mapFixed.length < low) return;
+        s.step = 6;
+        startProc('etl', 11, 230);
+      },
+      toEtlReview: () => go(7),
+      startExec: () => {
+        s.step = 8;
+        startProc('load', WH.length * 2 + 1, 190);
+      },
+      toReport: () => go(9),
+      toTalk: () => go(10),
+      ask: (i) => {
+        s.activeQ = Number(i);
+        render();
+      },
+      finish: () => {
+        s.done = true;
+        render();
+      },
+      restart: () => {
+        ['disc', 'etl', 'load'].forEach((k) => clearInterval(timers[k]));
+        s = init();
+        render();
+      },
+    };
+
+    root.addEventListener('click', (e) => {
+      const t = (e.target as HTMLElement).closest('[data-act]') as HTMLElement | null;
+      if (!t) return;
+      const fn = actions[t.dataset.act!];
+      if (fn) fn(t.dataset.arg);
+    });
+
+    // ---------- renderers ----------
+    function renderHud() {
+      const step = s.step;
+      const owner = STATIONS[step - 1].owner;
+      const chars = Object.keys(CHARS)
+        .map((k) => {
+          const c = CHARS[k];
+          const on = owner === k;
+          return `<div class="g-char" style="opacity:${on ? 1 : 0.4};border-color:${on ? c.color : 'var(--line-soft)'};background:${on ? 'color-mix(in srgb,var(--ink) 6%,transparent)' : 'transparent'}">
+          <span class="code" style="background:${c.color}">${c.code}</span><span class="nm">${c.name}</span></div>`;
+        })
+        .join('');
+      const arts = ART.map((a) => {
+        const on = a.at === 10 ? s.done : step > a.at;
+        return `<span class="g-art ${on ? 'on' : ''}">${on ? '◆' : '◇'} ${a.n}</span>`;
+      }).join('');
+      const pct = s.done ? 100 : Math.round(((step - 1) / 9) * 100);
+      hudEl.innerHTML = `
+        <div class="g-hud-top">
+          <div class="g-hud-title"><b>▸ DWH BUILD · MISSION</b><span>station ${pad(step)} / 10</span></div>
+          <div class="g-chars">${chars}</div>
+          <button class="g-restart" data-act="restart">↻ Restart</button>
+        </div>
+        <div class="g-prog"><div style="width:${pct}%"></div></div>
+        <div class="g-arts">${arts}</div>`;
+    }
+
+    function renderMap() {
+      const step = s.step;
+      const rows = STATIONS.map((st, i) => {
+        const n = i + 1;
+        const done = n < step;
+        const active = n === step;
+        const cls = done ? 'done' : active ? 'active' : '';
+        const badge = done ? '✓' : pad(n);
+        const ping = active ? '<span class="ping"></span>' : '';
+        return `<div class="g-st ${cls}">
+          <span class="badge">${badge}${ping}</span>
+          <span class="lbl">${st.label}</span>
+          <span class="own" style="background:${CHARS[st.owner].color}">${st.owner}</span></div>`;
+      }).join('');
+      mapEl.innerHTML = `<div class="g-map-h">Mission map</div>${rows}`;
+    }
+
+    function stageHead() {
+      const step = s.step;
+      const stn = STATIONS[step - 1];
+      const owner = stn.owner;
+      return `<div class="g-stage-head">
+        <div><div class="k">Station ${pad(step)} · ${stn.label}</div><div class="t">${stn.instruction}</div></div>
+        <div class="g-owner"><span class="av" style="background:${CHARS[owner].color}">${owner}</span><span class="nm">${CHARS[owner].name}</span></div>
+      </div>`;
+    }
+
+    function confColor(c: number, low: boolean) {
+      return low ? 'var(--alert)' : c >= 90 ? 'var(--green)' : c >= 75 ? 'var(--yellow)' : 'var(--alert)';
+    }
+
+    function renderStage() {
+      const step = s.step;
+      let body = '';
+
+      if (step === 1) {
+        const cards = SOURCES.map((x) => {
+          const on = !!s.sources[x.id];
+          return `<button class="g-src ${on ? 'on' : ''}" data-act="toggle" data-arg="${x.id}">
+            <div class="g-src-top"><span class="g-src-code">${x.code}</span><span class="g-src-dot">${on ? '✓' : ''}</span></div>
+            <div class="g-src-name">${x.name}</div><div class="g-src-type">${x.type} · ${x.cols} cols</div></button>`;
+        }).join('');
+        const cnt = selected().length;
+        const can = cnt >= 1;
+        body = `<div class="g-pane"><div class="g-srcgrid">${cards}</div><div class="g-spacer"></div>
+          <div class="g-foot"><div class="g-note"><b style="color:var(--yellow)">${cnt}</b> systems selected</div>
+          <button class="g-btn y ${can ? '' : 'off'}" data-act="runDiscovery">▶ Run agent discovery</button></div></div>`;
+      } else if (step === 2) {
+        const lines = discAll().slice(0, s.discTick);
+        const max = Math.max(1, discAll().length);
+        const pct = Math.round((s.discTick / max) * 100);
+        const head = s.discDone
+          ? `Discovery complete · ${selected().length} systems scanned`
+          : `Scanning ${selected().length} source systems…`;
+        const log = lines
+          .map((l) => `<div class="ln"><span style="color:${l.color}">${l.tag}</span> ${esc(l.x)}</div>`)
+          .join('');
+        const cursor = s.discRun ? '<span class="g-cursor"></span>' : '';
+        let results = '';
+        if (s.discDone) {
+          const sel = selected();
+          const entities = sel.reduce((a, x) => a + Math.round(x.cols / 4), 0);
+          const pii = sel.length + 2;
+          const rels = sel.length * 2 + 1;
+          results = `<div class="g-results">
+            <div class="g-res" style="border:1px solid color-mix(in srgb,var(--green) 40%,transparent);background:color-mix(in srgb,var(--green) 8%,transparent)"><div class="v" style="color:var(--green)">${entities}</div><div class="l">entities found</div></div>
+            <div class="g-res" style="border:1px solid color-mix(in srgb,var(--yellow) 40%,transparent);background:color-mix(in srgb,var(--yellow) 8%,transparent);animation-delay:.08s"><div class="v" style="color:var(--yellow)">${pii}</div><div class="l">PII fields flagged</div></div>
+            <div class="g-res" style="border:1px solid var(--line-soft);animation-delay:.16s"><div class="v" style="color:var(--ink)">${rels}</div><div class="l">relationships</div></div></div>
+            <div class="g-foot end"><button class="g-btn y" data-act="toReview">→ Send to engineer review</button></div>`;
+        }
+        body = `<div class="g-pane">
+          <div class="g-progline"><span class="nm">${head}</span><div class="bar"><div style="width:${pct}%"></div></div><span class="pct">${pct}%</span></div>
+          <div class="g-term" style="margin-top:16px;flex:1;min-height:230px"><div class="dim">// agent.discovery — scanning estate</div>${log}${cursor}</div>
+          ${results}</div>`;
+      } else if (step === 3) {
+        const sel = selected().length;
+        const pii = selected().length + 2;
+        body = `<div class="g-pane">
+          <div class="g-check">⬡ Human-in-the-loop checkpoint — nothing proceeds without your approval.</div>
+          <div style="display:grid;gap:9px;margin-top:14px">
+            ${[
+              `Schema discovery · ${sel} systems parsed`,
+              `PII handling · ${pii} fields → masked policy`,
+              'Entity & relationship graph',
+            ]
+              .map(
+                (x) =>
+                  `<div style="display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line-soft);border-radius:9px;padding:13px 15px"><span style="font:600 12px var(--font-mono);color:var(--ink)">${x}</span><span style="font:800 10px var(--font-mono);color:var(--green)">✓ READY</span></div>`,
+              )
+              .join('')}
+          </div><div class="g-spacer"></div>
+          <div class="g-foot end"><button class="g-btn g" data-act="approveDiscovery">✓ Approve discovery</button></div></div>`;
+      } else if (step === 4 || step === 5) {
+        const low = MAPPINGS.filter((m) => m.low).length;
+        const rows = MAPPINGS.map((m, i) => {
+          const fixed = s.mapFixed.includes(i);
+          const isLow = !!m.low && !fixed;
+          const conf = m.low && fixed ? 96 : m.conf;
+          const cc = confColor(conf, isLow);
+          const arrow = isLow ? 'var(--alert)' : 'var(--green)';
+          const rowbg = isLow
+            ? 'background:color-mix(in srgb,var(--alert) 8%,transparent)'
+            : fixed
+              ? 'background:color-mix(in srgb,var(--green) 6%,transparent)'
+              : '';
+          if (step === 4) {
+            const label = isLow ? 'LOW ' + conf : conf + '%';
+            return `<div class="g-maprow" style="${rowbg}"><span class="g-mapsrc">${m.src}</span><span style="color:${arrow};font-weight:800">→</span><span class="g-maptgt">${m.tgt}</span><span class="g-confbar"><span style="width:${conf}%;background:${cc}"></span></span><span class="conflabel" style="font:800 10px var(--font-mono);text-align:right;color:${cc}">${label}</span></div>`;
+          }
+          let action: string;
+          if (!m.low) action = '<span style="font:800 9px var(--font-mono);color:var(--green)">✓ AUTO</span>';
+          else if (fixed) action = '<span style="font:800 9px var(--font-mono);color:var(--green)">✓ FIXED</span>';
+          else action = `<button class="g-fix" data-act="fix" data-arg="${i}">Fix</button>`;
+          return `<div class="g-maprow r5" style="${rowbg}"><span class="g-mapsrc">${m.src}</span><span style="color:${arrow};font-weight:800">→</span><span class="g-maptgt">${m.tgt}</span><span style="text-align:right">${action}</span></div>`;
+        }).join('');
+
+        if (step === 4) {
+          body = `<div class="g-pane">
+            <div style="display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(90deg,color-mix(in srgb,var(--orange) 12%,transparent),transparent);padding:14px 16px">
+              <span style="display:grid;place-items:center;width:42px;height:42px;border-radius:10px;background:var(--orange);color:var(--on-accent);font:900 13px var(--font-display)">HRDM</span>
+              <div style="flex:1"><div style="font:800 16px var(--font-display);letter-spacing:-.02em;color:var(--ink)">DataModel selected — HRDM</div><div style="font:600 10px var(--font-mono);color:var(--ink-dim);margin-top:2px">foundation · analytical · semantic — the governed center of the build</div></div>
+              <span style="font:800 9px var(--font-mono);color:var(--on-accent);background:var(--green);border-radius:5px;padding:4px 8px">MODEL-FIRST</span></div>
+            <div style="font:700 10px var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);margin:16px 2px 8px">AI-suggested field mappings</div>
+            <div class="g-maptbl">${rows}</div><div class="g-spacer"></div>
+            <div class="g-foot"><div class="g-note"><b style="color:var(--alert)">${low}</b> low-confidence mappings need a human</div><button class="g-btn y" data-act="toMapReview">→ Review mappings</button></div></div>`;
+        } else {
+          const can = s.mapFixed.length >= low;
+          body = `<div class="g-pane">
+            <div class="g-check y">⬡ Resolve each flagged mapping, then approve. The agent suggests — you decide.</div>
+            <div class="g-maptbl" style="margin-top:14px">${rows}</div><div class="g-spacer"></div>
+            <div class="g-foot"><div class="g-note"><b style="color:var(--green)">${s.mapFixed.length}</b> / ${low} resolved</div><button class="g-btn g ${can ? '' : 'off'}" data-act="approveMap">✓ Approve mappings</button></div></div>`;
+        }
+      } else if (step === 6) {
+        const pct = Math.round((s.etlTick / 11) * 100);
+        const nodes = DAG.map((name, i) => {
+          const doneN = s.etlTick >= i * 2 + 2;
+          const running = !doneN && s.etlTick >= i * 2 + 1;
+          const bd = doneN ? 'var(--green)' : running ? 'var(--orange)' : 'var(--ink-faint)';
+          const bg = doneN
+            ? 'color-mix(in srgb,var(--green) 15%,transparent)'
+            : running
+              ? 'color-mix(in srgb,var(--orange) 18%,transparent)'
+              : 'transparent';
+          const fg = doneN ? 'var(--green)' : running ? 'var(--orange)' : 'var(--ink-dim)';
+          const lf = doneN || running ? 'var(--ink)' : 'var(--ink-dim)';
+          const conn =
+            i < DAG.length - 1
+              ? `<span class="conn" style="background:${doneN ? 'var(--green)' : 'var(--ink-faint)'}"></span>`
+              : '';
+          return `<div class="g-dagnode"><div class="col"><span class="ic" style="border-color:${bd};background:${bg};color:${fg}">${DAGICON[i]}</span><span class="nm" style="color:${lf}">${name}</span></div>${conn}</div>`;
+        }).join('');
+        const allLog = [
+          { x: 'DDL generated · 38 objects' },
+          { x: 'extract complete · all sources' },
+          { x: 'SCD2 dimensions loaded' },
+          { x: 'quality gates passed · 7/7' },
+          { x: 'reports built · DAG green' },
+        ];
+        const log = allLog
+          .slice(0, Math.min(allLog.length, Math.floor(s.etlTick / 2)))
+          .map((l) => `<div class="ln"><span style="color:var(--green)">[ok]</span> ${l.x}</div>`)
+          .join('');
+        const next = s.etlDone
+          ? `<div class="g-foot end"><button class="g-btn y" data-act="toEtlReview">→ Review ETL plan</button></div>`
+          : '';
+        body = `<div class="g-pane">
+          <div class="g-progline"><span class="nm">Agent forging ETL infrastructure…</span><div class="bar"><div style="width:${pct}%"></div></div><span class="pct">${pct}%</span></div>
+          <div class="g-dag">${nodes}</div>
+          <div class="g-term" style="margin-top:18px;min-height:96px">${log}</div><div class="g-spacer"></div>${next}</div>`;
+      } else if (step === 7) {
+        const boxes = [
+          { k: 'objects', v: '38', s: 'DDL · tables + views' },
+          { k: 'load strategy', v: 'SCD2', s: 'history preserved' },
+          { k: 'quality gates', v: '7', s: 'block on fail' },
+          { k: 'DAG tasks', v: '21', s: 'ordered · retryable' },
+        ]
+          .map(
+            (b) =>
+              `<div class="g-statbox"><div class="k">${b.k}</div><div class="v">${b.v}</div><div class="s">${b.s}</div></div>`,
+          )
+          .join('');
+        body = `<div class="g-pane">
+          <div class="g-check">⬡ ETL plan ready. Approve to start a governed, traceable run.</div>
+          <div class="g-stats4">${boxes}</div><div class="g-spacer"></div>
+          <div class="g-foot end"><button class="g-btn g" data-act="startExec">▶ Approve &amp; start execution</button></div></div>`;
+      } else if (step === 8) {
+        const max = WH.length * 2 + 1;
+        const pct = Math.round((s.loadTick / max) * 100);
+        const crates = ['var(--orange)', 'var(--yellow)', 'var(--ink)']
+          .map((c, i) => `<div class="g-crate" style="background:${c};animation-delay:${i * 0.8}s">ROW</div>`)
+          .join('');
+        const tables = WH.map((name, i) => {
+          const on = s.loadTick >= i * 2 + 2;
+          return `<div class="g-wh ${on ? 'on' : ''}"><span class="dot"></span><span class="nm">${name}</span><span class="st">${on ? 'LIVE' : '…'}</span></div>`;
+        }).join('');
+        const next = s.loadDone
+          ? `<div class="g-foot end"><button class="g-btn y" data-act="toReport">→ View agent report</button></div>`
+          : '';
+        body = `<div class="g-pane">
+          <div class="g-progline"><span class="nm">Loading governed warehouse…</span><div class="bar"><div style="width:${pct}%;background:linear-gradient(90deg,var(--orange),var(--green))"></div></div><span class="pct" style="color:var(--green)">${pct}%</span></div>
+          <div class="g-belt">${crates}<div class="g-beltbase"></div></div>
+          <div style="font:700 10px var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);margin:18px 2px 9px">Warehouse tables coming online</div>
+          <div class="g-whgrid">${tables}</div><div class="g-spacer"></div>${next}</div>`;
+      } else if (step === 9) {
+        const cards = [
+          { v: '21', l: 'jobs succeeded', c: 'var(--green)', b: 'color-mix(in srgb,var(--green) 8%,transparent)' },
+          { v: '2', l: 'warnings', c: 'var(--yellow)', b: 'color-mix(in srgb,var(--yellow) 8%,transparent)' },
+          { v: '0', l: 'blocking issues', c: 'var(--alert)', b: 'color-mix(in srgb,var(--alert) 6%,transparent)' },
+          { v: '100%', l: 'QC passed', c: 'var(--ink)', b: 'transparent' },
+        ]
+          .map(
+            (x) =>
+              `<div style="border:1px solid var(--line-soft);border-radius:11px;padding:14px;background:${x.b}"><div style="font:900 30px var(--font-display);color:${x.c}">${x.v}</div><div style="font:600 10px var(--font-mono);text-transform:uppercase;color:var(--ink-dim)">${x.l}</div></div>`,
+          )
+          .join('');
+        body = `<div class="g-pane">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">${cards}</div>
+          <div style="font:700 10px var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);margin:18px 2px 9px">Agent recommendations</div>
+          <div class="g-recs">
+            <div class="g-rec"><span class="m">▹</span> Add a freshness SLA on the payroll extract (last load +6h).</div>
+            <div class="g-rec"><span class="m">▹</span> Promote <b style="color:var(--green)">&nbsp;sem_workforce_kpi&nbsp;</b> to a certified semantic view.</div>
+          </div><div class="g-spacer"></div>
+          <div class="g-foot end"><button class="g-btn g" data-act="toTalk">→ Open Talk-to-DWH</button></div></div>`;
+      } else if (step === 10) {
+        const chips = QUESTIONS.map(
+          (q, i) =>
+            `<button class="g-qchip ${s.activeQ === i ? 'on' : ''}" data-act="ask" data-arg="${i}">${q.short}</button>`,
+        ).join('');
+        let ans = '';
+        if (s.activeQ !== null) {
+          const q = QUESTIONS[s.activeQ];
+          const mx = Math.max(...q.data.map((d) => d.v));
+          const bars = q.data
+            .map(
+              (d, i) =>
+                `<div class="col"><span class="v">${d.v}</span><div class="bar" style="height:${Math.round((d.v / mx) * 100)}%;background:${i === 0 ? 'var(--orange)' : 'var(--yellow)'}"></div><span class="l">${d.l}</span></div>`,
+            )
+            .join('');
+          ans = `<div class="g-answer"><div class="qbar"><span class="av">BU</span><span class="q">${q.q}</span></div>
+            <div class="body"><div style="font:600 10px var(--font-mono);color:var(--terminal-dim);margin-bottom:6px">// NL → SQL</div>
+            <div class="g-sql">${esc(q.sql)}</div><div class="g-chart">${bars}</div>
+            <div class="g-insight"><span class="m">◆</span><span class="x">${q.insight}</span></div></div></div>`;
+        }
+        body = `<div class="g-pane">
+          <div style="font:700 10px var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);margin:0 2px 9px">Ask the warehouse — natural language</div>
+          <div class="g-qchips">${chips}</div>${ans}<div class="g-spacer"></div>
+          <div class="g-foot end"><button class="g-btn y" data-act="finish">✓ Complete mission</button></div></div>`;
+      }
+
+      const done = s.done
+        ? `<div class="g-done"><div class="seal">✓</div><h3>Warehouse shipped.</h3>
+        <p>From raw estate to governed answers — discovered, mapped, human-approved, built and queried. Every artifact traces back to one DataModel.</p>
+        <div class="row"><button class="g-btn y" data-act="restart">↻ Play again</button><a class="g-btn o" href="/contact">Book a real build review</a></div></div>`
+        : '';
+
+      stageEl.innerHTML = stageHead() + body + done;
+    }
+
+    function render() {
+      renderHud();
+      renderMap();
+      renderStage();
+    }
+    render();
+  }
+</script>

@@ -1,83 +1,284 @@
 ---
-import { mainNav } from '@data/navigation';
+import Logo from '@components/ui/Logo.astro';
+import ThemeToggle from '@components/ui/ThemeToggle.astro';
+import { PRIMARY_NAV, FEATURES } from '@data/site';
 ---
 
-<header class="sticky top-0 z-50 border-b border-white/[0.06] bg-[#0a0a1a]/80 backdrop-blur-xl">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-    <!-- Logo -->
-    <a href="/" class="flex items-center gap-2">
-      <img src="/android-chrome-192x192.png" alt="AutoWarehouse" class="h-8 w-8" />
-      <div class="flex flex-col">
-        <span class="text-lg font-extrabold leading-tight text-white">Auto<span class="gradient-text">Warehouse</span></span>
-        <span class="text-[9px] leading-tight tracking-wide text-slate-500">by <a href="https://www.intellica.net" target="_blank" rel="noopener" class="text-slate-400 hover:text-white transition-colors">Intellica</a></span>
-      </div>
+<header class="aw-header">
+  <div class="aw-header-inner shell">
+    <a href="/" class="aw-brand" aria-label="AutoWarehouse home">
+      <Logo variant="lockup" size={34} />
     </a>
 
-    <!-- Desktop Nav -->
-    <nav class="hidden items-center gap-6 md:flex" aria-label="Main navigation">
-      {mainNav.map((item) =>
-        item.children ? (
-          <div class="group relative">
-            <button class="flex items-center gap-1 text-sm text-slate-400 transition-colors hover:text-white" aria-haspopup="true" aria-expanded="false">
-              {item.label}
-              <svg class="h-3 w-3 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-            </button>
-            <div class="invisible absolute left-0 top-full min-w-[200px] rounded-lg border border-white/10 bg-[var(--bg-secondary)] p-2 opacity-0 shadow-xl transition-all group-hover:visible group-hover:opacity-100">
-              {item.children.map((child) => (
-                <a href={child.href} class="block rounded-md px-3 py-2 text-sm text-slate-400 transition-colors hover:bg-white/5 hover:text-white">
-                  {child.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <a
-            href={item.href}
-            class="text-sm text-slate-400 transition-colors hover:text-white"
-            {...(item.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}
-          >
-            {item.label}
+    <nav class="aw-nav" aria-label="Primary">
+      <div class="aw-dropdown">
+        <button class="aw-navlink" aria-expanded="false" aria-controls="aw-feat-menu" id="aw-feat-btn"
+          >Features ▾</button
+        >
+        <div class="aw-menu" id="aw-feat-menu" aria-labelledby="aw-feat-btn">
+          {
+            FEATURES.map((f) => (
+              <a class="aw-menu-item" href={`/features/${f.slug}`}>
+                <span class="aw-menu-num" style={`color:${f.color}`}>
+                  {String(f.step).padStart(2, '0')}
+                </span>
+                <span>
+                  <span class="aw-menu-label">{f.label}</span>
+                  <span class="aw-menu-name">{f.name}</span>
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      {
+        PRIMARY_NAV.map((l) => (
+          <a class="aw-navlink" href={l.href}>
+            {l.label}
           </a>
-        )
-      )}
+        ))
+      }
     </nav>
 
-    <!-- Right side -->
-    <div class="flex items-center gap-3">
-      <a href="/contact" class="gradient-bg rounded-lg px-4 py-2 text-xs font-semibold text-white transition-all hover:scale-105">
-        Request Demo
-      </a>
-
-      <!-- Mobile menu toggle -->
-      <button id="mobile-toggle" class="text-slate-400 md:hidden" aria-label="Toggle menu">
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <div class="aw-actions">
+      <ThemeToggle />
+      <a href="/contact" class="btn btn-primary btn-sm aw-cta">Request Demo</a>
+      <button id="aw-burger" class="aw-burger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 
-  <!-- Mobile Menu -->
-  <nav id="mobile-menu" class="hidden border-t border-white/[0.06] bg-[#0a0a1a] px-6 py-4 md:hidden" aria-label="Mobile navigation">
-    {mainNav.map((item) =>
-      item.children ? (
-        <>
-          <div class="py-2 text-xs font-semibold uppercase tracking-wider text-slate-500">{item.label}</div>
-          {item.children.map((child) => (
-            <a href={child.href} class="block py-2 text-sm text-slate-400 hover:text-white">
-              {child.label}
-            </a>
-          ))}
-        </>
-      ) : (
-        <a href={item.href} class="block py-2 text-sm text-slate-400 hover:text-white">
-          {item.label}
+  <div class="aw-mobile" id="aw-mobile" hidden>
+    <a href="/platform" class="aw-mlink">Platform</a>
+    <div class="aw-mgroup-label">Features</div>
+    {
+      FEATURES.map((f) => (
+        <a href={`/features/${f.slug}`} class="aw-mlink aw-msub">
+          <span style={`color:${f.color}`}>{String(f.step).padStart(2, '0')}</span> {f.name}
         </a>
-      )
-    )}
-  </nav>
+      ))
+    }
+    <a href="/use-cases" class="aw-mlink">Use Cases</a>
+    <a href="/pricing" class="aw-mlink">Pricing</a>
+    <a href="/about" class="aw-mlink">About</a>
+    <a href="/contact" class="btn btn-primary aw-mcta">Request Demo</a>
+  </div>
 </header>
 
-<script>
-  const toggle = document.getElementById('mobile-toggle');
-  const menu = document.getElementById('mobile-menu');
-  toggle?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+<style>
+  .aw-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .aw-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .aw-brand {
+    text-decoration: none;
+  }
+
+  .aw-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .aw-navlink {
+    padding: 8px 13px;
+    font: 700 10px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-muted);
+    text-decoration: none;
+    background: none;
+    border-radius: 8px;
+    transition:
+      color 0.2s ease,
+      background 0.2s ease;
+  }
+  .aw-navlink:hover {
+    color: var(--ink);
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+  }
+
+  .aw-dropdown {
+    position: relative;
+  }
+  .aw-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    min-width: 250px;
+    padding: 8px;
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.6);
+  }
+  .aw-dropdown:hover .aw-menu,
+  .aw-dropdown:focus-within .aw-menu,
+  .aw-dropdown.open .aw-menu {
+    display: block;
+  }
+  .aw-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 11px;
+    border-radius: 9px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.18s ease;
+  }
+  .aw-menu-item:hover {
+    background: color-mix(in srgb, var(--ink) 7%, transparent);
+  }
+  .aw-menu-num {
+    font: 800 12px var(--font-mono);
+    min-width: 22px;
+  }
+  .aw-menu-label {
+    display: block;
+    font: 800 13px var(--font-display);
+    letter-spacing: -0.01em;
+  }
+  .aw-menu-name {
+    display: block;
+    font: 600 10px var(--font-mono);
+    color: var(--ink-dim);
+  }
+
+  .aw-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .aw-burger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+  .aw-burger span {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+  }
+
+  .aw-mobile {
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 18px 22px;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .aw-mobile[hidden] {
+    display: none;
+  }
+  .aw-mlink {
+    padding: 11px 8px;
+    font: 700 13px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .aw-msub {
+    padding-left: 16px;
+    font-size: 12px;
+    text-transform: none;
+    color: var(--ink-muted);
+  }
+  .aw-mgroup-label {
+    padding: 12px 8px 4px;
+    font: 700 9px var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .aw-mcta {
+    margin-top: 14px;
+  }
+
+  @media (max-width: 880px) {
+    .aw-nav,
+    .aw-cta {
+      display: none;
+    }
+    .aw-burger {
+      display: flex;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var burger = document.getElementById('aw-burger');
+    var mobile = document.getElementById('aw-mobile');
+    if (burger && mobile) {
+      burger.addEventListener('click', function () {
+        var open = mobile.hidden;
+        mobile.hidden = !open;
+        burger.setAttribute('aria-expanded', String(open));
+      });
+    }
+
+    // Features disclosure: keep aria-expanded in sync across hover, focus, and
+    // click. The CSS opens on :hover/:focus-within for mouse/keyboard; this just
+    // mirrors the real visibility into ARIA and adds click + Escape control.
+    var dd = document.querySelector('.aw-dropdown');
+    var btn = document.getElementById('aw-feat-btn');
+    if (dd && btn) {
+      var sync = function () {
+        var open = dd.classList.contains('open') || dd.matches(':hover') || dd.contains(document.activeElement);
+        btn.setAttribute('aria-expanded', String(open));
+      };
+      btn.addEventListener('click', function () {
+        dd.classList.toggle('open');
+        sync();
+      });
+      dd.addEventListener('mouseenter', sync);
+      dd.addEventListener('mouseleave', function () {
+        dd.classList.remove('open');
+        sync();
+      });
+      dd.addEventListener('focusin', sync);
+      dd.addEventListener('focusout', function () {
+        // defer so document.activeElement updates
+        setTimeout(sync, 0);
+      });
+      dd.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          dd.classList.remove('open');
+          btn.focus();
+          sync();
+        }
+      });
+      document.addEventListener('click', function (e) {
+        if (!dd.contains(e.target)) {
+          dd.classList.remove('open');
+          sync();
+        }
+      });
+    }
+  })();
 </script>
