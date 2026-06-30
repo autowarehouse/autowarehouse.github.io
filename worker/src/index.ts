@@ -45,8 +45,18 @@ export async function parsePayload(request: Request): Promise<ContactPayload> {
   };
 }
 
-export function validate(_p: ContactPayload): ValidationResult {
-  throw new Error('not implemented');
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export function validate(p: ContactPayload): ValidationResult {
+  const errors: string[] = [];
+  const name = p.name.trim();
+  if (name.length === 0 || name.length > 120) errors.push('name');
+  if (!EMAIL_RE.test(p.email) || p.email.length > 200) errors.push('email');
+  const company = p.company.trim();
+  if (company.length === 0 || company.length > 160) errors.push('company');
+  const usecase = p.usecase.trim();
+  if (usecase.length === 0 || usecase.length > 4000) errors.push('usecase');
+  return { ok: errors.length === 0, errors };
 }
 
 export function isSpam(_p: ContactPayload): boolean {
