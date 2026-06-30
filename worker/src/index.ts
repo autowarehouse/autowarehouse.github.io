@@ -92,12 +92,17 @@ export async function verifyTurnstile(token: string, secret: string, ip: string 
   body.append('secret', secret);
   body.append('response', token);
   if (ip) body.append('remoteip', ip);
-  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-    method: 'POST',
-    body,
-  });
-  const data = (await res.json()) as { success?: boolean };
-  return data.success === true;
+  try {
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      body,
+    });
+    const data = (await res.json()) as { success?: boolean };
+    return data.success === true;
+  } catch (err) {
+    console.error('verifyTurnstile failed', err);
+    return false;
+  }
 }
 
 function json(status: number, body: unknown): Response {

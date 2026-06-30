@@ -83,6 +83,24 @@ describe('validate', () => {
     expect(r.ok).toBe(false);
     expect(r.errors).toContain('usecase');
   });
+
+  test('flags an over-long name', () => {
+    const r = validate({ ...full, name: 'x'.repeat(121) });
+    expect(r.ok).toBe(false);
+    expect(r.errors).toContain('name');
+  });
+
+  test('flags an over-long company', () => {
+    const r = validate({ ...full, company: 'x'.repeat(161) });
+    expect(r.ok).toBe(false);
+    expect(r.errors).toContain('company');
+  });
+
+  test('flags an over-long email', () => {
+    const r = validate({ ...full, email: `${'x'.repeat(196)}@x.io` });
+    expect(r.ok).toBe(false);
+    expect(r.errors).toContain('email');
+  });
 });
 
 describe('isSpam', () => {
@@ -142,6 +160,11 @@ describe('verifyTurnstile', () => {
     globalThis.fetch = (async () => new Response(JSON.stringify({ success: false }))) as unknown as typeof fetch;
     expect(await verifyTurnstile('tok', 'secret', null)).toBe(false);
   });
+
+  test('returns false (does not throw) when siteverify returns a non-JSON body', async () => {
+    globalThis.fetch = (async () => new Response('<html>503</html>', { status: 503 })) as unknown as typeof fetch;
+    expect(await verifyTurnstile('tok', 'secret', null)).toBe(false);
+  });
 });
 
 function fakeEnv(send: (o: unknown) => Promise<{ messageId?: string }>) {
@@ -185,9 +208,10 @@ describe('fetch handler', () => {
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true });
     expect(send).toHaveBeenCalledTimes(1);
-    const arg = send.mock.calls[0][0] as { to: string; replyTo: string };
+    const arg = send.mock.calls[0][0] as { to: string; replyTo: string; from: { email: string; name?: string } };
     expect(arg.to).toBe('info@intellica.net');
     expect(arg.replyTo).toBe('ada@example.com');
+    expect(arg.from).toEqual({ email: 'noreply@autowarehouse.ai', name: 'AutoWarehouse' });
   });
 
   test('returns 502 when send throws', async () => {
@@ -199,5 +223,38 @@ describe('fetch handler', () => {
       }) as never,
     );
     expect(res.status).toBe(502);
+  });
+
+  test('rejects invalid fields with 400 validation error before sending', async () => {
+    globalThis.fetch = (async () => new Response(JSON.stringify({ success: true }))) as unknown as typeof fetch;
+    const send = mock(async () => ({}));
+    const res = await worker.fetch(formRequest({ ...okFields, email: 'not-an-email' }), fakeEnv(send) as never);
+    expect(res.status).toBe(400);
+    expect(await res.json()).toEqual({ ok: false, error: 'validation', fields: ['email'] });
+    expect(send).not.toHaveBeenCalled();
+  });
+
+  test('rejects a failed turnstile verification with 400 before sending', async () => {
+    globalThis.fetch = (async () => new Response(JSON.stringify({ success: false }))) as unknown as typeof fetch;
+    const send = mock(async () => ({}));
+    const res = await worker.fetch(formRequest(okFields), fakeEnv(send) as never);
+    expect(res.status).toBe(400);
+    expect(await res.json()).toEqual({ ok: false, error: 'verification' });
+    expect(send).not.toHaveBeenCalled();
+  });
+
+  test('forwards CF-Connecting-IP to siteverify as remoteip', async () => {
+    let capturedBody: BodyInit | null | undefined;
+    globalThis.fetch = (async (_url: string, opts: RequestInit) => {
+      capturedBody = opts.body;
+      return new Response(JSON.stringify({ success: true }));
+    }) as unknown as typeof fetch;
+    const send = mock(async () => ({ messageId: 'm1' }));
+    const req = formRequest(okFields);
+    req.headers.set('CF-Connecting-IP', '203.0.113.7');
+    const res = await worker.fetch(req, fakeEnv(send) as never);
+    expect(res.status).toBe(200);
+    const form = await new Response(capturedBody).formData();
+    expect(form.get('remoteip')).toBe('203.0.113.7');
   });
 });
