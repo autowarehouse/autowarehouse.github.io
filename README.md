@@ -18,7 +18,7 @@ AutoWarehouse automates the entire data warehouse lifecycle: connect any source,
 | Use Cases       | `/use-cases`         | Three adoption paths with real-world scenarios                 |
 | Pricing         | `/pricing`           | Enterprise tiers + FAQ                                         |
 | About           | `/about`             | Company story, timeline, industries                            |
-| Contact         | `/contact`           | Demo request form (Formspree)                                  |
+| Contact         | `/contact`           | Demo request form (Web3Forms)                                  |
 | Privacy / Terms | `/privacy`, `/terms` | Legal                                                          |
 
 ## Tech Stack

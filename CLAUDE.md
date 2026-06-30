@@ -65,7 +65,7 @@ Three nested layouts: `BaseLayout` (head, meta, fonts, global.css, **theme boots
 - `/features/[slug]` — 5 feature pages (source-connectors, data-model-engine, intelligent-mapping, etl-engine, analytics)
 - `/use-cases` — Three adoption paths with scenarios
 - `/pricing` — Tiers + FAQ · `/about` — story, timeline, industries
-- `/contact` — Formspree form (action is a placeholder: `REPLACE_FORM_ID`)
+- `/contact` — demo request form posting to **Web3Forms** (`api.web3forms.com`); public access key in `CONTACT.web3formsAccessKey` (`src/data/site.ts`); recipient + spam settings live in the Web3Forms dashboard
 - `/privacy`, `/terms` — legal
 
 ## Design System

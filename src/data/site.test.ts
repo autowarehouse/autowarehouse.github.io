@@ -54,4 +54,8 @@ describe('contact details', () => {
     expect(CONTACT.phoneHref.startsWith('tel:')).toBe(true);
     expect(CONTACT.address.length).toBeGreaterThan(0);
   });
+
+  test('CONTACT has a Web3Forms access key (UUID)', () => {
+    expect(CONTACT.web3formsAccessKey).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
+  });
 });

@@ -33,14 +33,11 @@ import { CONTACT } from '@data/site';
         </div>
         <div class="barcode wo-barcode" aria-hidden="true"></div>
 
-        <!--
-          Formspree integration: replace REPLACE_FORM_ID with the real Formspree
-          form ID before going live (https://formspree.io/forms). Until then, the
-          inline script below intercepts submit and falls back to a mailto: so the
-          primary CTA still works. Once the real ID is set, the fallback disables
-          itself automatically.
-        -->
-        <form id="demo-form" class="wo-form" method="POST" action="https://formspree.io/f/REPLACE_FORM_ID">
+        <form id="demo-form" class="wo-form" method="POST" action="https://api.web3forms.com/submit">
+          <input type="hidden" name="access_key" value={CONTACT.web3formsAccessKey} />
+          <input type="hidden" name="subject" value="AutoWarehouse — New Demo Request" />
+          <input type="hidden" name="from_name" value="AutoWarehouse Contact Form" />
+
           <div class="wo-field">
             <label class="wo-label" for="name">
               <span class="wo-no">01</span> Name <span class="wo-req">required</span>
@@ -57,49 +54,89 @@ import { CONTACT } from '@data/site';
 
           <div class="wo-field">
             <label class="wo-label" for="company">
-              <span class="wo-no">03</span> Company <span class="wo-opt">optional</span>
+              <span class="wo-no">03</span> Company <span class="wo-req">required</span>
             </label>
-            <input class="wo-input" type="text" id="company" name="company" placeholder="Company name" />
+            <input class="wo-input" type="text" id="company" name="company" placeholder="Company name" required />
           </div>
 
           <div class="wo-field">
             <label class="wo-label" for="usecase">
-              <span class="wo-no">04</span> Use Case
+              <span class="wo-no">04</span> Use Case <span class="wo-req">required</span>
             </label>
             <textarea
               class="wo-input wo-textarea"
               id="usecase"
               name="usecase"
               rows="5"
-              placeholder="Tell us about your data warehouse needs..."></textarea>
+              placeholder="Tell us about your data warehouse needs..."
+              required></textarea>
           </div>
+
+          <!-- Web3Forms honeypot: hidden checkbox; a bot that ticks it is rejected server-side -->
+          <input type="checkbox" name="botcheck" class="wo-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
           <div class="wo-foot">
             <button type="submit" class="btn btn-primary">Request Demo</button>
             <span class="wo-note mono-label">We reply within 1 business day</span>
           </div>
+
+          <p id="wo-msg" class="wo-msg" role="status" aria-live="polite" hidden></p>
+          <noscript>
+            <p class="wo-note">
+              JavaScript is disabled — please email
+              <a href="mailto:info@intellica.net">info@intellica.net</a>.
+            </p>
+          </noscript>
         </form>
 
         <script is:inline>
-          // Until a real Formspree form ID is configured, fall back to mailto so
-          // the primary CTA is never a dead end. No-op once the action is real.
           (function () {
             var form = document.getElementById('demo-form');
-            if (!form || form.getAttribute('action').indexOf('REPLACE_FORM_ID') === -1) return;
+            if (!form) return;
+            var msg = document.getElementById('wo-msg');
+            var btn = form.querySelector('button[type="submit"]');
+            var statusPill = document.querySelector('.wo-status');
+            function show(text, ok) {
+              if (!msg) return;
+              msg.hidden = false;
+              msg.textContent = text;
+              msg.classList.toggle('is-ok', !!ok);
+              msg.classList.toggle('is-err', !ok);
+            }
             form.addEventListener('submit', function (e) {
               e.preventDefault();
-              var get = function (n) {
-                var el = form.elements.namedItem(n);
-                return el && 'value' in el ? el.value : '';
-              };
-              var body = 'Name: ' + get('name') + '\n' + 'Company: ' + get('company') + '\n\n' + (get('usecase') || '');
-              var href =
-                'mailto:info@intellica.net' +
-                '?subject=' +
-                encodeURIComponent('AutoWarehouse demo request') +
-                '&body=' +
-                encodeURIComponent(body);
-              window.location.href = href;
+              if (btn) {
+                btn.disabled = true;
+                btn.textContent = 'Sending…';
+              }
+              fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { Accept: 'application/json' },
+              })
+                .then(function (r) {
+                  return r.json().catch(function () {
+                    return { success: r.ok };
+                  });
+                })
+                .then(function (data) {
+                  if (data && data.success) {
+                    show('Thanks — we received your request and will reply within 1 business day.', true);
+                    if (statusPill) statusPill.textContent = 'SENT';
+                    form.reset();
+                  } else {
+                    show('Could not send. Please try again or email info@intellica.net.', false);
+                  }
+                })
+                .catch(function () {
+                  show('Network error. Please try again or email info@intellica.net.', false);
+                })
+                .finally(function () {
+                  if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = 'Request Demo';
+                  }
+                });
             });
           })();
         </script>
@@ -311,6 +348,23 @@ import { CONTACT } from '@data/site';
   }
   .wo-note {
     color: var(--ink-dim);
+  }
+  .wo-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .wo-msg {
+    margin: 4px 0 0;
+    font: 600 13px var(--font-mono);
+  }
+  .wo-msg.is-ok {
+    color: var(--green);
+  }
+  .wo-msg.is-err {
+    color: var(--alert);
   }
 
   /* contact info card */
