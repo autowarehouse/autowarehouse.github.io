@@ -59,8 +59,8 @@ export function validate(p: ContactPayload): ValidationResult {
   return { ok: errors.length === 0, errors };
 }
 
-export function isSpam(_p: ContactPayload): boolean {
-  throw new Error('not implemented');
+export function isSpam(p: ContactPayload): boolean {
+  return p.website.trim().length > 0;
 }
 
 export function buildEmail(_p: ContactPayload): { subject: string; html: string; text: string } {

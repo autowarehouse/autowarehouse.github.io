@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'bun:test';
-import { parsePayload } from './index';
+import { parsePayload, validate, isSpam } from './index';
 
 function formRequest(fields: Record<string, string>): Request {
   const body = new FormData();
@@ -36,8 +36,6 @@ describe('parsePayload', () => {
     expect(p.turnstileToken).toBe('');
   });
 });
-
-import { validate } from './index';
 
 const base = {
   name: 'Ada',
@@ -84,5 +82,17 @@ describe('validate', () => {
     const r = validate({ ...full, usecase: 'x'.repeat(4001) });
     expect(r.ok).toBe(false);
     expect(r.errors).toContain('usecase');
+  });
+});
+
+describe('isSpam', () => {
+  test('clean when honeypot is empty', () => {
+    expect(isSpam({ ...base, website: '' })).toBe(false);
+  });
+  test('clean when honeypot is whitespace', () => {
+    expect(isSpam({ ...base, website: '   ' })).toBe(false);
+  });
+  test('spam when honeypot is filled', () => {
+    expect(isSpam({ ...base, website: 'http://spam.example' })).toBe(true);
   });
 });
