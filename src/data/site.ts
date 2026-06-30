@@ -129,8 +129,9 @@ export const CONTACT = {
   intellica: 'https://www.intellica.net',
   linkedin: 'https://www.linkedin.com/company/intellica',
   careers: 'https://www.intellica.net/careers',
-  // Web3Forms public access key — safe to embed in the static page; the form
-  // posts to api.web3forms.com which emails submissions to info@intellica.net.
+  // Web3Forms public access key — safe to embed in the static page. The form
+  // posts to api.web3forms.com, which emails submissions to whichever recipient
+  // is configured for this key in the Web3Forms dashboard.
   web3formsAccessKey: 'f24e930f-6df2-463e-a2a8-3900136129ed',
 };
 

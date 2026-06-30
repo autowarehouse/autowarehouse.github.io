@@ -56,6 +56,6 @@ describe('contact details', () => {
   });
 
   test('CONTACT has a Web3Forms access key (UUID)', () => {
-    expect(CONTACT.web3formsAccessKey).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+    expect(CONTACT.web3formsAccessKey).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
   });
 });
