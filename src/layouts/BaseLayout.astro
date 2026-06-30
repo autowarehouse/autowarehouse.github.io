@@ -25,13 +25,16 @@ const ogImageUrl = ogImage
     <!-- Theme: set before paint to prevent flash. Default = dark. -->
     <script is:inline>
       (function () {
+        var t = 'dark';
         try {
-          var t = localStorage.getItem('aw-theme');
-          if (t !== 'light' && t !== 'dark') t = 'dark';
-          document.documentElement.setAttribute('data-theme', t);
+          var saved = localStorage.getItem('aw-theme');
+          if (saved === 'light' || saved === 'dark') t = saved;
         } catch (e) {
-          document.documentElement.setAttribute('data-theme', 'dark');
+          /* storage blocked — fall back to dark */
         }
+        document.documentElement.setAttribute('data-theme', t);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', t === 'light' ? '#d9cdb4' : '#16110c');
       })();
     </script>
 
@@ -78,8 +81,12 @@ const ogImageUrl = ogImage
         ad_personalization: 'denied',
         wait_for_update: 1500,
       });
-      if (localStorage.getItem('cookie-consent') === 'accepted') {
-        gtag('consent', 'update', { analytics_storage: 'granted' });
+      try {
+        if (localStorage.getItem('cookie-consent') === 'accepted') {
+          gtag('consent', 'update', { analytics_storage: 'granted' });
+        }
+      } catch (e) {
+        /* storage blocked — leave analytics denied */
       }
     </script>
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-ZENXMKC3ET"></script>

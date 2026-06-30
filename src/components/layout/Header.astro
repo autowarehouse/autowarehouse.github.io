@@ -12,11 +12,13 @@ import { PRIMARY_NAV, FEATURES } from '@data/site';
 
     <nav class="aw-nav" aria-label="Primary">
       <div class="aw-dropdown">
-        <button class="aw-navlink" aria-haspopup="true" aria-expanded="false" id="aw-feat-btn">Features ▾</button>
-        <div class="aw-menu" role="menu" aria-labelledby="aw-feat-btn">
+        <button class="aw-navlink" aria-expanded="false" aria-controls="aw-feat-menu" id="aw-feat-btn"
+          >Features ▾</button
+        >
+        <div class="aw-menu" id="aw-feat-menu" aria-labelledby="aw-feat-btn">
           {
             FEATURES.map((f) => (
-              <a class="aw-menu-item" href={`/features/${f.slug}`} role="menuitem">
+              <a class="aw-menu-item" href={`/features/${f.slug}`}>
                 <span class="aw-menu-num" style={`color:${f.color}`}>
                   {String(f.step).padStart(2, '0')}
                 </span>
@@ -124,7 +126,8 @@ import { PRIMARY_NAV, FEATURES } from '@data/site';
     box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.6);
   }
   .aw-dropdown:hover .aw-menu,
-  .aw-dropdown:focus-within .aw-menu {
+  .aw-dropdown:focus-within .aw-menu,
+  .aw-dropdown.open .aw-menu {
     display: block;
   }
   .aw-menu-item {
@@ -231,11 +234,51 @@ import { PRIMARY_NAV, FEATURES } from '@data/site';
   (function () {
     var burger = document.getElementById('aw-burger');
     var mobile = document.getElementById('aw-mobile');
-    if (!burger || !mobile) return;
-    burger.addEventListener('click', function () {
-      var open = mobile.hidden;
-      mobile.hidden = !open;
-      burger.setAttribute('aria-expanded', String(open));
-    });
+    if (burger && mobile) {
+      burger.addEventListener('click', function () {
+        var open = mobile.hidden;
+        mobile.hidden = !open;
+        burger.setAttribute('aria-expanded', String(open));
+      });
+    }
+
+    // Features disclosure: keep aria-expanded in sync across hover, focus, and
+    // click. The CSS opens on :hover/:focus-within for mouse/keyboard; this just
+    // mirrors the real visibility into ARIA and adds click + Escape control.
+    var dd = document.querySelector('.aw-dropdown');
+    var btn = document.getElementById('aw-feat-btn');
+    if (dd && btn) {
+      var sync = function () {
+        var open = dd.classList.contains('open') || dd.matches(':hover') || dd.contains(document.activeElement);
+        btn.setAttribute('aria-expanded', String(open));
+      };
+      btn.addEventListener('click', function () {
+        dd.classList.toggle('open');
+        sync();
+      });
+      dd.addEventListener('mouseenter', sync);
+      dd.addEventListener('mouseleave', function () {
+        dd.classList.remove('open');
+        sync();
+      });
+      dd.addEventListener('focusin', sync);
+      dd.addEventListener('focusout', function () {
+        // defer so document.activeElement updates
+        setTimeout(sync, 0);
+      });
+      dd.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          dd.classList.remove('open');
+          btn.focus();
+          sync();
+        }
+      });
+      document.addEventListener('click', function (e) {
+        if (!dd.contains(e.target)) {
+          dd.classList.remove('open');
+          sync();
+        }
+      });
+    }
   })();
 </script>

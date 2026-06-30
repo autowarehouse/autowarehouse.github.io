@@ -35,9 +35,12 @@ import { CONTACT } from '@data/site';
 
         <!--
           Formspree integration: replace REPLACE_FORM_ID with the real Formspree
-          form ID before going live (https://formspree.io/forms).
+          form ID before going live (https://formspree.io/forms). Until then, the
+          inline script below intercepts submit and falls back to a mailto: so the
+          primary CTA still works. Once the real ID is set, the fallback disables
+          itself automatically.
         -->
-        <form class="wo-form" method="POST" action="https://formspree.io/f/REPLACE_FORM_ID">
+        <form id="demo-form" class="wo-form" method="POST" action="https://formspree.io/f/REPLACE_FORM_ID">
           <div class="wo-field">
             <label class="wo-label" for="name">
               <span class="wo-no">01</span> Name <span class="wo-req">required</span>
@@ -76,6 +79,30 @@ import { CONTACT } from '@data/site';
             <span class="wo-note mono-label">We reply within 1 business day</span>
           </div>
         </form>
+
+        <script is:inline>
+          // Until a real Formspree form ID is configured, fall back to mailto so
+          // the primary CTA is never a dead end. No-op once the action is real.
+          (function () {
+            var form = document.getElementById('demo-form');
+            if (!form || form.getAttribute('action').indexOf('REPLACE_FORM_ID') === -1) return;
+            form.addEventListener('submit', function (e) {
+              e.preventDefault();
+              var get = function (n) {
+                var el = form.elements.namedItem(n);
+                return el && 'value' in el ? el.value : '';
+              };
+              var body = 'Name: ' + get('name') + '\n' + 'Company: ' + get('company') + '\n\n' + (get('usecase') || '');
+              var href =
+                'mailto:info@intellica.net' +
+                '?subject=' +
+                encodeURIComponent('AutoWarehouse demo request') +
+                '&body=' +
+                encodeURIComponent(body);
+              window.location.href = href;
+            });
+          })();
+        </script>
       </div>
 
       <!-- RIGHT: contact info + resources -->

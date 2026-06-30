@@ -88,7 +88,29 @@
 
 <script is:inline>
   (function () {
-    var consent = localStorage.getItem('cookie-consent');
+    // Storage can throw in privacy modes / sandboxed contexts — never let it
+    // break the banner. gtag may also be absent if the GA script was blocked.
+    function lsGet(k) {
+      try {
+        return localStorage.getItem(k);
+      } catch (e) {
+        return null;
+      }
+    }
+    function lsSet(k, v) {
+      try {
+        localStorage.setItem(k, v);
+      } catch (e) {
+        /* ignore */
+      }
+    }
+    function grantAnalytics() {
+      if (typeof window.gtag === 'function') {
+        window.gtag('consent', 'update', { analytics_storage: 'granted' });
+      }
+    }
+
+    var consent = lsGet('cookie-consent');
     if (consent === 'accepted' || consent === 'declined') {
       var b = document.getElementById('cookie-consent');
       if (b) b.remove();
@@ -109,12 +131,12 @@
       }
     }
     document.getElementById('cookie-accept')?.addEventListener('click', function () {
-      localStorage.setItem('cookie-consent', 'accepted');
-      gtag('consent', 'update', { analytics_storage: 'granted' });
+      lsSet('cookie-consent', 'accepted');
+      grantAnalytics();
       hideBanner();
     });
     document.getElementById('cookie-decline')?.addEventListener('click', function () {
-      localStorage.setItem('cookie-consent', 'declined');
+      lsSet('cookie-consent', 'declined');
       hideBanner();
     });
   })();
