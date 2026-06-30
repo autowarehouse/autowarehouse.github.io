@@ -1,12 +1,13 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "baseUrl": ".",
+    // baseUrl is deprecated in TypeScript 6.0 (removed in 7.0); the `./` prefix
+    // is inlined into each paths entry instead so module resolution is unchanged.
     "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@data/*": ["src/data/*"]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@data/*": ["./src/data/*"]
     },
     // Bun runtime types for the `bun:test` imports in *.test.ts. @types/bun also
     // references @types/node, covering Node globals. Astro's ambient types load

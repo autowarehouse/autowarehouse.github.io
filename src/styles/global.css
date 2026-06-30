@@ -315,13 +315,25 @@ a {
   font: 800 12px var(--font-mono);
 }
 
-/* ── Reveal on scroll (zero JS, CSS scroll timeline) ── */
-@supports (animation-timeline: view()) {
-  .reveal {
-    opacity: 0;
-    animation: awUp linear both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 20%;
+/* ── Reveal on scroll (zero JS, CSS scroll timeline) ──
+   The hidden-before-reveal state lives ONLY in the @keyframes (awUp `from`)
+   + `both` fill — NOT as a static `opacity: 0` here. Reason: lightningcss
+   (Tailwind v4's CSS engine) folds `animation-timeline: view()` into the
+   `animation` shorthand, producing the invalid `animation: … view()` which
+   browsers drop — killing the reveal. If the only thing hiding content were a
+   static `opacity: 0`, that would survive minification and leave content
+   permanently invisible. With opacity:0 in the keyframes instead, a dropped
+   animation simply means no reveal (content stays visible) — it fails OPEN.
+   Longhands (not the `animation` shorthand) reduce the chance of the bad fold. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation-name: awUp;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: view();
+      animation-range: entry 0% cover 20%;
+    }
   }
 }
 
