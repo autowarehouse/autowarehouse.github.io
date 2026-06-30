@@ -1,0 +1,14 @@
+# Build output / generated
+dist
+.astro
+node_modules
+bun.lock
+
+# Served verbatim — Prettier must not reflow static assets
+public
+
+# Binary assets / non-source
+images
+
+# Internal design/plan artifacts (not shipped source)
+docs

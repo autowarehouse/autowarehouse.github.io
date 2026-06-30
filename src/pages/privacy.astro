@@ -40,34 +40,38 @@ const cookieRows = [
   <section class="shell pp">
     <article class="panel prose reveal">
       <p class="lead">
-        AutoWarehouse is a product of Intellica (a PiA Group company). We are committed to protecting
-        your privacy and being transparent about how we collect and use data.
+        AutoWarehouse is a product of Intellica (a PiA Group company). We are committed to protecting your privacy and
+        being transparent about how we collect and use data.
       </p>
 
       <div class="divider-dashed"></div>
 
       <h2 id="cookies">Cookies &amp; Analytics</h2>
       <p>
-        We use Google Analytics 4 with Consent Mode v2. Your consent choice determines exactly what is
-        collected at every stage:
+        We use Google Analytics 4 with Consent Mode v2. Your consent choice determines exactly what is collected at
+        every stage:
       </p>
       <ul class="cookie-list">
-        {cookieRows.map((r) => (
-          <li class="cookie-item">
-            <span class="cookie-glyph" aria-hidden="true">{r.glyph}</span>
-            <div>
-              <span class="cookie-state">{r.state}</span>
-              <span class="cookie-desc">{r.desc}</span>
-            </div>
-          </li>
-        ))}
+        {
+          cookieRows.map((r) => (
+            <li class="cookie-item">
+              <span class="cookie-glyph" aria-hidden="true">
+                {r.glyph}
+              </span>
+              <div>
+                <span class="cookie-state">{r.state}</span>
+                <span class="cookie-desc">{r.desc}</span>
+              </div>
+            </li>
+          ))
+        }
       </ul>
 
       <h2 id="rights">Your Rights</h2>
       <p>
-        You can change your preference at any time by clearing your browser local storage, which resets
-        your consent choice. Under the GDPR, you also have the right to access, correct, and delete the
-        personal data we hold about you.
+        You can change your preference at any time by clearing your browser local storage, which resets your consent
+        choice. Under the GDPR, you also have the right to access, correct, and delete the personal data we hold about
+        you.
       </p>
 
       <h2 id="contact">Contact</h2>
@@ -81,17 +85,29 @@ const cookieRows = [
 
 <style>
   /* hero */
-  .ph { position: relative; overflow: hidden; }
-  .ph-inner { padding-top: 40px; padding-bottom: 30px; }
+  .ph {
+    position: relative;
+    overflow: hidden;
+  }
+  .ph-inner {
+    padding-top: 40px;
+    padding-bottom: 30px;
+  }
   .ph-h1 {
     margin: 14px 0 0;
     font: 900 clamp(38px, 6vw, 72px)/0.9 var(--font-display);
-    letter-spacing: -0.05em; color: var(--ink);
+    letter-spacing: -0.05em;
+    color: var(--ink);
   }
-  .ph-meta { margin: 18px 0 0; }
+  .ph-meta {
+    margin: 18px 0 0;
+  }
 
   /* prose container */
-  .pp { padding-top: 40px; padding-bottom: 80px; }
+  .pp {
+    padding-top: 40px;
+    padding-bottom: 80px;
+  }
   .prose {
     max-width: 760px;
     margin: 0 auto;
@@ -102,11 +118,14 @@ const cookieRows = [
     font: 500 clamp(16px, 2vw, 19px)/1.55 var(--font-body);
     color: var(--ink);
   }
-  .prose .divider-dashed { margin: 28px 0; }
+  .prose .divider-dashed {
+    margin: 28px 0;
+  }
   .prose h2 {
     margin: 36px 0 12px;
     font: 800 clamp(20px, 2.6vw, 26px) var(--font-display);
-    letter-spacing: -0.03em; color: var(--ink);
+    letter-spacing: -0.03em;
+    color: var(--ink);
     scroll-margin-top: 90px;
   }
   .prose h2::before {
@@ -121,15 +140,21 @@ const cookieRows = [
     font: 400 15px/1.7 var(--font-body);
     color: var(--ink-muted);
   }
-  .prose p:last-child { margin-bottom: 0; }
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
   .mail {
     color: var(--orange);
     font-weight: 600;
     text-decoration: none;
     border-bottom: 1px solid color-mix(in srgb, var(--orange) 45%, transparent);
-    transition: border-color .2s, color .2s;
+    transition:
+      border-color 0.2s,
+      color 0.2s;
   }
-  .mail:hover { border-bottom-color: var(--orange); }
+  .mail:hover {
+    border-bottom-color: var(--orange);
+  }
 
   /* cookie consent list */
   .cookie-list {
@@ -153,7 +178,8 @@ const cookieRows = [
     flex: none;
     display: grid;
     place-items: center;
-    width: 26px; height: 26px;
+    width: 26px;
+    height: 26px;
     border-radius: 7px;
     background: color-mix(in srgb, var(--orange) 14%, transparent);
     color: var(--orange);

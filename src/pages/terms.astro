@@ -15,8 +15,8 @@ const updated = '2026-06-30';
       <div class="eyebrow">Legal</div>
       <h1 class="th-h1">Terms of <span class="highlight">Service</span></h1>
       <p class="th-sub">
-        AutoWarehouse is a product of Intellica — a PiA Group company. This document will be
-        expanded with full licensing terms, usage policies, and service level agreements.
+        AutoWarehouse is a product of Intellica — a PiA Group company. This document will be expanded with full
+        licensing terms, usage policies, and service level agreements.
       </p>
       <div class="th-meta">
         <span class="pill">Document · TOS-001</span>
@@ -33,16 +33,16 @@ const updated = '2026-06-30';
       <div class="tp-block">
         <div class="mono-label tp-k">01 · Overview</div>
         <p class="tp-p">
-          AutoWarehouse is a product of Intellica (a PiA Group company). Terms of service will be
-          updated with full licensing terms, usage policies, and service level agreements.
+          AutoWarehouse is a product of Intellica (a PiA Group company). Terms of service will be updated with full
+          licensing terms, usage policies, and service level agreements.
         </p>
       </div>
 
       <div class="tp-block divider-dashed">
         <div class="mono-label tp-k">02 · Licensing</div>
         <p class="tp-p">
-          The AutoWarehouse platform is provided under enterprise licensing terms. For licensing
-          details, deployment agreements, or service level questions, please reach our team.
+          The AutoWarehouse platform is provided under enterprise licensing terms. For licensing details, deployment
+          agreements, or service level questions, please reach our team.
         </p>
         <a class="tp-mail" href={`mailto:${CONTACT.email}`}>
           <span class="tp-mail-glyph" aria-hidden="true">→</span>
@@ -59,51 +59,120 @@ const updated = '2026-06-30';
 </PageLayout>
 
 <style>
-  .th { position: relative; overflow: hidden; border-bottom: 1px solid var(--line-soft); }
-  .th-inner { padding-top: 48px; padding-bottom: 40px; }
+  .th {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .th-inner {
+    padding-top: 48px;
+    padding-bottom: 40px;
+  }
   .th-h1 {
     margin: 14px 0 0;
     font: 900 clamp(38px, 6vw, 72px)/0.9 var(--font-display);
-    letter-spacing: -0.05em; color: var(--ink);
+    letter-spacing: -0.05em;
+    color: var(--ink);
   }
   .th-sub {
-    max-width: 600px; margin: 22px 0 0;
-    font: 400 clamp(14px, 1.6vw, 16px)/1.6 var(--font-mono); color: var(--ink-muted);
+    max-width: 600px;
+    margin: 22px 0 0;
+    font: 400 clamp(14px, 1.6vw, 16px)/1.6 var(--font-mono);
+    color: var(--ink-muted);
   }
-  .th-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 28px; }
-  .th-updated { font: 700 10px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); }
+  .th-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .th-updated {
+    font: 700 10px var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
 
-  .tp { padding-top: 56px; padding-bottom: 72px; }
-  .tp-panel { position: relative; padding: clamp(26px, 4vw, 48px); overflow: hidden; }
+  .tp {
+    padding-top: 56px;
+    padding-bottom: 72px;
+  }
+  .tp-panel {
+    position: relative;
+    padding: clamp(26px, 4vw, 48px);
+    overflow: hidden;
+  }
   .tp-mark {
-    position: absolute; top: -18px; right: 10px;
-    font: 900 160px var(--font-display); line-height: 1;
-    color: var(--line); pointer-events: none; user-select: none;
+    position: absolute;
+    top: -18px;
+    right: 10px;
+    font: 900 160px var(--font-display);
+    line-height: 1;
+    color: var(--line);
+    pointer-events: none;
+    user-select: none;
   }
 
-  .tp-block { position: relative; }
-  .tp-block + .tp-block { margin-top: 32px; padding-top: 32px; }
-  .tp-k { color: var(--orange); }
+  .tp-block {
+    position: relative;
+  }
+  .tp-block + .tp-block {
+    margin-top: 32px;
+    padding-top: 32px;
+  }
+  .tp-k {
+    color: var(--orange);
+  }
   .tp-p {
-    margin: 14px 0 0; max-width: 620px;
-    font: 400 clamp(15px, 1.7vw, 17px)/1.7 var(--font-body); color: var(--ink);
+    margin: 14px 0 0;
+    max-width: 620px;
+    font: 400 clamp(15px, 1.7vw, 17px)/1.7 var(--font-body);
+    color: var(--ink);
   }
 
   .tp-mail {
-    display: inline-flex; align-items: center; gap: 10px; margin-top: 20px;
-    padding: 12px 18px; border: 1px solid var(--line); border-radius: 999px;
-    font: 800 13px var(--font-mono); color: var(--ink);
-    background: var(--panel-2); text-decoration: none;
-    transition: border-color .2s, color .2s, transform .15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 12px 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font: 800 13px var(--font-mono);
+    color: var(--ink);
+    background: var(--panel-2);
+    text-decoration: none;
+    transition:
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.15s;
   }
-  .tp-mail:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
-  .tp-mail-glyph { font: 900 14px var(--font-display); color: var(--orange); }
+  .tp-mail:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+    transform: translateY(-2px);
+  }
+  .tp-mail-glyph {
+    font: 900 14px var(--font-display);
+    color: var(--orange);
+  }
 
   .tp-aside {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-    gap: 16px; margin-top: 16px; padding: 18px 22px;
-    border: 1px solid var(--line-soft); border-radius: 12px;
-    border-left: 3px solid var(--yellow); background: var(--panel);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 16px;
+    padding: 18px 22px;
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    border-left: 3px solid var(--yellow);
+    background: var(--panel);
   }
-  .tp-aside-t { font: 600 13px var(--font-mono); color: var(--ink-muted); }
+  .tp-aside-t {
+    font: 600 13px var(--font-mono);
+    color: var(--ink-muted);
+  }
 </style>

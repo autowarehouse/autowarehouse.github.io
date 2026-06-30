@@ -15,17 +15,19 @@ const next = FEATURES[(idx + 1) % FEATURES.length];
   <section class="fh grid-bg">
     <div class="shell fh-inner">
       <div class="fh-steps" aria-label="Pipeline position">
-        {FEATURES.map((f) => (
-          <a
-            href={`/features/${f.slug}`}
-            class={`fh-step ${f.slug === feature.slug ? 'on' : ''}`}
-            style={`--c:${f.color}`}
-            aria-current={f.slug === feature.slug ? 'page' : undefined}
-          >
-            <span class="fh-step-no">{String(f.step).padStart(2, '0')}</span>
-            <span class="fh-step-lbl">{f.label}</span>
-          </a>
-        ))}
+        {
+          FEATURES.map((f) => (
+            <a
+              href={`/features/${f.slug}`}
+              class={`fh-step ${f.slug === feature.slug ? 'on' : ''}`}
+              style={`--c:${f.color}`}
+              aria-current={f.slug === feature.slug ? 'page' : undefined}
+            >
+              <span class="fh-step-no">{String(f.step).padStart(2, '0')}</span>
+              <span class="fh-step-lbl">{f.label}</span>
+            </a>
+          ))
+        }
       </div>
 
       <div class="eyebrow" style={`color:${feature.color}`}>
@@ -45,12 +47,14 @@ const next = FEATURES[(idx + 1) % FEATURES.length];
     <div class="eyebrow" style={`color:${feature.color}`}>Capabilities</div>
     <h2 class="fc-h">What {feature.name} does</h2>
     <div class="fc-grid">
-      {feature.capabilities.map((cap, i) => (
-        <div class="fc-card reveal" style={`--c:${feature.color}`}>
-          <span class="fc-no">{String(i + 1).padStart(2, '0')}</span>
-          <span class="fc-cap">{cap}</span>
-        </div>
-      ))}
+      {
+        feature.capabilities.map((cap, i) => (
+          <div class="fc-card reveal" style={`--c:${feature.color}`}>
+            <span class="fc-no">{String(i + 1).padStart(2, '0')}</span>
+            <span class="fc-cap">{cap}</span>
+          </div>
+        ))
+      }
     </div>
   </section>
 
@@ -70,32 +74,140 @@ const next = FEATURES[(idx + 1) % FEATURES.length];
 </PageLayout>
 
 <style>
-  .fh { position: relative; overflow: hidden; }
-  .fh-inner { padding-top: 40px; padding-bottom: 30px; }
-  .fh-steps { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
-  .fh-step { display: flex; align-items: center; gap: 8px; padding: 8px 13px; border: 1px solid var(--line-soft); border-radius: 999px; text-decoration: none; transition: all .2s; }
-  .fh-step .fh-step-no { font: 800 10px var(--font-mono); color: var(--ink-dim); }
-  .fh-step .fh-step-lbl { font: 700 10px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-muted); }
-  .fh-step.on { border-color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); }
-  .fh-step.on .fh-step-no, .fh-step.on .fh-step-lbl { color: var(--c); }
-  .fh-h1 { margin: 14px 0 0; font: 900 clamp(38px, 6vw, 76px)/0.88 var(--font-display); letter-spacing: -0.05em; color: var(--ink); }
-  .fh-sub { max-width: 600px; margin: 22px 0 0; font: 400 clamp(14px, 1.6vw, 17px)/1.55 var(--font-mono); color: var(--ink-muted); }
-  .fh-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .fh {
+    position: relative;
+    overflow: hidden;
+  }
+  .fh-inner {
+    padding-top: 40px;
+    padding-bottom: 30px;
+  }
+  .fh-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 30px;
+  }
+  .fh-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 13px;
+    border: 1px solid var(--line-soft);
+    border-radius: 999px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .fh-step .fh-step-no {
+    font: 800 10px var(--font-mono);
+    color: var(--ink-dim);
+  }
+  .fh-step .fh-step-lbl {
+    font: 700 10px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+  }
+  .fh-step.on {
+    border-color: var(--c);
+    background: color-mix(in srgb, var(--c) 12%, transparent);
+  }
+  .fh-step.on .fh-step-no,
+  .fh-step.on .fh-step-lbl {
+    color: var(--c);
+  }
+  .fh-h1 {
+    margin: 14px 0 0;
+    font: 900 clamp(38px, 6vw, 76px)/0.88 var(--font-display);
+    letter-spacing: -0.05em;
+    color: var(--ink);
+  }
+  .fh-sub {
+    max-width: 600px;
+    margin: 22px 0 0;
+    font: 400 clamp(14px, 1.6vw, 17px)/1.55 var(--font-mono);
+    color: var(--ink-muted);
+  }
+  .fh-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+  }
 
-  .fc { padding-top: 56px; }
-  .fc-h { margin: 12px 0 28px; font: 900 clamp(26px, 3.4vw, 40px) var(--font-display); letter-spacing: -0.03em; color: var(--ink); }
-  .fc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
-  .fc-card { display: flex; gap: 14px; align-items: flex-start; padding: 18px 18px; border: 1px solid var(--line-soft); border-radius: 12px; background: var(--panel); border-left: 3px solid var(--c); transition: transform .18s, border-color .2s; }
-  .fc-card:hover { transform: translateY(-3px); }
-  .fc-no { font: 800 13px var(--font-mono); color: var(--c); }
-  .fc-cap { font: 600 14px/1.45 var(--font-body); color: var(--ink); }
+  .fc {
+    padding-top: 56px;
+  }
+  .fc-h {
+    margin: 12px 0 28px;
+    font: 900 clamp(26px, 3.4vw, 40px) var(--font-display);
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .fc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .fc-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 18px 18px;
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    background: var(--panel);
+    border-left: 3px solid var(--c);
+    transition:
+      transform 0.18s,
+      border-color 0.2s;
+  }
+  .fc-card:hover {
+    transform: translateY(-3px);
+  }
+  .fc-no {
+    font: 800 13px var(--font-mono);
+    color: var(--c);
+  }
+  .fc-cap {
+    font: 600 14px/1.45 var(--font-body);
+    color: var(--ink);
+  }
 
-  .fc-extra:empty { display: none; }
-  .fc-extra { padding-top: 8px; }
+  .fc-extra:empty {
+    display: none;
+  }
+  .fc-extra {
+    padding-top: 8px;
+  }
 
-  .fn { padding-top: 40px; padding-bottom: 70px; }
-  .fn-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px 28px; border: 2px solid var(--c); border-radius: 18px; background: linear-gradient(90deg, color-mix(in srgb, var(--c) 10%, transparent), transparent); text-decoration: none; transition: transform .18s; }
-  .fn-card:hover { transform: translateY(-3px); }
-  .fn-h { margin-top: 6px; font: 900 clamp(20px, 3vw, 30px) var(--font-display); letter-spacing: -0.03em; color: var(--ink); }
-  .fn-arrow { font: 900 28px var(--font-display); color: var(--c); }
+  .fn {
+    padding-top: 40px;
+    padding-bottom: 70px;
+  }
+  .fn-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 28px;
+    border: 2px solid var(--c);
+    border-radius: 18px;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--c) 10%, transparent), transparent);
+    text-decoration: none;
+    transition: transform 0.18s;
+  }
+  .fn-card:hover {
+    transform: translateY(-3px);
+  }
+  .fn-h {
+    margin-top: 6px;
+    font: 900 clamp(20px, 3vw, 30px) var(--font-display);
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .fn-arrow {
+    font: 900 28px var(--font-display);
+    color: var(--c);
+  }
 </style>

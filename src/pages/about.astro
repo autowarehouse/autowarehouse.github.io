@@ -77,9 +77,9 @@ const INDUSTRIES = [
         20 Years of Data Expertise,<br /><span class="highlight">One Platform</span>
       </h1>
       <p class="hero-sub">
-        AutoWarehouse is the culmination of nearly two decades of enterprise data platform delivery.
-        Built by Intellica — a PiA Group company — it brings proven industry models, AI-powered
-        discovery, and deterministic code generation into a single, unified platform.
+        AutoWarehouse is the culmination of nearly two decades of enterprise data platform delivery. Built by Intellica
+        — a PiA Group company — it brings proven industry models, AI-powered discovery, and deterministic code
+        generation into a single, unified platform.
       </p>
       <div class="hero-cta">
         <a href="/contact" class="btn btn-primary">Request a demo</a>
@@ -106,18 +106,20 @@ const INDUSTRIES = [
   <section class="shell journey">
     <SectionHeading eyebrow="The Story" title="Our Journey" />
     <ol class="timeline">
-      {JOURNEY.map((m, i) => (
-        <li class="tl-item reveal" style={`--i:${i}`}>
-          <div class="tl-marker">
-            <span class="tl-node" aria-hidden="true"></span>
-            <span class="tl-year">{m.year}</span>
-          </div>
-          <div class="tl-card panel">
-            <h3 class="tl-title">{m.title}</h3>
-            <p class="tl-body">{m.body}</p>
-          </div>
-        </li>
-      ))}
+      {
+        JOURNEY.map((m, i) => (
+          <li class="tl-item reveal" style={`--i:${i}`}>
+            <div class="tl-marker">
+              <span class="tl-node" aria-hidden="true" />
+              <span class="tl-year">{m.year}</span>
+            </div>
+            <div class="tl-card panel">
+              <h3 class="tl-title">{m.title}</h3>
+              <p class="tl-body">{m.body}</p>
+            </div>
+          </li>
+        ))
+      }
     </ol>
   </section>
 
@@ -129,29 +131,32 @@ const INDUSTRIES = [
       lead="After building 80+ enterprise data platforms manually, we identified the patterns that repeat across every project. AutoWarehouse automates those patterns while preserving the engineering rigor our clients expect."
     />
     <div class="why-grid">
-      {WHY.map((c) => (
-        <div class="why-card reveal" style={`--c:${c.accent}`}>
-          <div class="why-no">{c.no}</div>
-          <h3 class="why-title">{c.title}</h3>
-          <p class="why-body">{c.body}</p>
-        </div>
-      ))}
+      {
+        WHY.map((c) => (
+          <div class="why-card reveal" style={`--c:${c.accent}`}>
+            <div class="why-no">{c.no}</div>
+            <h3 class="why-title">{c.title}</h3>
+            <p class="why-body">{c.body}</p>
+          </div>
+        ))
+      }
     </div>
   </section>
 
   <!-- ── INDUSTRY EXPERIENCE ──────────────────────────── -->
   <section class="shell industries">
-    <SectionHeading
-      eyebrow="Industry Experience"
-      title="Proven across<br />regulated sectors."
-    />
+    <SectionHeading eyebrow="Industry Experience" title="Proven across<br />regulated sectors." />
     <div class="ind-grid">
-      {INDUSTRIES.map((ind) => (
-        <div class="ind-chip reveal">
-          <span class="ind-glyph"><Icon name={ind.icon} size={20} /></span>
-          <span class="ind-label">{ind.label}</span>
-        </div>
-      ))}
+      {
+        INDUSTRIES.map((ind) => (
+          <div class="ind-chip reveal">
+            <span class="ind-glyph">
+              <Icon name={ind.icon} size={20} />
+            </span>
+            <span class="ind-label">{ind.label}</span>
+          </div>
+        ))
+      }
     </div>
   </section>
 
@@ -162,8 +167,8 @@ const INDUSTRIES = [
         <div class="eyebrow" style="color:var(--orange)">Talk to us</div>
         <h2 class="cta-h">Twenty years of rigor.<br />One conversation away.</h2>
         <p class="cta-lead">
-          See AutoWarehouse in action. Tell us about your data warehouse needs and we'll set up a
-          personalized walkthrough.
+          See AutoWarehouse in action. Tell us about your data warehouse needs and we'll set up a personalized
+          walkthrough.
         </p>
         <div class="cta-row">
           <a href="/contact" class="btn btn-primary">Request a demo</a>
@@ -176,128 +181,295 @@ const INDUSTRIES = [
 
 <style>
   /* ── HERO ── */
-  .hero { position: relative; overflow: hidden; }
-  .hero-inner { padding-top: 48px; padding-bottom: 36px; }
+  .hero {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    padding-top: 48px;
+    padding-bottom: 36px;
+  }
   .hero-h1 {
     margin: 22px 0 0;
     font: 900 clamp(38px, 6vw, 72px)/0.9 var(--font-display);
-    letter-spacing: -0.05em; color: var(--ink);
+    letter-spacing: -0.05em;
+    color: var(--ink);
   }
   .hero-sub {
-    max-width: 600px; margin: 24px 0 0;
-    font: 400 clamp(14px, 1.6vw, 17px)/1.6 var(--font-mono); color: var(--ink-muted);
+    max-width: 600px;
+    margin: 24px 0 0;
+    font: 400 clamp(14px, 1.6vw, 17px)/1.6 var(--font-mono);
+    color: var(--ink-muted);
   }
-  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
 
   /* ── METRICS ── */
-  .metrics { padding-top: 40px; padding-bottom: 16px; }
+  .metrics {
+    padding-top: 40px;
+    padding-bottom: 16px;
+  }
   .metrics-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 18px; padding: 28px clamp(20px, 4vw, 40px);
-    border: 1px solid var(--line); border-radius: 18px; background: var(--panel);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 18px;
+    padding: 28px clamp(20px, 4vw, 40px);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--panel);
   }
   .metrics-grid :global(.aw-stat) {
-    padding: 6px 14px 6px 0; border-right: 1px solid var(--line-soft);
+    padding: 6px 14px 6px 0;
+    border-right: 1px solid var(--line-soft);
   }
-  .metrics-grid :global(.aw-stat:last-child) { border-right: none; }
+  .metrics-grid :global(.aw-stat:last-child) {
+    border-right: none;
+  }
   .metrics-foot {
-    margin: 20px 0 0; max-width: 640px;
-    font: 400 13px/1.6 var(--font-mono); color: var(--ink-dim);
+    margin: 20px 0 0;
+    max-width: 640px;
+    font: 400 13px/1.6 var(--font-mono);
+    color: var(--ink-dim);
   }
-  .metrics-link { color: var(--yellow); text-decoration: none; border-bottom: 1px solid var(--line); }
-  .metrics-link:hover { color: var(--orange); border-color: var(--orange); }
+  .metrics-link {
+    color: var(--yellow);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .metrics-link:hover {
+    color: var(--orange);
+    border-color: var(--orange);
+  }
   @media (max-width: 560px) {
-    .metrics-grid :global(.aw-stat) { border-right: none; border-bottom: 1px solid var(--line-soft); padding-bottom: 14px; }
-    .metrics-grid :global(.aw-stat:last-child) { border-bottom: none; padding-bottom: 6px; }
+    .metrics-grid :global(.aw-stat) {
+      border-right: none;
+      border-bottom: 1px solid var(--line-soft);
+      padding-bottom: 14px;
+    }
+    .metrics-grid :global(.aw-stat:last-child) {
+      border-bottom: none;
+      padding-bottom: 6px;
+    }
   }
 
   /* ── TIMELINE ── */
-  .journey { padding-top: 60px; }
+  .journey {
+    padding-top: 60px;
+  }
   .timeline {
-    list-style: none; margin: 36px 0 0; padding: 0;
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0;
+    list-style: none;
+    margin: 36px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0;
   }
-  .tl-item { position: relative; padding: 0 14px; }
+  .tl-item {
+    position: relative;
+    padding: 0 14px;
+  }
   /* connector line running through the markers */
-  .tl-marker { position: relative; display: flex; align-items: center; gap: 12px; padding-bottom: 22px; }
-  .tl-marker::before {
-    content: ''; position: absolute; top: 9px; left: 9px; right: -14px; height: 2px;
-    background: var(--line); z-index: 0;
+  .tl-marker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 22px;
   }
-  .tl-item:last-child .tl-marker::before { right: 50%; }
+  .tl-marker::before {
+    content: '';
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    right: -14px;
+    height: 2px;
+    background: var(--line);
+    z-index: 0;
+  }
+  .tl-item:last-child .tl-marker::before {
+    right: 50%;
+  }
   .tl-node {
-    position: relative; z-index: 1; flex-shrink: 0;
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--bg); border: 4px solid var(--orange);
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 4px solid var(--orange);
     box-shadow: 0 0 0 4px color-mix(in srgb, var(--orange) 16%, transparent);
   }
   .tl-year {
-    position: relative; z-index: 1; background: var(--bg);
+    position: relative;
+    z-index: 1;
+    background: var(--bg);
     padding-right: 6px;
     font: 900 clamp(20px, 2.6vw, 26px) var(--font-display);
-    letter-spacing: -0.03em; color: var(--ink);
+    letter-spacing: -0.03em;
+    color: var(--ink);
   }
-  .tl-card { padding: 16px 18px; height: calc(100% - 40px); border-left: 3px solid var(--orange); }
-  .tl-title { margin: 0; font: 800 16px/1.2 var(--font-display); letter-spacing: -0.02em; color: var(--ink); }
-  .tl-body { margin: 9px 0 0; font: 400 13px/1.55 var(--font-body); color: var(--ink-muted); }
+  .tl-card {
+    padding: 16px 18px;
+    height: calc(100% - 40px);
+    border-left: 3px solid var(--orange);
+  }
+  .tl-title {
+    margin: 0;
+    font: 800 16px/1.2 var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .tl-body {
+    margin: 9px 0 0;
+    font: 400 13px/1.55 var(--font-body);
+    color: var(--ink-muted);
+  }
   /* On stacked layout, turn the horizontal connector into a vertical spine */
   @media (max-width: 720px) {
-    .timeline { grid-template-columns: 1fr; }
-    .tl-item { padding: 0 0 0 4px; }
-    .tl-marker::before { top: 18px; bottom: -22px; left: 8px; right: auto; width: 2px; height: auto; }
-    .tl-item:last-child .tl-marker::before { display: none; }
-    .tl-card { height: auto; margin-bottom: 8px; }
+    .timeline {
+      grid-template-columns: 1fr;
+    }
+    .tl-item {
+      padding: 0 0 0 4px;
+    }
+    .tl-marker::before {
+      top: 18px;
+      bottom: -22px;
+      left: 8px;
+      right: auto;
+      width: 2px;
+      height: auto;
+    }
+    .tl-item:last-child .tl-marker::before {
+      display: none;
+    }
+    .tl-card {
+      height: auto;
+      margin-bottom: 8px;
+    }
   }
 
   /* ── WHY ── */
-  .why { padding-top: 64px; }
+  .why {
+    padding-top: 64px;
+  }
   .why-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 14px; margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-top: 32px;
   }
   .why-card {
-    padding: 22px; background: var(--panel);
-    border: 1px solid var(--line-soft); border-left: 3px solid var(--c);
-    border-radius: 14px; transition: transform .18s ease, border-color .2s ease;
+    padding: 22px;
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-left: 3px solid var(--c);
+    border-radius: 14px;
+    transition:
+      transform 0.18s ease,
+      border-color 0.2s ease;
   }
-  .why-card:hover { transform: translateY(-3px); border-color: var(--c); }
-  .why-no { font: 900 14px var(--font-mono); color: var(--c); letter-spacing: 0.05em; }
-  .why-title { margin: 12px 0 0; font: 800 18px/1.15 var(--font-display); letter-spacing: -0.02em; color: var(--ink); }
-  .why-body { margin: 11px 0 0; font: 400 14px/1.55 var(--font-body); color: var(--ink-muted); }
+  .why-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--c);
+  }
+  .why-no {
+    font: 900 14px var(--font-mono);
+    color: var(--c);
+    letter-spacing: 0.05em;
+  }
+  .why-title {
+    margin: 12px 0 0;
+    font: 800 18px/1.15 var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .why-body {
+    margin: 11px 0 0;
+    font: 400 14px/1.55 var(--font-body);
+    color: var(--ink-muted);
+  }
 
   /* ── INDUSTRIES ── */
-  .industries { padding-top: 64px; }
+  .industries {
+    padding-top: 64px;
+  }
   .ind-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 12px; margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 12px;
+    margin-top: 32px;
   }
   .ind-chip {
-    display: flex; align-items: center; gap: 13px;
-    padding: 16px 18px; background: var(--panel-2);
-    border: 1px solid var(--line-soft); border-radius: 12px;
-    transition: transform .18s ease, border-color .2s ease, background .2s ease;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 16px 18px;
+    background: var(--panel-2);
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    transition:
+      transform 0.18s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
   }
-  .ind-chip:hover { transform: translateY(-3px); border-color: var(--orange); }
+  .ind-chip:hover {
+    transform: translateY(-3px);
+    border-color: var(--orange);
+  }
   .ind-glyph {
-    flex-shrink: 0; display: grid; place-items: center;
-    width: 38px; height: 38px; border-radius: 9px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
     background: color-mix(in srgb, var(--orange) 12%, transparent);
-    color: var(--orange); line-height: 1;
+    color: var(--orange);
+    line-height: 1;
   }
-  .ind-label { font: 700 13px/1.2 var(--font-display); letter-spacing: -0.01em; color: var(--ink); }
+  .ind-label {
+    font: 700 13px/1.2 var(--font-display);
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
 
   /* ── CTA ── */
-  .cta { padding-top: 70px; padding-bottom: 80px; }
-  .cta-card { position: relative; overflow: hidden; padding: clamp(32px, 5vw, 60px); text-align: center; }
-  .cta-inner { position: relative; }
+  .cta {
+    padding-top: 70px;
+    padding-bottom: 80px;
+  }
+  .cta-card {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(32px, 5vw, 60px);
+    text-align: center;
+  }
+  .cta-inner {
+    position: relative;
+  }
   .cta-h {
     margin: 14px 0 0;
     font: 900 clamp(28px, 4.6vw, 52px)/0.92 var(--font-display);
-    letter-spacing: -0.04em; color: var(--ink);
+    letter-spacing: -0.04em;
+    color: var(--ink);
   }
   .cta-lead {
-    max-width: 520px; margin: 18px auto 0;
-    font: 400 14px/1.6 var(--font-mono); color: var(--ink-muted);
+    max-width: 520px;
+    margin: 18px auto 0;
+    font: 400 14px/1.6 var(--font-mono);
+    color: var(--ink-muted);
   }
-  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 30px; }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 30px;
+  }
 </style>

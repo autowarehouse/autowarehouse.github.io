@@ -10,28 +10,73 @@ const { feature } = Astro.props;
 
 // Optional per-feature highlight rows (chips). Pure content.
 const EXTRAS: Record<string, { label: string; items: string[] }> = {
-  'data-model-engine': { label: 'Industry templates', items: ['HRDM · Human Resources (Ready)', 'TDM · Telecom (Coming)', 'FDM · Finance (Coming)', 'Custom · Build your own'] },
-  'intelligent-mapping': { label: 'How it works', items: ['Discover · scan source schema', 'Match · heuristic + LLM with reasoning', 'Validate · nulls, ranges, uniqueness', 'Approve · review & sign off'] },
-  'etl-engine': { label: 'Export targets', items: ['Airflow DAGs', 'dbt Models', 'SQL Scripts', 'Spark Jobs', 'Snowflake'] },
-  'source-connectors': { label: 'Supported sources', items: ['PostgreSQL', 'MySQL', 'Oracle', 'MSSQL', 'MongoDB', 'PDF / Word', 'Excel / CSV'] },
-  'analytics': { label: 'Chart types', items: ['Bar', 'Line', 'Pie', 'KPI cards', 'Saved reports', 'Widget dashboards'] },
+  'data-model-engine': {
+    label: 'Industry templates',
+    items: [
+      'HRDM · Human Resources (Ready)',
+      'TDM · Telecom (Coming)',
+      'FDM · Finance (Coming)',
+      'Custom · Build your own',
+    ],
+  },
+  'intelligent-mapping': {
+    label: 'How it works',
+    items: [
+      'Discover · scan source schema',
+      'Match · heuristic + LLM with reasoning',
+      'Validate · nulls, ranges, uniqueness',
+      'Approve · review & sign off',
+    ],
+  },
+  'etl-engine': {
+    label: 'Export targets',
+    items: ['Airflow DAGs', 'dbt Models', 'SQL Scripts', 'Spark Jobs', 'Snowflake'],
+  },
+  'source-connectors': {
+    label: 'Supported sources',
+    items: ['PostgreSQL', 'MySQL', 'Oracle', 'MSSQL', 'MongoDB', 'PDF / Word', 'Excel / CSV'],
+  },
+  analytics: { label: 'Chart types', items: ['Bar', 'Line', 'Pie', 'KPI cards', 'Saved reports', 'Widget dashboards'] },
 };
 const extra = EXTRAS[feature.slug];
 ---
 
 <FeatureLayout feature={feature}>
-  {extra && (
-    <div class="ext">
-      <div class="eyebrow" style={`color:${feature.color}`}>{extra.label}</div>
-      <div class="ext-chips">
-        {extra.items.map((i) => <span class="ext-chip" style={`--c:${feature.color}`}>{i}</span>)}
+  {
+    extra && (
+      <div class="ext">
+        <div class="eyebrow" style={`color:${feature.color}`}>
+          {extra.label}
+        </div>
+        <div class="ext-chips">
+          {extra.items.map((i) => (
+            <span class="ext-chip" style={`--c:${feature.color}`}>
+              {i}
+            </span>
+          ))}
+        </div>
       </div>
-    </div>
-  )}
+    )
+  }
 </FeatureLayout>
 
 <style>
-  .ext { padding-top: 36px; }
-  .ext-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-  .ext-chip { padding: 10px 16px; border: 1px solid var(--line-soft); border-left: 3px solid var(--c); border-radius: 10px; background: var(--panel); font: 700 12px var(--font-mono); color: var(--ink); }
+  .ext {
+    padding-top: 36px;
+  }
+  .ext-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .ext-chip {
+    padding: 10px 16px;
+    border: 1px solid var(--line-soft);
+    border-left: 3px solid var(--c);
+    border-radius: 10px;
+    background: var(--panel);
+    font: 700 12px var(--font-mono);
+    color: var(--ink);
+  }
 </style>

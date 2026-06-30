@@ -17,24 +17,28 @@ const year = new Date().getFullYear();
         </p>
       </div>
 
-      {FOOTER_GROUPS.map((g) => (
-        <div>
-          <h3 class="aw-foot-h">{g.title}</h3>
-          <ul class="aw-foot-list">
-            {g.links.map((l) => (
-              <li>
-                <a href={l.href} {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>{l.label}</a>
-              </li>
-            ))}
-          </ul>
-          {g.title === 'Company' && (
-            <div class="aw-foot-contact">
-              <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
-              <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-            </div>
-          )}
-        </div>
-      ))}
+      {
+        FOOTER_GROUPS.map((g) => (
+          <div>
+            <h3 class="aw-foot-h">{g.title}</h3>
+            <ul class="aw-foot-list">
+              {g.links.map((l) => (
+                <li>
+                  <a href={l.href} {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            {g.title === 'Company' && (
+              <div class="aw-foot-contact">
+                <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+                <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+              </div>
+            )}
+          </div>
+        ))
+      }
     </div>
 
     <div class="aw-foot-bottom">
@@ -49,28 +53,116 @@ const year = new Date().getFullYear();
 </footer>
 
 <style>
-  .aw-footer { border-top: 1px solid var(--line); background: var(--panel); }
-  .aw-foot-tape { height: 8px; }
-  .aw-foot-inner { padding-top: 48px; padding-bottom: 30px; }
-  .aw-foot-grid { display: grid; gap: 32px; grid-template-columns: 1.5fr 1fr 1fr 1fr; }
-  .aw-foot-brand { max-width: 280px; }
-  .aw-foot-tag { margin: 14px 0 0; font: 600 13px var(--font-body); color: var(--ink-muted); }
-  .aw-foot-sub { margin: 8px 0 0; font: 500 11px var(--font-mono); color: var(--ink-dim); }
-  .aw-foot-sub a { color: var(--orange); text-decoration: none; }
-  .aw-foot-h { margin: 0 0 14px; font: 700 10px var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); }
-  .aw-foot-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
-  .aw-foot-list a { font: 600 13px var(--font-body); color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
-  .aw-foot-list a:hover { color: var(--orange); }
-  .aw-foot-contact { margin-top: 16px; display: grid; gap: 4px; font: 600 11px var(--font-mono); color: var(--ink-dim); }
-  .aw-foot-contact a { color: var(--ink-dim); text-decoration: none; }
-  .aw-foot-contact a:hover { color: var(--ink); }
-  .aw-foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line-soft);
-    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center;
-    font: 600 11px var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-dim); }
-  .aw-foot-legal { display: flex; align-items: center; gap: 18px; }
-  .aw-foot-legal a { text-decoration: none; color: var(--ink-dim); }
-  .aw-foot-legal a:hover { color: var(--orange); }
-  .aw-ver { opacity: 0.6; }
-  @media (max-width: 880px) { .aw-foot-grid { grid-template-columns: 1fr 1fr; } .aw-foot-brand { grid-column: 1 / -1; } }
-  @media (max-width: 520px) { .aw-foot-grid { grid-template-columns: 1fr; } }
+  .aw-footer {
+    border-top: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .aw-foot-tape {
+    height: 8px;
+  }
+  .aw-foot-inner {
+    padding-top: 48px;
+    padding-bottom: 30px;
+  }
+  .aw-foot-grid {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  }
+  .aw-foot-brand {
+    max-width: 280px;
+  }
+  .aw-foot-tag {
+    margin: 14px 0 0;
+    font: 600 13px var(--font-body);
+    color: var(--ink-muted);
+  }
+  .aw-foot-sub {
+    margin: 8px 0 0;
+    font: 500 11px var(--font-mono);
+    color: var(--ink-dim);
+  }
+  .aw-foot-sub a {
+    color: var(--orange);
+    text-decoration: none;
+  }
+  .aw-foot-h {
+    margin: 0 0 14px;
+    font: 700 10px var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .aw-foot-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 9px;
+  }
+  .aw-foot-list a {
+    font: 600 13px var(--font-body);
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .aw-foot-list a:hover {
+    color: var(--orange);
+  }
+  .aw-foot-contact {
+    margin-top: 16px;
+    display: grid;
+    gap: 4px;
+    font: 600 11px var(--font-mono);
+    color: var(--ink-dim);
+  }
+  .aw-foot-contact a {
+    color: var(--ink-dim);
+    text-decoration: none;
+  }
+  .aw-foot-contact a:hover {
+    color: var(--ink);
+  }
+  .aw-foot-bottom {
+    margin-top: 44px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line-soft);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    font: 600 11px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-dim);
+  }
+  .aw-foot-legal {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .aw-foot-legal a {
+    text-decoration: none;
+    color: var(--ink-dim);
+  }
+  .aw-foot-legal a:hover {
+    color: var(--orange);
+  }
+  .aw-ver {
+    opacity: 0.6;
+  }
+  @media (max-width: 880px) {
+    .aw-foot-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .aw-foot-brand {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 520px) {
+    .aw-foot-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

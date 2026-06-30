@@ -7,10 +7,10 @@
 export interface FeatureStage {
   slug: string;
   step: number;
-  label: string;        // short nav label
-  name: string;         // full feature name
-  icon: string;         // glyph (mono, not emoji)
-  color: string;        // accent hex for this stage
+  label: string; // short nav label
+  name: string; // full feature name
+  icon: string; // glyph (mono, not emoji)
+  color: string; // accent hex for this stage
   hero: string;
   sub: string;
   capabilities: string[];

@@ -1,4 +1,5 @@
 ---
+
 ---
 
 <div id="cookie-consent" class="awc">
@@ -16,35 +17,82 @@
 
 <style>
   .awc {
-    position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-    transform: translateY(120%); transition: transform 0.5s ease-out;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transform: translateY(120%);
+    transition: transform 0.5s ease-out;
   }
-  .awc.show { transform: translateY(0); }
+  .awc.show {
+    transform: translateY(0);
+  }
   .awc-inner {
-    max-width: 760px; margin: 0 auto 16px; padding: 14px 16px;
-    display: flex; flex-direction: column; gap: 12px; align-items: center;
+    max-width: 760px;
+    margin: 0 auto 16px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
     background: color-mix(in srgb, var(--panel) 94%, transparent);
-    border: 1px solid var(--line); border-radius: 14px;
-    box-shadow: 0 18px 50px -16px rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 18px 50px -16px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
   }
-  .awc-text { flex: 1; margin: 0; font: 500 12px/1.5 var(--font-mono); color: var(--ink-muted); }
-  .awc-text a { color: var(--orange); text-decoration: none; }
-  .awc-text a:hover { text-decoration: underline; }
-  .awc-actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .awc-text {
+    flex: 1;
+    margin: 0;
+    font: 500 12px/1.5 var(--font-mono);
+    color: var(--ink-muted);
+  }
+  .awc-text a {
+    color: var(--orange);
+    text-decoration: none;
+  }
+  .awc-text a:hover {
+    text-decoration: underline;
+  }
+  .awc-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
   .awc-decline {
-    border: 1px solid var(--line-soft); border-radius: 999px; padding: 0 16px; min-height: 38px;
-    font: 800 10px var(--font-mono); text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted);
-    transition: border-color 0.2s, color 0.2s;
+    border: 1px solid var(--line-soft);
+    border-radius: 999px;
+    padding: 0 16px;
+    min-height: 38px;
+    font: 800 10px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-muted);
+    transition:
+      border-color 0.2s,
+      color 0.2s;
   }
-  .awc-decline:hover { border-color: var(--ink-muted); color: var(--ink); }
-  @media (min-width: 560px) { .awc-inner { flex-direction: row; gap: 16px; padding: 12px 16px 12px 20px; } }
+  .awc-decline:hover {
+    border-color: var(--ink-muted);
+    color: var(--ink);
+  }
+  @media (min-width: 560px) {
+    .awc-inner {
+      flex-direction: row;
+      gap: 16px;
+      padding: 12px 16px 12px 20px;
+    }
+  }
 </style>
 
 <script is:inline>
   (function () {
     var consent = localStorage.getItem('cookie-consent');
     if (consent === 'accepted' || consent === 'declined') {
-      var b = document.getElementById('cookie-consent'); if (b) b.remove(); return;
+      var b = document.getElementById('cookie-consent');
+      if (b) b.remove();
+      return;
     }
     setTimeout(function () {
       var banner = document.getElementById('cookie-consent');
@@ -53,11 +101,16 @@
 
     function hideBanner() {
       var banner = document.getElementById('cookie-consent');
-      if (banner) { banner.classList.remove('show'); setTimeout(function () { banner.remove(); }, 500); }
+      if (banner) {
+        banner.classList.remove('show');
+        setTimeout(function () {
+          banner.remove();
+        }, 500);
+      }
     }
     document.getElementById('cookie-accept')?.addEventListener('click', function () {
       localStorage.setItem('cookie-consent', 'accepted');
-      gtag('consent', 'update', { 'analytics_storage': 'granted' });
+      gtag('consent', 'update', { analytics_storage: 'granted' });
       hideBanner();
     });
     document.getElementById('cookie-decline')?.addEventListener('click', function () {

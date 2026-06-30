@@ -1,0 +1,8 @@
+#!/bin/sh
+# Full verification before pushing. Mirrors what CI enforces.
+set -e
+
+bun run gate
+
+# Advisory only: report known advisories but never block the push.
+bun audit || true

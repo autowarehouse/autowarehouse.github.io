@@ -1,0 +1,5 @@
+# Reproducible installs: `bun add` records exact versions (no ^ ranges) so a new
+# dependency can't silently float to a newer minor. All versions in package.json
+# are pinned exact to match; Dependabot proposes bumps explicitly as PRs.
+[install]
+exact = true

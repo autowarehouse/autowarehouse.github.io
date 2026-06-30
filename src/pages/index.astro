@@ -4,11 +4,29 @@ import HomeHero from '@components/home/HomeHero.astro';
 import WarehouseGame from '@components/game/WarehouseGame.astro';
 
 const PROOF = [
-  'Multi-source discovery', 'AI-assisted mapping', 'Human-in-the-loop review', 'HRDM model templates',
-  'DAG-based ETL', 'SCD Type 2 history', 'Quality gates', 'Agent-generated reports',
-  'NL-to-SQL · Talk-to-DWH', 'RBAC · audit · isolation',
+  'Multi-source discovery',
+  'AI-assisted mapping',
+  'Human-in-the-loop review',
+  'HRDM model templates',
+  'DAG-based ETL',
+  'SCD Type 2 history',
+  'Quality gates',
+  'Agent-generated reports',
+  'NL-to-SQL · Talk-to-DWH',
+  'RBAC · audit · isolation',
 ];
-const CLIENTS = ['Akbank', 'Vodafone', 'Turkcell', 'Yapı Kredi', 'ING', 'DenizBank', 'Türk Telekom', 'T-Mobile', 'LC Waikiki', 'Garanti BBVA'];
+const CLIENTS = [
+  'Akbank',
+  'Vodafone',
+  'Turkcell',
+  'Yapı Kredi',
+  'ING',
+  'DenizBank',
+  'Türk Telekom',
+  'T-Mobile',
+  'LC Waikiki',
+  'Garanti BBVA',
+];
 ---
 
 <PageLayout
@@ -37,16 +55,23 @@ const CLIENTS = ['Akbank', 'Vodafone', 'Turkcell', 'Yapı Kredi', 'ING', 'DenizB
         <div class="eyebrow">Model-first by design</div>
         <h2 class="proof-h">The DataModel is<br />the whole platform.</h2>
         <p class="proof-lead">
-          Discovery, mapping, ETL, reporting, dashboards and Talk-to-DWH don't each invent their own truth.
-          They all read and write one governed model — so an executive's answer and an engineer's pipeline
-          are provably the same thing.
+          Discovery, mapping, ETL, reporting, dashboards and Talk-to-DWH don't each invent their own truth. They all
+          read and write one governed model — so an executive's answer and an engineer's pipeline are provably the same
+          thing.
         </p>
         <a href="/platform" class="btn btn-outline" style="margin-top:24px">Explore the platform</a>
       </div>
       <div class="proof-cards">
-        {PROOF.map((t, i) => (
-          <div class="proof-card reveal"><div class="proof-no">{String(i + 1).padStart(2, '0')}</div><div class="proof-t">{t}</div></div>
-        ))}
+        {
+          PROOF.map((t, i) => (
+            <div class="proof-card reveal">
+              <>
+                <div class="proof-no">{String(i + 1).padStart(2, '0')}</div>
+                <div class="proof-t">{t}</div>
+              </>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -55,9 +80,15 @@ const CLIENTS = ['Akbank', 'Vodafone', 'Turkcell', 'Yapı Kredi', 'ING', 'DenizB
   <section id="gov" class="shell gov">
     <div class="gov-card reveal">
       <div class="gov-h">Enterprise governance,<br />not a demo toy.</div>
-      <div class="gov-item"><span class="gov-k">RBAC</span><span class="gov-s">role-scoped access on every object</span></div>
-      <div class="gov-item"><span class="gov-k">AUDIT</span><span class="gov-s">every agent action &amp; approval logged</span></div>
-      <div class="gov-item"><span class="gov-k">ISOLATION</span><span class="gov-s">per-tenant workspaces · OIDC</span></div>
+      <div class="gov-item">
+        <span class="gov-k">RBAC</span><span class="gov-s">role-scoped access on every object</span>
+      </div>
+      <div class="gov-item">
+        <span class="gov-k">AUDIT</span><span class="gov-s">every agent action &amp; approval logged</span>
+      </div>
+      <div class="gov-item">
+        <span class="gov-k">ISOLATION</span><span class="gov-s">per-tenant workspaces · OIDC</span>
+      </div>
     </div>
   </section>
 
@@ -66,7 +97,9 @@ const CLIENTS = ['Akbank', 'Vodafone', 'Turkcell', 'Yapı Kredi', 'ING', 'DenizB
     <div class="cta-card grid-bg reveal">
       <div class="cta-inner">
         <h2 class="cta-h">Ready to build<br />the real one?</h2>
-        <p class="cta-lead">Bring your messiest sources. We'll run a live build review and show your governed warehouse taking shape.</p>
+        <p class="cta-lead">
+          Bring your messiest sources. We'll run a live build review and show your governed warehouse taking shape.
+        </p>
         <div class="cta-row">
           <a href="/contact" class="btn btn-primary cta-btn">Book a build review</a>
           <a href="#game" class="btn btn-outline cta-btn">Replay the build</a>
@@ -81,35 +114,165 @@ const CLIENTS = ['Akbank', 'Vodafone', 'Turkcell', 'Yapı Kredi', 'ING', 'DenizB
 </PageLayout>
 
 <style>
-  .clients { padding: 30px 0 10px; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
-  .clients-h { text-align: center; }
-  .marquee { margin-top: 18px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-  .marquee-track { display: flex; gap: 48px; width: max-content; animation: awMarquee 32s linear infinite; }
-  .client { font: 800 20px var(--font-display); letter-spacing: -0.02em; color: var(--ink-dim); white-space: nowrap; }
+  .clients {
+    padding: 30px 0 10px;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .clients-h {
+    text-align: center;
+  }
+  .marquee {
+    margin-top: 18px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 48px;
+    width: max-content;
+    animation: awMarquee 32s linear infinite;
+  }
+  .client {
+    font: 800 20px var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--ink-dim);
+    white-space: nowrap;
+  }
 
-  .proof { padding-top: 60px; padding-bottom: 30px; }
-  .proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: center; }
-  .proof-h { margin: 14px 0 0; font: 900 clamp(32px, 4.5vw, 56px)/0.9 var(--font-display); letter-spacing: -0.05em; color: var(--ink); }
-  .proof-lead { max-width: 520px; margin: 20px 0 0; font: 400 15px/1.6 var(--font-mono); color: var(--ink-muted); }
-  .proof-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .proof-card { border: 1px solid var(--line); border-radius: 11px; padding: 14px; background: var(--panel); transition: border-color .2s; }
-  .proof-card:hover { border-color: var(--orange); }
-  .proof-no { font: 800 11px var(--font-mono); color: var(--orange); }
-  .proof-t { margin-top: 9px; font: 700 13px/1.2 var(--font-display); letter-spacing: -0.02em; color: var(--ink); }
+  .proof {
+    padding-top: 60px;
+    padding-bottom: 30px;
+  }
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    align-items: center;
+  }
+  .proof-h {
+    margin: 14px 0 0;
+    font: 900 clamp(32px, 4.5vw, 56px)/0.9 var(--font-display);
+    letter-spacing: -0.05em;
+    color: var(--ink);
+  }
+  .proof-lead {
+    max-width: 520px;
+    margin: 20px 0 0;
+    font: 400 15px/1.6 var(--font-mono);
+    color: var(--ink-muted);
+  }
+  .proof-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .proof-card {
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    padding: 14px;
+    background: var(--panel);
+    transition: border-color 0.2s;
+  }
+  .proof-card:hover {
+    border-color: var(--orange);
+  }
+  .proof-no {
+    font: 800 11px var(--font-mono);
+    color: var(--orange);
+  }
+  .proof-t {
+    margin-top: 9px;
+    font: 700 13px/1.2 var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
 
-  .gov { padding-top: 10px; padding-bottom: 50px; }
-  .gov-card { border: 2px solid var(--yellow); border-radius: 18px; background: linear-gradient(90deg, color-mix(in srgb, var(--orange) 10%, transparent), transparent); padding: 26px 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 20px; align-items: center; }
-  .gov-h { font: 800 clamp(20px, 2.4vw, 28px)/1 var(--font-display); letter-spacing: -0.03em; color: var(--ink); }
-  .gov-item { display: flex; align-items: center; gap: 11px; }
-  .gov-k { font: 900 22px var(--font-display); color: var(--yellow); }
-  .gov-s { font: 600 11px var(--font-mono); color: var(--ink-muted); }
+  .gov {
+    padding-top: 10px;
+    padding-bottom: 50px;
+  }
+  .gov-card {
+    border: 2px solid var(--yellow);
+    border-radius: 18px;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--orange) 10%, transparent), transparent);
+    padding: 26px 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 20px;
+    align-items: center;
+  }
+  .gov-h {
+    font: 800 clamp(20px, 2.4vw, 28px)/1 var(--font-display);
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .gov-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .gov-k {
+    font: 900 22px var(--font-display);
+    color: var(--yellow);
+  }
+  .gov-s {
+    font: 600 11px var(--font-mono);
+    color: var(--ink-muted);
+  }
 
-  .cta { padding-top: 20px; padding-bottom: 70px; }
-  .cta-card { position: relative; border: 2px solid var(--yellow); border-radius: 24px; background: var(--panel); padding: clamp(30px, 5vw, 60px); text-align: center; overflow: hidden; }
-  .cta-inner { position: relative; }
-  .cta-h { margin: 0; font: 900 clamp(32px, 5.5vw, 68px)/0.86 var(--font-display); letter-spacing: -0.05em; color: var(--ink); }
-  .cta-lead { max-width: 520px; margin: 20px auto 0; font: 400 15px/1.6 var(--font-mono); color: var(--ink-muted); }
-  .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
-  .cta-btn { min-height: 52px; padding: 0 26px; font-size: 13px; }
-  .cta-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line-soft); font: 600 10px var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-dim); }
+  .cta {
+    padding-top: 20px;
+    padding-bottom: 70px;
+  }
+  .cta-card {
+    position: relative;
+    border: 2px solid var(--yellow);
+    border-radius: 24px;
+    background: var(--panel);
+    padding: clamp(30px, 5vw, 60px);
+    text-align: center;
+    overflow: hidden;
+  }
+  .cta-inner {
+    position: relative;
+  }
+  .cta-h {
+    margin: 0;
+    font: 900 clamp(32px, 5.5vw, 68px)/0.86 var(--font-display);
+    letter-spacing: -0.05em;
+    color: var(--ink);
+  }
+  .cta-lead {
+    max-width: 520px;
+    margin: 20px auto 0;
+    font: 400 15px/1.6 var(--font-mono);
+    color: var(--ink-muted);
+  }
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+  .cta-btn {
+    min-height: 52px;
+    padding: 0 26px;
+    font-size: 13px;
+  }
+  .cta-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line-soft);
+    font: 600 10px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+  }
 </style>

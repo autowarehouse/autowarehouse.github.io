@@ -14,18 +14,28 @@ import { PRIMARY_NAV, FEATURES } from '@data/site';
       <div class="aw-dropdown">
         <button class="aw-navlink" aria-haspopup="true" aria-expanded="false" id="aw-feat-btn">Features ▾</button>
         <div class="aw-menu" role="menu" aria-labelledby="aw-feat-btn">
-          {FEATURES.map((f) => (
-            <a class="aw-menu-item" href={`/features/${f.slug}`} role="menuitem">
-              <span class="aw-menu-num" style={`color:${f.color}`}>{String(f.step).padStart(2, '0')}</span>
-              <span>
-                <span class="aw-menu-label">{f.label}</span>
-                <span class="aw-menu-name">{f.name}</span>
-              </span>
-            </a>
-          ))}
+          {
+            FEATURES.map((f) => (
+              <a class="aw-menu-item" href={`/features/${f.slug}`} role="menuitem">
+                <span class="aw-menu-num" style={`color:${f.color}`}>
+                  {String(f.step).padStart(2, '0')}
+                </span>
+                <span>
+                  <span class="aw-menu-label">{f.label}</span>
+                  <span class="aw-menu-name">{f.name}</span>
+                </span>
+              </a>
+            ))
+          }
         </div>
       </div>
-      {PRIMARY_NAV.map((l) => <a class="aw-navlink" href={l.href}>{l.label}</a>)}
+      {
+        PRIMARY_NAV.map((l) => (
+          <a class="aw-navlink" href={l.href}>
+            {l.label}
+          </a>
+        ))
+      }
     </nav>
 
     <div class="aw-actions">
@@ -40,11 +50,13 @@ import { PRIMARY_NAV, FEATURES } from '@data/site';
   <div class="aw-mobile" id="aw-mobile" hidden>
     <a href="/platform" class="aw-mlink">Platform</a>
     <div class="aw-mgroup-label">Features</div>
-    {FEATURES.map((f) => (
-      <a href={`/features/${f.slug}`} class="aw-mlink aw-msub">
-        <span style={`color:${f.color}`}>{String(f.step).padStart(2, '0')}</span> {f.name}
-      </a>
-    ))}
+    {
+      FEATURES.map((f) => (
+        <a href={`/features/${f.slug}`} class="aw-mlink aw-msub">
+          <span style={`color:${f.color}`}>{String(f.step).padStart(2, '0')}</span> {f.name}
+        </a>
+      ))
+    }
     <a href="/use-cases" class="aw-mlink">Use Cases</a>
     <a href="/pricing" class="aw-mlink">Pricing</a>
     <a href="/about" class="aw-mlink">About</a>
@@ -54,59 +66,164 @@ import { PRIMARY_NAV, FEATURES } from '@data/site';
 
 <style>
   .aw-header {
-    position: sticky; top: 0; z-index: 50;
+    position: sticky;
+    top: 0;
+    z-index: 50;
     background: color-mix(in srgb, var(--bg) 82%, transparent);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line);
   }
   .aw-header-inner {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 14px; padding-top: 12px; padding-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
-  .aw-brand { text-decoration: none; }
+  .aw-brand {
+    text-decoration: none;
+  }
 
-  .aw-nav { display: flex; align-items: center; gap: 4px; }
+  .aw-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
   .aw-navlink {
-    padding: 8px 13px; font: 700 10px var(--font-mono);
-    text-transform: uppercase; letter-spacing: 0.07em;
-    color: var(--ink-muted); text-decoration: none; background: none; border-radius: 8px;
-    transition: color 0.2s ease, background 0.2s ease;
+    padding: 8px 13px;
+    font: 700 10px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-muted);
+    text-decoration: none;
+    background: none;
+    border-radius: 8px;
+    transition:
+      color 0.2s ease,
+      background 0.2s ease;
   }
-  .aw-navlink:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+  .aw-navlink:hover {
+    color: var(--ink);
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+  }
 
-  .aw-dropdown { position: relative; }
+  .aw-dropdown {
+    position: relative;
+  }
   .aw-menu {
-    position: absolute; top: calc(100% + 10px); left: 0;
-    min-width: 250px; padding: 8px; display: none;
-    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
-    box-shadow: 0 18px 40px -18px rgba(0,0,0,0.6);
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    min-width: 250px;
+    padding: 8px;
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.6);
   }
-  .aw-dropdown:hover .aw-menu, .aw-dropdown:focus-within .aw-menu { display: block; }
+  .aw-dropdown:hover .aw-menu,
+  .aw-dropdown:focus-within .aw-menu {
+    display: block;
+  }
   .aw-menu-item {
-    display: flex; align-items: center; gap: 12px; padding: 9px 11px;
-    border-radius: 9px; text-decoration: none; color: var(--ink); transition: background 0.18s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 11px;
+    border-radius: 9px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.18s ease;
   }
-  .aw-menu-item:hover { background: color-mix(in srgb, var(--ink) 7%, transparent); }
-  .aw-menu-num { font: 800 12px var(--font-mono); min-width: 22px; }
-  .aw-menu-label { display: block; font: 800 13px var(--font-display); letter-spacing: -0.01em; }
-  .aw-menu-name { display: block; font: 600 10px var(--font-mono); color: var(--ink-dim); }
+  .aw-menu-item:hover {
+    background: color-mix(in srgb, var(--ink) 7%, transparent);
+  }
+  .aw-menu-num {
+    font: 800 12px var(--font-mono);
+    min-width: 22px;
+  }
+  .aw-menu-label {
+    display: block;
+    font: 800 13px var(--font-display);
+    letter-spacing: -0.01em;
+  }
+  .aw-menu-name {
+    display: block;
+    font: 600 10px var(--font-mono);
+    color: var(--ink-dim);
+  }
 
-  .aw-actions { display: flex; align-items: center; gap: 10px; }
+  .aw-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-  .aw-burger { display: none; flex-direction: column; gap: 4px; width: 38px; height: 38px;
-    align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 999px; }
-  .aw-burger span { display: block; width: 16px; height: 2px; background: var(--ink); border-radius: 2px; }
+  .aw-burger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+  .aw-burger span {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+  }
 
-  .aw-mobile { flex-direction: column; gap: 2px; padding: 12px 18px 22px; border-bottom: 1px solid var(--line); background: var(--panel); }
-  .aw-mobile[hidden] { display: none; }
-  .aw-mlink { padding: 11px 8px; font: 700 13px var(--font-mono); text-transform: uppercase; letter-spacing: .05em; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-soft); }
-  .aw-msub { padding-left: 16px; font-size: 12px; text-transform: none; color: var(--ink-muted); }
-  .aw-mgroup-label { padding: 12px 8px 4px; font: 700 9px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-dim); }
-  .aw-mcta { margin-top: 14px; }
+  .aw-mobile {
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 18px 22px;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .aw-mobile[hidden] {
+    display: none;
+  }
+  .aw-mlink {
+    padding: 11px 8px;
+    font: 700 13px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .aw-msub {
+    padding-left: 16px;
+    font-size: 12px;
+    text-transform: none;
+    color: var(--ink-muted);
+  }
+  .aw-mgroup-label {
+    padding: 12px 8px 4px;
+    font: 700 9px var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .aw-mcta {
+    margin-top: 14px;
+  }
 
   @media (max-width: 880px) {
-    .aw-nav, .aw-cta { display: none; }
-    .aw-burger { display: flex; }
+    .aw-nav,
+    .aw-cta {
+      display: none;
+    }
+    .aw-burger {
+      display: flex;
+    }
   }
 </style>
 

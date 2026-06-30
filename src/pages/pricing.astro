@@ -76,48 +76,60 @@ const FAQ = [
   <!-- TIERS -->
   <section class="shell tiers">
     <div class="tiers-grid">
-      {TIERS.map((tier) => (
-        <article class={`tier reveal ${tier.recommended ? 'tier-rec' : 'tier-muted'}`}>
-          {tier.recommended && <span class="rec-pill">Recommended</span>}
-          <div class="tier-head">
-            <h2 class="tier-name">{tier.name}</h2>
-            <p class="tier-tag">{tier.tagline}</p>
-          </div>
+      {
+        TIERS.map((tier) => (
+          <article class={`tier reveal ${tier.recommended ? 'tier-rec' : 'tier-muted'}`}>
+            {tier.recommended && <span class="rec-pill">Recommended</span>}
+            <div class="tier-head">
+              <h2 class="tier-name">{tier.name}</h2>
+              <p class="tier-tag">{tier.tagline}</p>
+            </div>
 
-          <div class="tier-price">
-            <span class="tier-price-main">Enterprise</span>
-            <span class="tier-price-sub">Custom — scoped to your deployment</span>
-          </div>
+            <div class="tier-price">
+              <span class="tier-price-main">Enterprise</span>
+              <span class="tier-price-sub">Custom — scoped to your deployment</span>
+            </div>
 
-          <code class="tier-deploy">{tier.deploy}</code>
+            <code class="tier-deploy">{tier.deploy}</code>
 
-          <ul class="tier-feats">
-            {tier.features.map((f) => (
-              <li class="tier-feat">
-                <span class="feat-check" aria-hidden="true">✓</span>
-                <span class="feat-label">{f}</span>
-              </li>
-            ))}
-          </ul>
+            <ul class="tier-feats">
+              {tier.features.map((f) => (
+                <li class="tier-feat">
+                  <span class="feat-check" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span class="feat-label">{f}</span>
+                </li>
+              ))}
+            </ul>
 
-          {tier.cta.href ? (
-            <a href={tier.cta.href} class="btn btn-primary tier-cta">{tier.cta.label}</a>
-          ) : (
-            <span class="btn btn-outline tier-cta is-disabled" aria-disabled="true">{tier.cta.label}</span>
-          )}
-        </article>
-      ))}
+            {tier.cta.href ? (
+              <a href={tier.cta.href} class="btn btn-primary tier-cta">
+                {tier.cta.label}
+              </a>
+            ) : (
+              <span class="btn btn-outline tier-cta is-disabled" aria-disabled="true">
+                {tier.cta.label}
+              </span>
+            )}
+          </article>
+        ))
+      }
     </div>
 
     <!-- NOTE LINE -->
     <div class="note reveal">
-      {NOTES.map((n) => (
-        <div class="note-item">
-          <span class="note-glyph" aria-hidden="true">◆</span>
-          <span class="note-k">{n.k}</span>
-          <span class="note-v">{n.v}</span>
-        </div>
-      ))}
+      {
+        NOTES.map((n) => (
+          <div class="note-item">
+            <span class="note-glyph" aria-hidden="true">
+              ◆
+            </span>
+            <span class="note-k">{n.k}</span>
+            <span class="note-v">{n.v}</span>
+          </div>
+        ))
+      }
     </div>
   </section>
 
@@ -126,16 +138,20 @@ const FAQ = [
     <div class="eyebrow">FAQ</div>
     <h2 class="faq-h">Common questions</h2>
     <div class="faq-list">
-      {FAQ.map((item, i) => (
-        <details class="faq-item reveal" name="pricing-faq">
-          <summary class="faq-q">
-            <span class="faq-no">{String(i + 1).padStart(2, '0')}</span>
-            <span class="faq-q-text">{item.q}</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </summary>
-          <p class="faq-a">{item.a}</p>
-        </details>
-      ))}
+      {
+        FAQ.map((item, i) => (
+          <details class="faq-item reveal" name="pricing-faq">
+            <summary class="faq-q">
+              <span class="faq-no">{String(i + 1).padStart(2, '0')}</span>
+              <span class="faq-q-text">{item.q}</span>
+              <span class="faq-icon" aria-hidden="true">
+                +
+              </span>
+            </summary>
+            <p class="faq-a">{item.a}</p>
+          </details>
+        ))
+      }
     </div>
   </section>
 
@@ -144,7 +160,8 @@ const FAQ = [
     <div class="card-frame grid-bg cta-card reveal">
       <h2 class="cta-h">Let's scope your<br />deployment.</h2>
       <p class="cta-lead">
-        Tell us about your data infrastructure. We'll map AutoWarehouse to your environment and walk you through pricing.
+        Tell us about your data infrastructure. We'll map AutoWarehouse to your environment and walk you through
+        pricing.
       </p>
       <div class="cta-row">
         <a href="/contact" class="btn btn-primary cta-btn">Contact Sales</a>
@@ -156,20 +173,31 @@ const FAQ = [
 
 <style>
   /* HERO */
-  .hero { position: relative; overflow: hidden; }
-  .hero-inner { padding-top: 40px; padding-bottom: 34px; }
+  .hero {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    padding-top: 40px;
+    padding-bottom: 34px;
+  }
   .hero-h {
     margin: 14px 0 0;
     font: 900 clamp(38px, 6vw, 72px)/0.9 var(--font-display);
-    letter-spacing: -0.05em; color: var(--ink);
+    letter-spacing: -0.05em;
+    color: var(--ink);
   }
   .hero-sub {
-    max-width: 600px; margin: 22px 0 0;
-    font: 400 clamp(14px, 1.6vw, 17px)/1.55 var(--font-mono); color: var(--ink-muted);
+    max-width: 600px;
+    margin: 22px 0 0;
+    font: 400 clamp(14px, 1.6vw, 17px)/1.55 var(--font-mono);
+    color: var(--ink-muted);
   }
 
   /* TIERS */
-  .tiers { padding-top: 56px; }
+  .tiers {
+    padding-top: 56px;
+  }
   .tiers-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -192,63 +220,95 @@ const FAQ = [
     border: 1px solid var(--line-soft);
   }
   .tier-muted .tier-name,
-  .tier-muted .tier-price-main { color: var(--ink-muted); }
+  .tier-muted .tier-price-main {
+    color: var(--ink-muted);
+  }
 
   .rec-pill {
     position: absolute;
-    top: -13px; left: clamp(24px, 3vw, 36px);
-    background: var(--yellow); color: var(--on-accent);
+    top: -13px;
+    left: clamp(24px, 3vw, 36px);
+    background: var(--yellow);
+    color: var(--on-accent);
     font: 800 10px var(--font-mono);
-    letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 6px 13px; border-radius: 999px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 13px;
+    border-radius: 999px;
     box-shadow: 3px 3px 0 var(--orange);
   }
 
   .tier-name {
     margin: 0;
     font: 900 clamp(26px, 3vw, 36px) var(--font-display);
-    letter-spacing: -0.03em; color: var(--ink);
+    letter-spacing: -0.03em;
+    color: var(--ink);
   }
   .tier-tag {
     margin: 10px 0 0;
-    font: 400 14px/1.5 var(--font-body); color: var(--ink-muted);
+    font: 400 14px/1.5 var(--font-body);
+    color: var(--ink-muted);
     max-width: 34ch;
   }
 
   .tier-price {
-    margin-top: 22px; padding-top: 22px;
+    margin-top: 22px;
+    padding-top: 22px;
     border-top: 1px dashed var(--line);
-    display: flex; flex-direction: column; gap: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
   .tier-price-main {
     font: 900 clamp(22px, 2.6vw, 30px) var(--font-display);
-    letter-spacing: -0.02em; color: var(--ink);
+    letter-spacing: -0.02em;
+    color: var(--ink);
   }
   .tier-price-sub {
-    font: 600 11px var(--font-mono); letter-spacing: 0.04em;
-    text-transform: uppercase; color: var(--ink-dim);
+    font: 600 11px var(--font-mono);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
   }
 
   .tier-deploy {
-    display: block; margin-top: 16px;
-    background: var(--terminal); color: var(--terminal-ink);
-    border: 1px solid var(--line-soft); border-radius: 9px;
+    display: block;
+    margin-top: 16px;
+    background: var(--terminal);
+    color: var(--terminal-ink);
+    border: 1px solid var(--line-soft);
+    border-radius: 9px;
     padding: 11px 13px;
-    font: 600 12px var(--font-mono); letter-spacing: 0.01em;
-    overflow-x: auto; white-space: nowrap;
+    font: 600 12px var(--font-mono);
+    letter-spacing: 0.01em;
+    overflow-x: auto;
+    white-space: nowrap;
   }
-  .tier-muted .tier-deploy { color: var(--terminal-dim); }
+  .tier-muted .tier-deploy {
+    color: var(--terminal-dim);
+  }
 
   .tier-feats {
-    list-style: none; margin: 22px 0 0; padding: 0;
-    display: flex; flex-direction: column; gap: 12px;
+    list-style: none;
+    margin: 22px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     flex: 1;
   }
-  .tier-feat { display: flex; align-items: flex-start; gap: 11px; }
+  .tier-feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+  }
   .feat-check {
     flex: none;
-    display: inline-grid; place-items: center;
-    width: 20px; height: 20px; border-radius: 6px;
+    display: inline-grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
     font: 800 11px var(--font-mono);
     background: color-mix(in srgb, var(--green) 18%, transparent);
     color: var(--green);
@@ -259,93 +319,162 @@ const FAQ = [
     color: var(--ink-dim);
     border-color: var(--line-soft);
   }
-  .feat-label { font: 600 14px/1.4 var(--font-body); color: var(--ink); }
-  .tier-muted .feat-label { color: var(--ink-muted); }
+  .feat-label {
+    font: 600 14px/1.4 var(--font-body);
+    color: var(--ink);
+  }
+  .tier-muted .feat-label {
+    color: var(--ink-muted);
+  }
 
-  .tier-cta { margin-top: 26px; width: 100%; }
+  .tier-cta {
+    margin-top: 26px;
+    width: 100%;
+  }
   .tier-cta.is-disabled {
-    cursor: not-allowed; opacity: 0.55;
-    border-style: dashed; box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.55;
+    border-style: dashed;
+    box-shadow: none;
     pointer-events: none;
   }
 
   /* NOTE LINE */
   .note {
-    margin-top: 28px; padding: 18px 22px;
-    border: 1px solid var(--line); border-radius: 14px;
+    margin-top: 28px;
+    padding: 18px 22px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
     background: linear-gradient(90deg, color-mix(in srgb, var(--orange) 8%, transparent), transparent);
-    display: flex; flex-wrap: wrap; gap: 14px 28px;
-    align-items: center; justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+    align-items: center;
+    justify-content: center;
   }
-  .note-item { display: inline-flex; align-items: center; gap: 9px; }
-  .note-glyph { color: var(--orange); font-size: 11px; }
+  .note-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .note-glyph {
+    color: var(--orange);
+    font-size: 11px;
+  }
   .note-k {
-    font: 800 11px var(--font-mono); letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--ink);
+    font: 800 11px var(--font-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
   }
-  .note-v { font: 500 12px var(--font-mono); color: var(--ink-muted); }
+  .note-v {
+    font: 500 12px var(--font-mono);
+    color: var(--ink-muted);
+  }
 
   /* FAQ */
-  .faq { padding-top: 64px; }
+  .faq {
+    padding-top: 64px;
+  }
   .faq-h {
     margin: 12px 0 28px;
     font: 900 clamp(26px, 3.4vw, 42px) var(--font-display);
-    letter-spacing: -0.03em; color: var(--ink);
+    letter-spacing: -0.03em;
+    color: var(--ink);
   }
-  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
   .faq-item {
-    border: 1px solid var(--line-soft); border-radius: 12px;
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
     background: var(--panel);
     border-left: 3px solid var(--orange);
     overflow: hidden;
     transition: border-color 0.2s;
   }
-  .faq-item[open] { border-color: var(--line); }
+  .faq-item[open] {
+    border-color: var(--line);
+  }
   .faq-q {
-    display: flex; align-items: center; gap: 14px;
-    padding: 18px 20px; cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    cursor: pointer;
     list-style: none;
   }
-  .faq-q::-webkit-details-marker { display: none; }
-  .faq-no { flex: none; font: 800 12px var(--font-mono); color: var(--orange); }
+  .faq-q::-webkit-details-marker {
+    display: none;
+  }
+  .faq-no {
+    flex: none;
+    font: 800 12px var(--font-mono);
+    color: var(--orange);
+  }
   .faq-q-text {
     flex: 1;
     font: 800 clamp(15px, 1.8vw, 18px)/1.3 var(--font-display);
-    letter-spacing: -0.01em; color: var(--ink);
+    letter-spacing: -0.01em;
+    color: var(--ink);
   }
   .faq-icon {
     flex: none;
-    display: inline-grid; place-items: center;
-    width: 26px; height: 26px; border-radius: 7px;
+    display: inline-grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
     border: 1px solid var(--line);
-    font: 700 16px var(--font-mono); color: var(--yellow);
+    font: 700 16px var(--font-mono);
+    color: var(--yellow);
     transition: transform 0.22s ease;
   }
-  .faq-item[open] .faq-icon { transform: rotate(45deg); }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
   .faq-a {
-    margin: 0; padding: 0 20px 20px 46px;
-    font: 400 14px/1.6 var(--font-body); color: var(--ink-muted);
+    margin: 0;
+    padding: 0 20px 20px 46px;
+    font: 400 14px/1.6 var(--font-body);
+    color: var(--ink-muted);
     max-width: 70ch;
   }
 
   /* CTA */
-  .cta { padding-top: 56px; padding-bottom: 80px; }
+  .cta {
+    padding-top: 56px;
+    padding-bottom: 80px;
+  }
   .cta-card {
-    position: relative; overflow: hidden;
-    padding: clamp(32px, 5vw, 60px); text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: clamp(32px, 5vw, 60px);
+    text-align: center;
   }
   .cta-h {
     margin: 0;
     font: 900 clamp(30px, 5vw, 60px)/0.88 var(--font-display);
-    letter-spacing: -0.05em; color: var(--ink);
+    letter-spacing: -0.05em;
+    color: var(--ink);
   }
   .cta-lead {
-    max-width: 520px; margin: 20px auto 0;
-    font: 400 15px/1.6 var(--font-mono); color: var(--ink-muted);
+    max-width: 520px;
+    margin: 20px auto 0;
+    font: 400 15px/1.6 var(--font-mono);
+    color: var(--ink-muted);
   }
   .cta-row {
-    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
     margin-top: 30px;
   }
-  .cta-btn { min-height: 52px; padding: 0 26px; }
+  .cta-btn {
+    min-height: 52px;
+    padding: 0 26px;
+  }
 </style>
