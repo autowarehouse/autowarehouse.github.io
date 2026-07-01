@@ -1,10 +1,13 @@
 ---
 /**
- * AutoWarehouse "Agent Ribbon" logo.
- * Three stacked layers (foundation/analytical/semantic) bound by an
- * orange ribbon (the AI agent) weaving through them.
+ * AutoWarehouse "Agent Weave" logo.
+ * Three stacked layers (foundation/analytical/semantic) with an orange ribbon
+ * (the AI agent) weaving vertically through them.
  *
- *  variant: 'lockup' (mark + wordmark) | 'mark' (ribbon only) | 'hex' (AW badge)
+ *  variant: 'lockup' (mark + wordmark) | 'mark' (weave only) | 'hex' (AW badge)
+ *
+ * The mark's slabs use `currentColor` (so they follow --ink per theme); the
+ * ribbon is always --orange. Static asset masters live in src/assets/brand/.
  */
 interface Props {
   variant?: 'lockup' | 'mark' | 'hex';
@@ -26,14 +29,14 @@ const { variant = 'lockup', size = 32, tagline = false, class: cls = '' } = Astr
 {
   variant === 'mark' && (
     <svg width={size} height={size} viewBox="0 0 64 64" class={cls} role="img" aria-label="AutoWarehouse">
-      <polygon points="18,13 46,13 39,21 11,21" fill="none" stroke="currentColor" stroke-width="2.5" />
-      <polygon points="18,29 46,29 39,37 11,37" fill="none" stroke="currentColor" stroke-width="2.5" />
-      <polygon points="18,45 46,45 39,53 11,53" fill="none" stroke="currentColor" stroke-width="2.5" />
+      <polygon points="16,12 48,12 40,22 8,22" fill="none" stroke="currentColor" stroke-width="2.5" />
+      <polygon points="16,28 48,28 40,38 8,38" fill="none" stroke="currentColor" stroke-width="2.5" />
+      <polygon points="16,44 48,44 40,54 8,54" fill="none" stroke="currentColor" stroke-width="2.5" />
       <path
-        d="M10 17 C 30 17, 34 33, 54 33 C 34 33, 30 49, 10 49"
+        d="M40 6 C 20 14, 20 24, 32 26 C 44 28, 44 38, 28 41 C 14 43, 16 52, 30 58"
         fill="none"
         stroke="var(--orange)"
-        stroke-width="3.6"
+        stroke-width="3.4"
         stroke-linecap="round"
       />
     </svg>
@@ -43,9 +46,18 @@ const { variant = 'lockup', size = 32, tagline = false, class: cls = '' } = Astr
 {
   variant === 'lockup' && (
     <span class={`aw-lockup ${cls}`}>
-      <span class="hex-mark" style={`width:${size}px;height:${size}px`} aria-hidden="true">
-        AW
-      </span>
+      <svg class="aw-mark" width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
+        <polygon points="16,12 48,12 40,22 8,22" fill="none" stroke="currentColor" stroke-width="2.5" />
+        <polygon points="16,28 48,28 40,38 8,38" fill="none" stroke="currentColor" stroke-width="2.5" />
+        <polygon points="16,44 48,44 40,54 8,54" fill="none" stroke="currentColor" stroke-width="2.5" />
+        <path
+          d="M40 6 C 20 14, 20 24, 32 26 C 44 28, 44 38, 28 41 C 14 43, 16 52, 30 58"
+          fill="none"
+          stroke="var(--orange)"
+          stroke-width="3.4"
+          stroke-linecap="round"
+        />
+      </svg>
       <span class="aw-words">
         <span class="aw-wordmark" style={`font-size:${Math.round(size * 0.5)}px`}>
           Auto<span class="aw-mut">Warehouse</span>
@@ -60,8 +72,12 @@ const { variant = 'lockup', size = 32, tagline = false, class: cls = '' } = Astr
   .aw-lockup {
     display: inline-flex;
     align-items: center;
-    gap: 11px;
+    gap: 9px;
     text-decoration: none;
+    color: var(--ink);
+  }
+  .aw-mark {
+    flex: none;
     color: var(--ink);
   }
   .aw-words {
