@@ -37,9 +37,11 @@ rsvg-convert -w 512 app-icon.svg          -o ../../../public/android-chrome-512x
 rsvg-convert -w 512 app-icon-maskable.svg -o ../../../public/android-chrome-maskable-512x512.png
 cp app-icon.svg ../../../public/favicon.svg
 
-# social card + press lockup
+# social card
 rsvg-convert -w 1200 -h 630 og-default.svg -o ../../../public/og/default.png
-rsvg-convert -w 1120 -h 300 logo-dark.svg  -o ../images/full-logo.png
+
+# press lockup (rendered on demand — not committed; nothing in the site imports it)
+# rsvg-convert -w 1120 -h 300 logo-dark.svg -o /tmp/full-logo.png
 
 # multi-res favicon.ico (needs ImageMagick or icoutils)
 for s in 16 32 48; do rsvg-convert -w $s app-icon-small.svg -o /tmp/ico-$s.png; done
@@ -47,5 +49,5 @@ convert /tmp/ico-16.png /tmp/ico-32.png /tmp/ico-48.png ../../../public/favicon.
 #   or: icotool -c -o ../../../public/favicon.ico /tmp/ico-16.png /tmp/ico-32.png /tmp/ico-48.png
 
 # then compress the PNGs
-optipng -o2 ../../../public/*.png ../../../public/og/*.png ../images/full-logo.png
+optipng -o2 ../../../public/*.png ../../../public/og/*.png
 ```

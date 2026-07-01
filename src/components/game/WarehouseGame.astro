@@ -11,8 +11,28 @@
     <div id="aw-game" class="g-wrap" aria-label="Interactive data warehouse build simulation">
       <noscript>
         <div class="g-noscript">
-          The interactive build mission needs JavaScript. Explore the platform stages instead:
-          <a href="/platform">Platform overview →</a>
+          <p>
+            <strong>AutoWarehouse build mission.</strong> This interactive demo needs JavaScript. It shows how AutoWarehouse
+            turns raw source systems into a governed data warehouse — model-first and human-in-the-loop, where an AI agent
+            proposes each step and a person reviews and approves before anything runs. The ten stations of the build mission
+            are:
+          </p>
+          <ol>
+            <li>
+              <strong>Select sources</strong> — pick the source systems to bring in (PostgreSQL, Oracle, documents, spreadsheets,
+              APIs).
+            </li>
+            <li><strong>Agent discovery</strong> — the AI agent scans and profiles the estate.</li>
+            <li><strong>Review discovery</strong> — a data engineer approves the discovery results.</li>
+            <li><strong>Model &amp; mapping</strong> — the agent maps sources to the target data model (HRDM).</li>
+            <li><strong>Approve mappings</strong> — a human resolves and approves the mappings.</li>
+            <li><strong>ETL build</strong> — the agent forges the ETL pipeline.</li>
+            <li><strong>Approve ETL</strong> — the ETL plan is reviewed and approved.</li>
+            <li><strong>DWH load</strong> — the warehouse is loaded with SCD Type 2 history.</li>
+            <li><strong>Agent report</strong> — the agent reports on the run.</li>
+            <li><strong>Talk-to-DWH</strong> — ask the governed warehouse questions in natural language.</li>
+          </ol>
+          <p><a href="/platform">Explore the platform stages →</a></p>
         </div>
       </noscript>
       <div id="g-hud" class="g-hud"></div>
@@ -1004,6 +1024,7 @@
   };
 
   const root = document.getElementById('aw-game');
+  let started = false;
   if (root) {
     const hudEl = document.getElementById('g-hud')!;
     const mapEl = document.getElementById('g-map')!;
@@ -1068,6 +1089,10 @@
 
     function go(n: number) {
       s.step = n;
+      window.awTrack?.('game_station_advance', {
+        step: n,
+        station: (STATIONS[n - 1] && STATIONS[n - 1].label) || String(n),
+      });
       render();
     }
 
@@ -1107,10 +1132,12 @@
       toTalk: () => go(10),
       ask: (i) => {
         s.activeQ = Number(i);
+        window.awTrack?.('talk_to_dwh_query', { index: Number(i) });
         render();
       },
       finish: () => {
         s.done = true;
+        window.awTrack?.('game_complete', {});
         render();
       },
       restart: () => {
@@ -1124,7 +1151,13 @@
       const t = (e.target as HTMLElement).closest('[data-act]') as HTMLElement | null;
       if (!t) return;
       const fn = actions[t.dataset.act!];
-      if (fn) fn(t.dataset.arg);
+      if (fn) {
+        if (!started) {
+          started = true;
+          window.awTrack?.('game_start', {});
+        }
+        fn(t.dataset.arg);
+      }
     });
 
     // ---------- renderers ----------

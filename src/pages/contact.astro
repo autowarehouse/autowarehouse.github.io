@@ -122,6 +122,7 @@ import { CONTACT } from '@data/site';
                 .then(function (data) {
                   if (data && data.success) {
                     show('Thanks — we received your request and will reply within 1 business day.', true);
+                    window.awTrack?.('generate_lead', { form: 'demo_request' });
                     if (statusPill) statusPill.textContent = 'SENT';
                     form.reset();
                   } else {

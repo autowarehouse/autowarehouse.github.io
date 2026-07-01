@@ -1,6 +1,7 @@
 ---
 import '@/styles/global.css';
 import CookieConsent from '@components/common/CookieConsent.astro';
+import { FEATURES } from '@data/site';
 
 interface Props {
   title: string;
@@ -13,6 +14,19 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = ogImage
   ? new URL(ogImage, Astro.site).toString()
   : new URL('/og/default.png', Astro.site).toString();
+
+// BreadcrumbList for non-home pages: Home → current page (valid + simple; the
+// title prop is the page's own name, incl. feature names on /features/[slug]).
+const breadcrumb =
+  canonicalUrl.pathname === '/'
+    ? null
+    : {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).toString() },
+          { '@type': 'ListItem', position: 2, name: title, item: canonicalUrl.toString() },
+        ],
+      };
 ---
 
 <!doctype html>
@@ -39,6 +53,7 @@ const ogImageUrl = ogImage
     </script>
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -98,8 +113,63 @@ const ogImageUrl = ogImage
       gtag('config', 'G-ZENXMKC3ET', { anonymize_ip: true });
     </script>
 
+    <!--
+      Analytics event helper (issue #11). window.awTrack(name, params) is a global
+      no-op unless gtag is present, so every caller stays safe when GA is blocked or
+      consent is denied. Consent Mode v2 (above) keeps these events cookieless until
+      the visitor accepts. Defined before body scripts so the game/form/theme islands
+      can call it. Also delegates primary-CTA and outbound-link tracking site-wide so
+      individual pages need no per-element wiring.
+    -->
+    <script is:inline>
+      window.awTrack = function (name, params) {
+        try {
+          if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
+        } catch (e) {
+          /* never let analytics break the page */
+        }
+      };
+      (function () {
+        function onReady(fn) {
+          if (document.readyState !== 'loading') fn();
+          else document.addEventListener('DOMContentLoaded', fn);
+        }
+        onReady(function () {
+          document.addEventListener(
+            'click',
+            function (e) {
+              var el = e.target && e.target.closest ? e.target.closest('a, button') : null;
+              if (!el) return;
+              // Outbound links → a different host
+              if (el.tagName === 'A' && el.href) {
+                var url = null;
+                try {
+                  url = new URL(el.href, window.location.href);
+                } catch (err) {
+                  /* not a resolvable URL */
+                }
+                if (url && url.host && url.host !== window.location.host && /^https?:$/.test(url.protocol)) {
+                  window.awTrack('outbound_click', { link_url: url.href, link_domain: url.host });
+                }
+              }
+              // Primary calls-to-action → .btn-primary / .btn-accent
+              if (el.classList && (el.classList.contains('btn-primary') || el.classList.contains('btn-accent'))) {
+                window.awTrack('cta_click', {
+                  cta_text: (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80),
+                  cta_href: el.getAttribute('href') || '',
+                  page_path: window.location.pathname,
+                });
+              }
+            },
+            true,
+          );
+        });
+      })();
+    </script>
+
     <!-- Structured Data -->
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify({
         '@context': 'https://schema.org',
@@ -124,22 +194,29 @@ const ogImageUrl = ogImage
               contactType: 'sales',
             },
             sameAs: ['https://www.linkedin.com/company/intellica'],
+            parentOrganization: { '@type': 'Organization', name: 'PiA Group' },
           },
           {
             '@type': 'SoftwareApplication',
             name: 'AutoWarehouse',
             url: 'https://autowarehouse.ai',
             applicationCategory: 'BusinessApplication',
+            applicationSubCategory: 'Data Warehouse Automation',
             operatingSystem: 'Web',
             description: description,
+            featureList: FEATURES.map((f) => f.name),
             creator: { '@type': 'Organization', name: 'Intellica', url: 'https://www.intellica.net' },
             offers: { '@type': 'Offer', category: 'Enterprise' },
             sameAs: ['https://github.com/autowarehouse', 'https://www.linkedin.com/company/autowarehouse'],
           },
           { '@type': 'WebSite', name: 'AutoWarehouse', url: 'https://autowarehouse.ai' },
+          ...(breadcrumb ? [breadcrumb] : []),
         ],
       })}
     />
+
+    <!-- Page-specific head content (e.g. per-page JSON-LD) -->
+    <slot name="head" />
   </head>
   <body class="min-h-screen antialiased">
     <slot />

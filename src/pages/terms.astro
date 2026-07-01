@@ -2,7 +2,7 @@
 import PageLayout from '@layouts/PageLayout.astro';
 import { CONTACT } from '@data/site';
 
-const updated = '2026-06-30';
+const updated = '2026-07-01';
 ---
 
 <PageLayout
@@ -31,23 +31,147 @@ const updated = '2026-06-30';
       <div class="tp-mark" aria-hidden="true">§</div>
 
       <div class="tp-block">
-        <div class="mono-label tp-k">01 · Overview</div>
+        <div class="mono-label tp-k">01 · Acceptance of Terms</div>
         <p class="tp-p">
-          AutoWarehouse is a product of Intellica (a PiA Group company). Terms of service will be updated with full
-          licensing terms, usage policies, and service level agreements.
+          These Terms of Service (the "Terms") govern access to and use of the AutoWarehouse platform and the
+          autowarehouse.ai website, provided by Intellica (a PiA Group company). By accessing this website, requesting a
+          demo, or using the Platform, you agree to these Terms. Where a signed enterprise agreement exists between you
+          and Intellica, that agreement controls and prevails over any conflicting provision here.
         </p>
       </div>
 
       <div class="tp-block divider-dashed">
-        <div class="mono-label tp-k">02 · Licensing</div>
+        <div class="mono-label tp-k">02 · Definitions</div>
         <p class="tp-p">
-          The AutoWarehouse platform is provided under enterprise licensing terms. For licensing details, deployment
-          agreements, or service level questions, please reach our team.
+          "Platform" means the AutoWarehouse software — the application, AI/agent engine, LLM runtime, and related
+          components deployed on the Customer's own infrastructure. "Customer" means the organization that licenses or
+          uses the Platform. "Service" means the Platform together with any documentation, updates, and support
+          Intellica makes available. "Content" means data, models, mappings, queries, and outputs that the Customer
+          connects, creates, or processes through the Platform.
+        </p>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">03 · License Grant &amp; Restrictions</div>
+        <p class="tp-p">
+          Subject to these Terms and any applicable enterprise agreement, Intellica grants the Customer a non-exclusive,
+          non-transferable, non-sublicensable license to install and use the Platform for its internal business
+          operations. The Customer may not reverse-engineer, resell, sublicense, or provide the Platform as a service to
+          third parties, remove proprietary notices, or use the Platform outside the scope granted. All rights not
+          expressly granted are reserved by Intellica.
+        </p>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">04 · Commercial Terms</div>
+        <p class="tp-p">
+          AutoWarehouse is licensed under individual enterprise agreements; fees, deployment scope, and term are set in
+          each Customer's agreement. Tier positioning is outlined on our <a href="/pricing"><u>pricing page</u></a>; a
+          managed offering is forthcoming. For licensing, deployment, or commercial questions, reach our team.
         </p>
         <a class="tp-mail" href={`mailto:${CONTACT.email}`}>
           <span class="tp-mail-glyph" aria-hidden="true">→</span>
           {CONTACT.email}
         </a>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">05 · Acceptable Use</div>
+        <p class="tp-p">
+          The Customer agrees to use the Platform lawfully and only with data it is authorized to process. The Customer
+          may not use the Platform to violate applicable law, infringe third-party rights, or attempt to disrupt, probe,
+          or gain unauthorized access to Intellica systems or the website. Because the Platform is self-hosted, the
+          Customer is responsible for its own infrastructure, access controls, and the data it connects.
+        </p>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">06 · Service Levels &amp; Support</div>
+        <p class="tp-p">
+          The AutoWarehouse platform runs on the Customer's own infrastructure. Support scope, response targets, and any
+          service-level commitments are defined in the applicable enterprise agreement or a separate SLA; no service
+          levels are promised for the informational website itself. ETL execution is currently pre-alpha and provided
+          without availability guarantees.
+        </p>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">07 · Intellectual Property</div>
+        <p class="tp-p">
+          Intellica and its licensors own all right, title, and interest in the Platform, including its software,
+          models, templates, and documentation. The Customer retains all ownership of its Content — its source data, the
+          data warehouse it builds, agent state, and query results, all of which remain within the Customer's perimeter.
+          The Customer grants Intellica no rights to that Content beyond what is necessary to provide support under an
+          agreed engagement.
+        </p>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">08 · Confidentiality</div>
+        <p class="tp-p">
+          Each party may receive information the other treats as confidential. The receiving party will use such
+          information only to perform under these Terms, protect it with reasonable care, and not disclose it except to
+          personnel or advisors bound by comparable obligations. This does not apply to information that is public,
+          independently developed, or lawfully obtained without a duty of confidentiality.
+        </p>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">09 · Warranties &amp; Disclaimers</div>
+        <p class="tp-p">
+          This website and its contents are provided "as is" and "as available," without warranties of any kind, express
+          or implied, including merchantability, fitness for a particular purpose, and non-infringement. Any warranties
+          for the Platform are limited to those expressly stated in the applicable enterprise agreement. Product
+          descriptions on this site are informational and may change.
+        </p>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">10 · Limitation of Liability</div>
+        <p class="tp-p">
+          To the maximum extent permitted by law, neither party is liable for indirect, incidental, special,
+          consequential, or punitive damages, or for lost profits or data, arising out of or relating to these Terms or
+          use of the website. Any liability for the Platform is governed by, and capped as set out in, the applicable
+          enterprise agreement.
+        </p>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">11 · Indemnification</div>
+        <p class="tp-p">
+          The Customer will defend and indemnify Intellica against third-party claims arising from the Customer's
+          unlawful use of the Platform, its Content, or its breach of these Terms. Any reciprocal indemnities from
+          Intellica — for example against claims that the Platform infringes third-party intellectual property — are set
+          out in the applicable enterprise agreement.
+        </p>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">12 · Term, Termination &amp; Suspension</div>
+        <p class="tp-p">
+          These website Terms apply while you use the site. Platform license term, renewal, and termination are governed
+          by the applicable enterprise agreement. Intellica may suspend or terminate access for material breach,
+          unlawful use, or as required by law. Provisions that by their nature should survive — including intellectual
+          property, confidentiality, and limitation of liability — survive termination.
+        </p>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">13 · Governing Law &amp; Jurisdiction</div>
+        <p class="tp-p">
+          These Terms are governed by the laws of the Republic of Türkiye, without regard to conflict-of-law rules. The
+          courts of Istanbul, Türkiye have exclusive jurisdiction over any dispute arising from these Terms, save where
+          mandatory law provides otherwise.
+        </p>
+      </div>
+
+      <div class="tp-block divider-dashed">
+        <div class="mono-label tp-k">14 · Changes to These Terms</div>
+        <p class="tp-p">
+          Intellica may update these Terms from time to time. Material changes take effect when the revised version is
+          posted here, with the "Last updated" date above amended accordingly. Continued use of the website or Platform
+          after an update constitutes acceptance of the revised Terms.
+        </p>
       </div>
     </article>
 

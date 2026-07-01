@@ -1,0 +1,37 @@
+# AutoWarehouse
+
+> AI-powered, model-first data warehouse automation platform: connect sources, let AI agents model, map, build and query your DWH — self-hosted.
+
+AutoWarehouse is an agentic, AI-powered data warehouse automation platform built by Intellica (part of PiA Group, Türkiye). It replaces manual DWH/ETL work with AI-agent-driven workflows: it connects to source systems, discovers and profiles their data, designs a target warehouse model, maps source columns to that model, runs an ETL pipeline to load the warehouse, and exposes it through a natural-language chatbot and dashboards. Every step is model-first and human-in-the-loop — AI proposes with transparent reasoning, a human reviews and approves before anything runs. It is self-hosted (air-gapped capable), provider-agnostic across LLMs, and can export its ETL to existing tools instead of running it in-platform.
+
+## Core pages
+
+- [Home](https://autowarehouse.ai/): overview of the model-first platform and interactive build mission.
+- [Platform](https://autowarehouse.ai/platform): architecture, tech stack, security, data isolation, deployment topologies.
+- [Use cases](https://autowarehouse.ai/use-cases): adoption paths and scenarios.
+- [Pricing](https://autowarehouse.ai/pricing): tiers and FAQ.
+- [About](https://autowarehouse.ai/about): Intellica story, timeline, industries.
+- [Contact](https://autowarehouse.ai/contact): request a demo.
+
+## Features (pipeline stages)
+
+- [Source Connectors — Connect](https://autowarehouse.ai/features/source-connectors): connect to PostgreSQL, MySQL, Oracle, MSSQL, MongoDB.
+- [Data Model Engine — Model](https://autowarehouse.ai/features/data-model-engine): AI designs a target warehouse model (HRDM ships first).
+- [Intelligent Mapping — Map](https://autowarehouse.ai/features/intelligent-mapping): AI maps source columns to the model, human approves.
+- [ETL Engine — Execute](https://autowarehouse.ai/features/etl-engine): run ETL in-platform or export to Airflow, dbt, SQL, Spark, Snowflake.
+- [Analytics — Analyze](https://autowarehouse.ai/features/analytics): natural-language chatbot (NL-to-SQL) and dashboards.
+
+## Legal
+
+- [Privacy](https://autowarehouse.ai/privacy)
+- [Terms](https://autowarehouse.ai/terms)
+
+## Key facts
+
+- Source databases supported: PostgreSQL, MySQL, Oracle, MSSQL, MongoDB.
+- ETL can run inside AutoWarehouse or export to Airflow, dbt, SQL, Spark, and Snowflake.
+- Bring-your-own-LLM: Ollama, OpenAI, or Anthropic (selected via LLM_PROVIDER), with a deterministic heuristic fallback.
+- Self-hosted: app, AI engine, LLM runtime and database run on the customer's own infrastructure; data stays on-premise, air-gapped deployment supported.
+- Model-first and human-in-the-loop: AI proposes, a human reviews and approves.
+- Industry-agnostic templates on a single engine; HRDM (HR Data Model) ships first. ETL execution is currently pre-alpha.
+- Built by Intellica (PiA Group, Türkiye) — 450+ professionals with ~20 years of data warehouse expertise.
