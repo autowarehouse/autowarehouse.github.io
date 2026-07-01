@@ -1143,6 +1143,7 @@
       restart: () => {
         ['disc', 'etl', 'load'].forEach((k) => clearInterval(timers[k]));
         s = init();
+        started = false; // a replay counts as a new session → re-emit game_start
         render();
       },
     };
