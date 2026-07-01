@@ -127,7 +127,7 @@ export const CONTACT = {
   email: 'info@intellica.net',
   address: ['Atatürk Mah. Turgut Özal Blv.', 'Gardenya 1 Plaza, Floor 1', 'Ataşehir, Istanbul, Turkey'],
   intellica: 'https://www.intellica.net',
-  linkedin: 'https://www.linkedin.com/company/intellica',
+  linkedin: 'https://www.linkedin.com/company/autowarehouse',
   careers: 'https://www.intellica.net/careers',
   // Web3Forms public access key — safe to embed in the static page. The form
   // posts to api.web3forms.com, which emails submissions to whichever recipient
@@ -161,7 +161,7 @@ export const FOOTER_GROUPS = [
       { label: 'About', href: '/about' },
       { label: 'Intellica', href: 'https://www.intellica.net' },
       { label: 'Careers', href: 'https://www.intellica.net/careers' },
-      { label: 'LinkedIn', href: 'https://www.linkedin.com/company/intellica' },
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/company/autowarehouse' },
     ],
   },
 ];
