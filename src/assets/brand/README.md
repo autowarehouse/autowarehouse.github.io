@@ -20,18 +20,32 @@ The in-page logo lives separately in `src/components/ui/Logo.astro` (uses
 
 ## Regenerate the raster assets
 
+The masters are the source of truth; the committed PNGs/ICO are generated from
+them. Regeneration is rare (only when the mark changes) and done by hand with
+`rsvg-convert` + `optipng`. The text-bearing SVGs (`logo-*`, `og-default`)
+render with Archivo / JetBrains Mono, so install those fonts for fontconfig
+first (`fc-cache -f` after) — families: `Archivo SemiBold ExtraBold` (800),
+`Archivo SemiBold Black` (900), `JetBrains Mono` (700).
+
 ```bash
-bash scripts/gen-brand-assets.sh
+# icons (from src/assets/brand/, output to public/)
+rsvg-convert -w 16  app-icon-small.svg    -o ../../../public/favicon-16x16.png
+rsvg-convert -w 32  app-icon-small.svg    -o ../../../public/favicon-32x32.png
+rsvg-convert -w 180 app-icon.svg          -o ../../../public/apple-touch-icon.png
+rsvg-convert -w 192 app-icon.svg          -o ../../../public/android-chrome-192x192.png
+rsvg-convert -w 512 app-icon.svg          -o ../../../public/android-chrome-512x512.png
+rsvg-convert -w 512 app-icon-maskable.svg -o ../../../public/android-chrome-maskable-512x512.png
+cp app-icon.svg ../../../public/favicon.svg
+
+# social card + press lockup
+rsvg-convert -w 1200 -h 630 og-default.svg -o ../../../public/og/default.png
+rsvg-convert -w 1120 -h 300 logo-dark.svg  -o ../images/full-logo.png
+
+# multi-res favicon.ico (needs ImageMagick or icoutils)
+for s in 16 32 48; do rsvg-convert -w $s app-icon-small.svg -o /tmp/ico-$s.png; done
+convert /tmp/ico-16.png /tmp/ico-32.png /tmp/ico-48.png ../../../public/favicon.ico
+#   or: icotool -c -o ../../../public/favicon.ico /tmp/ico-16.png /tmp/ico-32.png /tmp/ico-48.png
+
+# then compress the PNGs
+optipng -o2 ../../../public/*.png ../../../public/og/*.png ../images/full-logo.png
 ```
-
-Requires `rsvg-convert`, `optipng`, and the display fonts installed for
-fontconfig (the text-bearing SVGs render with Archivo / JetBrains Mono):
-
-```bash
-# fetch the exact static weights into a local font dir, then: fc-cache -f
-# families used: "Archivo SemiBold ExtraBold" (800), "Archivo SemiBold Black" (900),
-#                "JetBrains Mono" (700)
-```
-
-Outputs land in `public/` (icons, `favicon.*`, `og/default.png`) and
-`src/assets/images/full-logo.png` (README/press lockup).

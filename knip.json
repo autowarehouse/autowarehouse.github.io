@@ -1,5 +1,4 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "ignoreDependencies": ["@secretlint/secretlint-rule-preset-recommend"],
-  "ignore": ["scripts/png-to-ico.ts"]
+  "ignoreDependencies": ["@secretlint/secretlint-rule-preset-recommend"]
 }
