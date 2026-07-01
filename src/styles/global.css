@@ -15,6 +15,8 @@
   --panel-3: #0a0805;
   --terminal: #080605;
 
+  --success-shadow: color-mix(in srgb, var(--green) 55%, #000);
+
   --ink: #f3eedd;
   --ink-muted: rgba(243, 238, 221, 0.62);
   --ink-dim: rgba(243, 238, 221, 0.4);
@@ -276,7 +278,7 @@ a {
 .btn-success {
   background: var(--green);
   color: var(--on-accent);
-  box-shadow: 4px 4px 0 color-mix(in srgb, var(--green) 55%, #000);
+  box-shadow: 4px 4px 0 var(--success-shadow);
 }
 .btn-success:hover {
   transform: translate(2px, 2px);
@@ -324,7 +326,10 @@ a {
    static `opacity: 0`, that would survive minification and leave content
    permanently invisible. With opacity:0 in the keyframes instead, a dropped
    animation simply means no reveal (content stays visible) — it fails OPEN.
-   Longhands (not the `animation` shorthand) reduce the chance of the bad fold. */
+   Longhands (not the `animation` shorthand) reduce the chance of the bad fold.
+   `animation-range: entry 0% cover 20%` means: start when the element first
+   enters the view (`entry 0%`), and finish by the time it covers ~20% of the
+   viewport (`cover 20%`) so the reveal completes early in the scroll. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .reveal {
