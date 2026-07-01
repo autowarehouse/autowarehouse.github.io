@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="AutoWarehouse — from raw estate to governed warehouse">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0 H0 V40" fill="none" stroke="#ffce1f" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="50%" cy="8%" r="65%">
+      <stop offset="0%" stop-color="#f25c1f" stop-opacity="0.20"/>
+      <stop offset="55%" stop-color="#f25c1f" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#16110c" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="tape" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="34" height="34" fill="#16110c"/>
+      <rect width="17" height="34" fill="#ffce1f" fill-opacity="0.85"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#16110c"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Lockup -->
+  <g transform="translate(400,96) scale(1.2)">
+    <polygon points="16,12 48,12 40,22 8,22" fill="none" stroke="#f1ead9" stroke-width="2.5"/>
+    <polygon points="16,28 48,28 40,38 8,38" fill="none" stroke="#f1ead9" stroke-width="2.5"/>
+    <polygon points="16,44 48,44 40,54 8,54" fill="none" stroke="#f1ead9" stroke-width="2.5"/>
+    <path d="M40 6 C 20 14, 20 24, 32 26 C 44 28, 44 38, 28 41 C 14 43, 16 52, 30 58"
+          fill="none" stroke="#f25c1f" stroke-width="3.4" stroke-linecap="round"/>
+  </g>
+  <text x="500" y="150" font-family="Archivo SemiBold ExtraBold" font-weight="800" font-size="46"
+        letter-spacing="-1.4" fill="#f1ead9">Auto<tspan fill="#f1ead9" opacity="0.5">Warehouse</tspan></text>
+
+  <!-- Tagline -->
+  <text x="600" y="248" text-anchor="middle" font-family="JetBrains Mono" font-weight="700"
+        font-size="20" letter-spacing="6" fill="#ffce1f">MODEL-FIRST · AGENT-BUILT · HUMAN-GOVERNED</text>
+
+  <!-- Headline -->
+  <text x="600" y="372" text-anchor="middle" font-family="Archivo SemiBold Black" font-weight="900"
+        font-size="76" letter-spacing="-2" fill="#f1ead9">From raw estate to</text>
+  <text x="600" y="454" text-anchor="middle" font-family="Archivo SemiBold Black" font-weight="900"
+        font-size="76" letter-spacing="-2" fill="#f1ead9"><tspan fill="#f25c1f">governed</tspan> warehouse.</text>
+
+  <!-- Sub -->
+  <text x="600" y="536" text-anchor="middle" font-family="JetBrains Mono" font-weight="700"
+        font-size="22" letter-spacing="4" fill="#f1ead9" fill-opacity="0.55">Discover · Model · Build · Govern · Ship</text>
+
+  <!-- Caution tape edge -->
+  <rect x="0" y="602" width="1200" height="28" fill="url(#tape)"/>
+  <rect x="0" y="600" width="1200" height="2.5" fill="#ffce1f"/>
+</svg>
