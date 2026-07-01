@@ -1,0 +1,98 @@
+# AutoWarehouse — Full Brief
+
+> AI-powered, model-first data warehouse automation platform: connect sources, let AI agents model, map, build and query your DWH — self-hosted.
+
+AutoWarehouse is an agentic, AI-powered data warehouse automation platform that replaces manual DWH/ETL work with AI-agent-driven workflows. It connects to source systems, discovers and profiles their data, designs a target data warehouse model, maps source columns to that model, runs an ETL pipeline to load the warehouse, and exposes it through a natural-language chatbot and dashboards. Every step is model-first and human-in-the-loop: AI proposes, a human reviews and approves before anything runs. The platform is industry-agnostic, with HRDM (HR Data Model) shipping as the first template; ETL execution is currently pre-alpha. It is built by Intellica, a data-focused company and part of PiA Group, headquartered in Istanbul, Türkiye.
+
+## What makes it different
+
+- Model-first: everything rests on a single, well-designed data model and correct mapping.
+- Human-in-the-loop: AI suggests mappings and pipelines with transparent reasoning; a human reviews and approves before anything runs.
+- Self-hosted / air-gapped: app, AI engine, LLM runtime and database all run on the customer's own infrastructure with no internet required.
+- Multi-LLM and provider-agnostic: Ollama, OpenAI, or Anthropic selectable via LLM_PROVIDER, with a deterministic heuristic fallback for every AI feature.
+- Code export: ETL can run inside AutoWarehouse or be exported to existing tools (Airflow, dbt, SQL, Spark, Snowflake).
+- Industry-agnostic templates (HRDM first) on a single engine.
+- End-to-end in one deployable unit: source ingestion through NL-to-SQL chatbot and dashboards.
+
+## The pipeline (Connect → Model → Map → Execute → Analyze)
+
+### 1. Connect — Source Connectors
+Link: https://autowarehouse.ai/features/source-connectors
+AutoWarehouse connects to the customer's source systems and reads their schemas and data. Supported databases are PostgreSQL, MySQL, Oracle, MSSQL, and MongoDB (via LibreDB Studio for multi-database connectivity). Once connected, it discovers and profiles the source data as the raw input to the rest of the pipeline. Source connection credentials are encrypted at rest with AES-256-GCM.
+
+### 2. Model — Data Model Engine
+Link: https://autowarehouse.ai/features/data-model-engine
+The platform designs a target data warehouse model rather than copying source tables verbatim — this is the "model-first" principle: everything downstream rests on a single, well-designed data model. HRDM (HR Data Model) ships as the first industry template, and the same engine is industry-agnostic so additional templates run on it. The AI proposes the model with transparent reasoning; a human reviews and approves.
+
+### 3. Map — Intelligent Mapping
+Link: https://autowarehouse.ai/features/intelligent-mapping
+AI maps source columns to the target warehouse model, suggesting mappings with transparent reasoning. Correct mapping is central to the model-first approach. Mappings are human-in-the-loop: a reviewer approves (or corrects) each proposal before it is used, so nothing runs on unverified mappings.
+
+### 4. Execute — ETL Engine
+Link: https://autowarehouse.ai/features/etl-engine
+The ETL pipeline loads the target warehouse from the mapped sources. ETL can run inside AutoWarehouse on a separate Node.js worker process (a DAG executor using Kahn's algorithm, with SELECT ... FOR UPDATE SKIP LOCKED job distribution), or be exported to existing tools — Airflow, dbt, SQL, Spark, or Snowflake — so teams can keep their current orchestration. ETL execution is currently pre-alpha.
+
+### 5. Analyze — Analytics
+Link: https://autowarehouse.ai/features/analytics
+Once loaded, the warehouse is exposed through a natural-language chatbot (NL-to-SQL) and dashboards, so users can query the DWH in plain language. The DWH query tool (exposed via MCP) is read-only with an automatic LIMIT 500 for safety.
+
+## Core pages
+
+- Home — https://autowarehouse.ai/ : the model-first system map and an interactive build mission.
+- Platform — https://autowarehouse.ai/platform : architecture, tech stack, security, data isolation, and deployment topologies.
+- Use cases — https://autowarehouse.ai/use-cases : three adoption paths with scenarios.
+- Pricing — https://autowarehouse.ai/pricing : tiers and FAQ.
+- About — https://autowarehouse.ai/about : the Intellica story, timeline, and industries served.
+- Contact — https://autowarehouse.ai/contact : demo-request form.
+- Privacy — https://autowarehouse.ai/privacy
+- Terms — https://autowarehouse.ai/terms
+
+## Key facts
+
+- Source databases supported: PostgreSQL, MySQL, Oracle, MSSQL, MongoDB.
+- ETL can run inside AutoWarehouse or export to Airflow, dbt, SQL, Spark, and Snowflake.
+- Bring-your-own-LLM: Ollama, OpenAI, or Anthropic (selected via LLM_PROVIDER), with a deterministic heuristic fallback for every AI feature.
+- Data stays on-premise: the application, AI/agent engine, LLM runtime, and database all run on the customer's own infrastructure; nothing leaves the customer's environment, and air-gapped (no-internet) deployment is supported.
+- Model-first and human-in-the-loop: AI proposes with transparent reasoning, a human reviews and approves.
+- Industry-agnostic templates on a single engine; HRDM (HR Data Model) ships first.
+- ETL execution is currently pre-alpha.
+
+## Technology
+
+- Turborepo + pnpm monorepo; Next.js 16 (App Router) with React 19; TypeScript (strict).
+- Tailwind CSS v4, Shadcn (base-nova) on Base UI.
+- Drizzle ORM 0.45.2 over PostgreSQL 18.3.
+- NextAuth v5 (OIDC-first) for authentication.
+- Agent stack: LangChain.js 1.3.3, LangGraph.js 1.2.9, DeepAgents.js 1.9.0, with a PostgreSQL-backed LangGraph checkpointer.
+- LLM providers: Ollama / OpenAI / Anthropic (selected by LLM_PROVIDER).
+- LibreDB Studio for multi-database connectivity (PostgreSQL, MySQL, Oracle, MSSQL, MongoDB).
+- Separate Node.js ETL worker process (DAG executor via Kahn's algorithm; SELECT ... FOR UPDATE SKIP LOCKED job distribution).
+- Local filesystem storage (S3/MinIO placeholder). Docker + Docker Compose. Vitest + Playwright testing.
+
+## Deployment options
+
+- Self-hosted single-VM via Docker Compose (web + worker + PostgreSQL): `docker compose up -d`.
+- Scale-out deployment with managed/external dependencies (e.g. external PostgreSQL: RDS, Cloud SQL, or on-prem).
+- Kubernetes / Helm charts with namespace tenant isolation (EKS, AKS, GKE, on-prem K8s).
+- Air-gapped deployment: app, AI engine, LLM runtime, and database all on customer infrastructure, no internet required (banking, defense, government).
+
+## Security posture
+
+- Source connection credentials encrypted at rest with AES-256-GCM (format iv:authTag:ciphertext; key from ENCRYPTION_KEY or the first 32 chars of AUTH_SECRET).
+- PostgreSQL Row-Level Security (RLS) enabled per tenant-scoped table via a non-superuser autowarehouse_app role, provisioned idempotently by db:rls.
+- Tenant isolation: every tenant-scoped row carries a tenantId; queries run in tenant-scoped transactions bound to an app.current_tenant_id GUC (injection-safe, UUID-validated).
+- RBAC guards (requireAuth, requirePermission, requireRole) with platform and tenant role scopes; agent runs pass an additional permission-guard middleware.
+- Authentication via NextAuth v5, OIDC-first (SSO) with email/password fallback; JWT sessions (8-day max age); passwords hashed with bcrypt (cost 12).
+- Multi-tenant architecture with server-side verification that the caller's tenant matches each entity.
+- The MCP DWH query tool is read-only with an automatic LIMIT 500.
+- The local file-storage provider enforces path-traversal and null-byte protection, an extension allow-list, and a 10 MB upload cap.
+
+## Data processing
+
+- The product is self-hosted: customer source data, the data warehouse, agent state, and query results stay on-premise within the customer's perimeter and are not transmitted to, received by, or processed by Intellica.
+- The marketing website (autowarehouse.ai) collects only contact/demo-request form submissions (name, email, message via Web3Forms), consent-gated Google Analytics 4 usage analytics, and standard server/CDN access logs.
+- Website sub-processors: Web3Forms (contact-form handling / email delivery), Google Analytics 4 (consent-gated analytics), Cloudflare (DNS and CDN), GitHub Pages (static hosting).
+
+## Who builds it
+
+AutoWarehouse is built by Intellica, part of PiA Group, headquartered at Atatürk Mah. Turgut Özal Blv. Gardenya 1 Plaza, Floor 1, Ataşehir, Istanbul, Türkiye. Intellica brings 450+ professionals and roughly 20 years of data warehouse expertise. Contact: info@intellica.net. The product is governed by the laws of the Republic of Türkiye; personal data is governed by Türkiye's KVKK (Law No. 6698), and GDPR applies for EU/EEA visitors to the marketing website.

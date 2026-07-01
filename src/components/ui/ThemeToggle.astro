@@ -76,6 +76,7 @@
       } catch (e) {}
       var meta = document.querySelector('meta[name="theme-color"]');
       if (meta) meta.setAttribute('content', next === 'light' ? '#d9cdb4' : '#16110c');
+      window.awTrack?.('theme_change', { theme: next });
     });
   })();
 </script>

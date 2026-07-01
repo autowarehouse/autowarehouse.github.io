@@ -56,12 +56,25 @@ const FAQ = [
     a: 'AutoWarehouse generates production-ready Airflow DAGs, dbt models, SQL scripts, Spark jobs, or Snowflake code that you deploy in your own environment.',
   },
 ];
+
+// FAQPage structured data — mirrors the FAQ list below for rich results / GEO.
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQ.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
 ---
 
 <PageLayout
   title="Pricing"
   description="Enterprise pricing for AutoWarehouse by Intellica. Self-hosted or managed deployment. All features included, bring your own LLM, data stays on-premise."
 >
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(faqJsonLd)} />
+
   <!-- HERO -->
   <section class="hero grid-bg">
     <div class="shell hero-inner">
